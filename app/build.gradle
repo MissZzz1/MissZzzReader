@@ -34,13 +34,12 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta2'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.jakewharton:butterknife:5.1.1'
@@ -51,8 +50,10 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'org.jsoup:jsoup:1.10.3'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2'  //没有使用特殊Header，可以不加这行
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3' //一个开源gif控件
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2'
+    //没有使用特殊Header，可以不加这行
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
+    //一个开源gif控件
     compile project(':PushSDK')
 }
 
