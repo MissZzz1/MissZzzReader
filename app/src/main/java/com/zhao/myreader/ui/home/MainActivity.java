@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
 
 import com.zhao.myreader.R;
+import com.zhao.myreader.application.MyApplication;
 import com.zhao.myreader.base.BaseActivity;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.custom.CircleImageView;
@@ -48,6 +49,12 @@ public class MainActivity extends BaseActivity {
         }else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.checkVersion(this);
     }
 
     public CircleImageView getCivAvatar() {

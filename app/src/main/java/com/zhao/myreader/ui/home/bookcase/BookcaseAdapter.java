@@ -1,6 +1,7 @@
 package com.zhao.myreader.ui.home.bookcase;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,7 +13,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.zhao.myreader.R;
+import com.zhao.myreader.creator.DialogCreator;
 import com.zhao.myreader.greendao.entity.Book;
+import com.zhao.myreader.greendao.service.BookService;
+import com.zhao.myreader.util.DipPxUtil;
 import com.zhao.myreader.util.StringHelper;
 
 import java.util.ArrayList;
@@ -24,32 +28,37 @@ import java.util.ArrayList;
 public class BookcaseAdapter extends ArrayAdapter<Book> {
 
     private int mResourceId;
+    private BookService mBookService;
 
-    public BookcaseAdapter(Context context, int resourceId, ArrayList<Book> datas){
-        super(context,resourceId,datas);
+
+    public BookcaseAdapter(Context context, int resourceId, ArrayList<Book> datas) {
+        super(context, resourceId, datas);
         mResourceId = resourceId;
+        mBookService = new BookService();
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         ViewHolder viewHolder = null;
-        if (convertView == null){
+        if (convertView == null) {
             viewHolder = new ViewHolder();
-            convertView = LayoutInflater.from(getContext()).inflate(mResourceId,null);
+            convertView = LayoutInflater.from(getContext()).inflate(mResourceId, null);
             viewHolder.ivBookImg = (ImageView) convertView.findViewById(R.id.iv_book_img);
             viewHolder.tvBookName = (TextView) convertView.findViewById(R.id.tv_book_name);
+            viewHolder.tvNoReadNum = (TextView)convertView.findViewById(R.id.tv_no_read_num);
+
             convertView.setTag(viewHolder);
-        }else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        initView(position,viewHolder);
+        initView(position, viewHolder);
         return convertView;
     }
 
-    private void initView(int postion,ViewHolder viewHolder){
-        Book book = getItem(postion);
-        if (StringHelper.isEmpty(book.getImgUrl())){
+    private void initView(int postion, ViewHolder viewHolder) {
+        final Book book = getItem(postion);
+        if (StringHelper.isEmpty(book.getImgUrl())) {
             book.setImgUrl("");
         }
         Glide.with(getContext())
@@ -59,12 +68,24 @@ public class BookcaseAdapter extends ArrayAdapter<Book> {
                 .placeholder(R.mipmap.no_image)
                 .into(viewHolder.ivBookImg);
         viewHolder.tvBookName.setText(book.getName());
+        if (book.getNoReadNum() != 0){
+            viewHolder.tvNoReadNum.setVisibility(View.VISIBLE);
+            if (book.getNoReadNum() > 99){
+                viewHolder.tvNoReadNum.setText("...");
+            }else {
+                viewHolder.tvNoReadNum.setText(String.valueOf(book.getNoReadNum()));
+            }
+
+        }else {
+            viewHolder.tvNoReadNum.setVisibility(View.GONE);
+        }
+
     }
 
-    class ViewHolder{
+    class ViewHolder {
         ImageView ivBookImg;
         TextView tvBookName;
-
+        TextView tvNoReadNum;
     }
 
 }

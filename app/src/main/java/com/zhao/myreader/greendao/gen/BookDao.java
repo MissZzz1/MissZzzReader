@@ -37,6 +37,8 @@ public class BookDao extends AbstractDao<Book, String> {
         public final static Property NewestChapterUrl = new Property(10, String.class, "newestChapterUrl", false, "NEWEST_CHAPTER_URL");
         public final static Property HistoryChapterId = new Property(11, String.class, "historyChapterId", false, "HISTORY_CHAPTER_ID");
         public final static Property HisttoryChapterNum = new Property(12, int.class, "histtoryChapterNum", false, "HISTTORY_CHAPTER_NUM");
+        public final static Property SortCode = new Property(13, int.class, "sortCode", false, "SORT_CODE");
+        public final static Property NoReadNum = new Property(14, int.class, "noReadNum", false, "NO_READ_NUM");
     }
 
 
@@ -64,7 +66,9 @@ public class BookDao extends AbstractDao<Book, String> {
                 "\"NEWEST_CHAPTER_TITLE\" TEXT," + // 9: newestChapterTitle
                 "\"NEWEST_CHAPTER_URL\" TEXT," + // 10: newestChapterUrl
                 "\"HISTORY_CHAPTER_ID\" TEXT," + // 11: historyChapterId
-                "\"HISTTORY_CHAPTER_NUM\" INTEGER NOT NULL );"); // 12: histtoryChapterNum
+                "\"HISTTORY_CHAPTER_NUM\" INTEGER NOT NULL ," + // 12: histtoryChapterNum
+                "\"SORT_CODE\" INTEGER NOT NULL ," + // 13: sortCode
+                "\"NO_READ_NUM\" INTEGER NOT NULL );"); // 14: noReadNum
     }
 
     /** Drops the underlying database table. */
@@ -137,6 +141,8 @@ public class BookDao extends AbstractDao<Book, String> {
             stmt.bindString(12, historyChapterId);
         }
         stmt.bindLong(13, entity.getHisttoryChapterNum());
+        stmt.bindLong(14, entity.getSortCode());
+        stmt.bindLong(15, entity.getNoReadNum());
     }
 
     @Override
@@ -203,6 +209,8 @@ public class BookDao extends AbstractDao<Book, String> {
             stmt.bindString(12, historyChapterId);
         }
         stmt.bindLong(13, entity.getHisttoryChapterNum());
+        stmt.bindLong(14, entity.getSortCode());
+        stmt.bindLong(15, entity.getNoReadNum());
     }
 
     @Override
@@ -225,7 +233,9 @@ public class BookDao extends AbstractDao<Book, String> {
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // newestChapterTitle
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // newestChapterUrl
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // historyChapterId
-            cursor.getInt(offset + 12) // histtoryChapterNum
+            cursor.getInt(offset + 12), // histtoryChapterNum
+            cursor.getInt(offset + 13), // sortCode
+            cursor.getInt(offset + 14) // noReadNum
         );
         return entity;
     }
@@ -245,6 +255,8 @@ public class BookDao extends AbstractDao<Book, String> {
         entity.setNewestChapterUrl(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setHistoryChapterId(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
         entity.setHisttoryChapterNum(cursor.getInt(offset + 12));
+        entity.setSortCode(cursor.getInt(offset + 13));
+        entity.setNoReadNum(cursor.getInt(offset + 14));
      }
     
     @Override

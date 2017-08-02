@@ -21,8 +21,9 @@ public class APPCONST {
 
     public static final String ALARM_SCHEDULE_MSG = "alarm_schedule_msg";
 
-    public static final String FILE_DIR = "gxdw";
-    public static final String TEM_FILE_DIR = Environment.getExternalStorageDirectory() + "/gxdw/tem/";
+    public static final String FILE_DIR = "MissZzzReader";
+    public static final String TEM_FILE_DIR = Environment.getExternalStorageDirectory() + "/MissZzzReader/tem/";
+    public static final String UPDATE_APK_FILE_DIR = "MissZzzReader/apk/";
     public static long exitTime;
     public static final int exitConfirmTime = 2000;
 
@@ -34,6 +35,8 @@ public class APPCONST {
     public static final int[] READ_STYLE_NIGHT = {R.color.sys_night_work, R.color.sys_night_bg};
 
     public static final String FILE_NAME_SETTING = "setting";
+    public static final String FILE_NAME_UPDATE_INFO = "updateInfo";
+
 
 
 }

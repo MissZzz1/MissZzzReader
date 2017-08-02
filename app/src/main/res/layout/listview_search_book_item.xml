@@ -10,6 +10,7 @@
         android:id="@+id/iv_book_img"
         android:layout_width="80dp"
         android:layout_height="120dp"
+        android:scaleType="fitXY"
         android:src="@mipmap/no_image" />
 
     <RelativeLayout

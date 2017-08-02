@@ -4,9 +4,11 @@ import android.database.Cursor;
 
 import com.zhao.myreader.greendao.GreenDaoManager;
 import com.zhao.myreader.greendao.entity.Book;
+import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.gen.BookDao;
 import com.zhao.myreader.util.StringHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +21,35 @@ public class BookService extends BaseService {
 
     public BookService(){
         mChapterService = new ChapterService();
+    }
+
+    private List<Book> findBooks(String sql, String[] selectionArgs) {
+        ArrayList<Book> books = new ArrayList<>();
+        try {
+            Cursor cursor = selectBySql(sql, selectionArgs);
+            while (cursor.moveToNext()) {
+                Book book = new Book();
+              book.setId(cursor.getString(0));
+                book.setName(cursor.getString(1));
+                book.setChapterUrl(cursor.getString(2));
+                book.setImgUrl(cursor.getString(3));
+                book.setDesc(cursor.getString(4));
+                book.setAuthor(cursor.getString(5));
+                book.setType(cursor.getString(6));
+                book.setUpdateDate(cursor.getString(7));
+                book.setNewestChapterId(cursor.getString(8));
+                book.setNewestChapterTitle(cursor.getString(9));
+                book.setNewestChapterUrl(cursor.getString(10));
+                book.setHistoryChapterId(cursor.getString(11));
+                book.setHisttoryChapterNum(cursor.getInt(12));
+                book.setSortCode(cursor.getInt(13));
+                book.setNoReadNum(cursor.getInt(14));
+                books.add(book);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return books;
     }
 
     /**
@@ -36,8 +67,8 @@ public class BookService extends BaseService {
      * @return
      */
     public List<Book> getAllBooks(){
-        BookDao bookDao = GreenDaoManager.getInstance().getSession().getBookDao();
-        return bookDao.loadAll();
+        String sql = "select * from book  order by sort_code";
+        return findBooks(sql, null);
     }
 
     /**
@@ -45,6 +76,7 @@ public class BookService extends BaseService {
      * @param book
      */
     public void addBook(Book book){
+        book.setSortCode(countBookTotalNum() + 1);
         book.setId(StringHelper.getStringRandom(25));
         addEntity(book);
     }
@@ -86,5 +118,23 @@ public class BookService extends BaseService {
     public void deleteBook(Book book){
        deleteEntity(book);
         mChapterService.deleteBookALLChapterById(book.getId());
+    }
+
+    /**
+     * 查询书籍总数
+     * @return
+     */
+    public int countBookTotalNum(){
+        int num = 0;
+        try {
+            Cursor cursor = selectBySql("select count(*) n from book ",null);
+            if (cursor.moveToNext()){
+                num = cursor.getInt(0);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return num;
     }
 }

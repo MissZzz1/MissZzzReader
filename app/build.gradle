@@ -8,14 +8,22 @@ android {
         applicationId "com.zhao.myreader"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 11
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "x86", "armeabi", "armeabi-v7a"
+            }
+        }
+        debug {
+            ndk {
+                abiFilters "x86", "armeabi", "armeabi-v7a"
+            }
         }
     }
     sourceSets.main {
@@ -49,7 +57,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 2
+    schemaVersion 4
     daoPackage 'com.zhao.myreader.greendao.gen'
     targetGenDir 'src/main/java'
 }

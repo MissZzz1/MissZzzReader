@@ -3,6 +3,8 @@ package com.zhao.myreader.ui.home.bookcase;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,12 +13,17 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhao.myreader.R;
 import com.zhao.myreader.base.BasePresenter;
+import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.creator.DialogCreator;
 import com.zhao.myreader.greendao.entity.Book;
+import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.service.BookService;
+import com.zhao.myreader.greendao.service.ChapterService;
 import com.zhao.myreader.ui.read.ReadActivity;
 import com.zhao.myreader.ui.search.SearchBookActivity;
+import com.zhao.myreader.util.StringHelper;
+import com.zhao.myreader.webapi.CommonApi;
 
 import java.util.ArrayList;
 
@@ -30,20 +37,35 @@ public class BookcasePresenter implements BasePresenter {
     private ArrayList<Book> mBooks;//书目数组
     private BookcaseAdapter mBookcaseAdapter;
     private BookService mBookService;
+    private ChapterService mChapterService;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 1:
+                    mBookcaseAdapter.notifyDataSetChanged();
+                    break;
+
+            }
+        }
+    };
 
     public BookcasePresenter(BookcaseFragment bookcaseFragment) {
         mBookcaseFragment = bookcaseFragment;
         mBookService = new BookService();
+        mChapterService = new ChapterService();
     }
 
     @Override
     public void start() {
         mBookcaseFragment.getSrlContent().setEnableHeaderTranslationContent(false);
+        mBookcaseFragment.getSrlContent().setEnableLoadmore(false);
         mBookcaseFragment.getSrlContent().setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 refreshlayout.finishRefresh(1000);
-                getData();
+                initNoReadNum();
             }
         });
         mBookcaseFragment.getGvBook().setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,6 +73,8 @@ public class BookcasePresenter implements BasePresenter {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(mBookcaseFragment.getContext(), ReadActivity.class);
                 intent.putExtra(APPCONST.BOOK, mBooks.get(i));
+                mBooks.get(i).setNoReadNum(0);
+                mBookService.updateEntity(mBooks.get(i));
                 mBookcaseFragment.startActivity(intent);
 
             }
@@ -95,13 +119,47 @@ public class BookcasePresenter implements BasePresenter {
             mBookcaseFragment.getGvBook().setAdapter(mBookcaseAdapter);
             mBookcaseFragment.getLlNoDataTips().setVisibility(View.GONE);
             mBookcaseFragment.getGvBook().setVisibility(View.VISIBLE);
+            initNoReadNum();
         }
+
     }
 
 
     public void getData() {
         mBooks = (ArrayList<Book>) mBookService.getAllBooks();
+        for (int i = 0; i < mBooks.size(); i++){
+            if (mBooks.get(i).getSortCode() != i + 1){
+                mBooks.get(i).setSortCode(i + 1);
+                mBookService.updateEntity(mBooks.get(i));
+            }
+        }
         init();
+    }
+
+    private void initNoReadNum(){
+        for (final Book book : mBooks){
+            CommonApi.getBookChapters(book.getChapterUrl(), new ResultCallback() {
+                @Override
+                public void onFinish(Object o, int code) {
+                    final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
+                    final ArrayList<Chapter> localChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(book.getId());
+                    int noReadNum =   chapters.size() - localChapters.size();
+                    if (noReadNum > 0){
+                        book.setNoReadNum(noReadNum);
+
+                        mHandler.sendMessage(mHandler.obtainMessage(1));
+                    }else {
+                        book.setNoReadNum(0);
+                    }
+                    mBookService.updateEntity(book);
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+            });
+        }
     }
 
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {

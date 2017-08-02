@@ -1,15 +1,20 @@
 package com.zhao.myreader.application;
 
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.MsgConstant;
 import com.umeng.message.PushAgent;
@@ -17,9 +22,19 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 import com.zhao.myreader.base.BaseActivity;
+import com.zhao.myreader.common.APPCONST;
+import com.zhao.myreader.common.URLCONST;
+import com.zhao.myreader.creator.DialogCreator;
+import com.zhao.myreader.entity.UpdateInfo;
+import com.zhao.myreader.util.CacheHelper;
+import com.zhao.myreader.util.DownloadMangerUtils;
 import com.zhao.myreader.util.HttpUtil;
+import com.zhao.myreader.util.OpenFileHelper;
+import com.zhao.myreader.util.TextHelper;
+import com.zhao.myreader.util.UriFileUtil;
 
 import java.io.File;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -44,7 +59,6 @@ public class MyApplication extends Application {
         HttpUtil.trustAllHosts();//信任所有证书
         mFixedThreadPool = Executors.newFixedThreadPool(3);//初始化线程池
         BaseActivity.setCloseAntiHijacking(true);
-
 
 
     }
@@ -75,6 +89,13 @@ public class MyApplication extends Application {
             @Override
             public Notification getNotification(Context context, UMessage uMessage) {
                 Log.i("UPush", "title:" + uMessage.title + "  text:" + uMessage.text);
+                Map<String, String> extra = uMessage.extra;
+                if (extra != null) {
+                    String json = extra.get(APPCONST.FILE_NAME_UPDATE_INFO);
+                    UpdateInfo updateInfo = new Gson().fromJson(json, UpdateInfo.class);
+                    CacheHelper.saveObject(updateInfo, APPCONST.FILE_NAME_UPDATE_INFO);
+                }
+
                 return super.getNotification(context, uMessage);
             }
         });
@@ -82,8 +103,6 @@ public class MyApplication extends Application {
         mPushAgent.setNotificationClickHandler(new UmengNotificationClickHandler() {
             @Override
             public void dealWithCustomAction(Context context, UMessage msg) {
-
-
 
             }
         });
@@ -168,13 +187,26 @@ public class MyApplication extends Application {
         }
     }
 
-   /* *//**
+    /**
+     * 检查更新
+     */
+    public static void checkVersion(Activity activity) {
+        UpdateInfo updateInfo = (UpdateInfo) CacheHelper.readObject(APPCONST.FILE_NAME_UPDATE_INFO);
+        int versionCode = getVersionCode();
+        if (updateInfo != null) {
+            if (updateInfo.getNewestVersionCode() > versionCode) {
+                updateApp(activity, updateInfo.getDownLoadUrl(), versionCode);
+            }
+        }
+    }
+
+    /**
      * App自动升级
      *
      * @param activity
      * @param versionCode
-     *//*
-    public static void updateApp(final Activity activity, final int versionCode) {
+     */
+    public static void updateApp(final Activity activity, final String url, final int versionCode) {
         DialogCreator.createCommonDialog(activity, "发现新版本", null, "立即更新",
                 new DialogInterface.OnClickListener() {
                     @Override
@@ -182,9 +214,7 @@ public class MyApplication extends Application {
                         dialog.dismiss();
                         TextHelper.showText("正在下载更新...");
                         DownloadMangerUtils.downloadFileOnNotificationByFinishListener(activity, APPCONST.UPDATE_APK_FILE_DIR,
-                                "app_gxdw_" + versionCode + ".apk",
-                                URLCONST.method_downloadNewApp,
-                                "广西党办平台更新下载",
+                                "MissZzzReader_" + versionCode + ".apk", url, "大钊阅读更新下载",
                                 new DownloadMangerUtils.DownloadCompleteListener() {
                                     @Override
                                     public void onFinish(Uri uri) {
@@ -199,7 +229,6 @@ public class MyApplication extends Application {
                                 });
                     }
                 });
-    }*/
-
+    }
 
 }

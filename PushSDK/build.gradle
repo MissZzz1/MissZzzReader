@@ -13,9 +13,15 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            ndk {
+                abiFilters "x86", "armeabi", "armeabi-v7a"
+            }
         }
-        debug {
 
+        debug {
+            ndk {
+                abiFilters "x86", "armeabi", "armeabi-v7a"
+            }
         }
     }
 

@@ -1,20 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="10dp">
+    >
 
-    <ImageView
-        android:id="@+id/iv_book_img"
-        android:layout_width="80dp"
-        android:layout_height="120dp"
-        android:src="@mipmap/no_image"/>
 
-    <TextView
-        android:id="@+id/tv_book_name"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="bookname"/>
+        android:orientation="vertical"
+        android:padding="10dp" >
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/iv_book_img"
+            android:layout_width="80dp"
+            android:layout_height="110dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/no_image"/>
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:id="@+id/tv_book_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="bookname"/>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_no_read_num"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/red_circle2"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="7dp"
+
+
+        />
+
+
+
+</RelativeLayout>
