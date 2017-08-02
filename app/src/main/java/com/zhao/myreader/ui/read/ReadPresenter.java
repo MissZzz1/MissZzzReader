@@ -48,6 +48,8 @@ public class ReadPresenter implements BasePresenter {
     private ChapterTitleAdapter mChapterTitleAdapter;
     private Setting mSetting;
 
+    private boolean settingChange;//是否是设置改变
+
     private float pointX;
     private float pointY;
 
@@ -267,7 +269,11 @@ public class ReadPresenter implements BasePresenter {
             initSetting();
             mChapterContentAdapter.notifyDataSetChanged();
         }
-        mReadActivity.getLvContent().setSelection(mBook.getHisttoryChapterNum());
+        if (!settingChange) {
+            mReadActivity.getLvContent().setSelection(mBook.getHisttoryChapterNum());
+        }else {
+            settingChange = false;
+        }
         mReadActivity.getPbLoading().setVisibility(View.GONE);
         mReadActivity.getSrlContent().finishLoadmore();
     }
@@ -287,6 +293,7 @@ public class ReadPresenter implements BasePresenter {
         }else {
             mChapterTitleAdapter.notifyDataSetChanged();
         }
+
         mReadActivity.getLvChapterList().setSelection(mReadActivity.getLvContent().getLastVisiblePosition());
 
     }
@@ -403,6 +410,7 @@ public class ReadPresenter implements BasePresenter {
         }
         mSetting.setDayStyle(!isCurDayStyle);
         SysManager.saveSetting(mSetting);
+        settingChange = true;
     }
 
     /**
