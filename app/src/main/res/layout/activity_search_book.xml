@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sys_bg2"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.search.SearchBookActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/title_base"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <EditText
+                android:id="@+id/et_search_key"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_weight="2"
+                android:hint="输入关键词"
+                android:paddingLeft="10dp"
+                android:background="@drawable/search_et_backcolor"/>
+
+            <TextView
+                android:id="@+id/tv_search_conform"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_weight="8"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:text="搜索"
+                android:textColor="@color/white"
+                android:background="@drawable/search_btn_backcolor"/>
+
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_suggest_books_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <GridView
+                android:id="@+id/gv_suggest_book"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scrollbars="none"
+                android:numColumns="auto_fit">
+
+            </GridView>
+
+            <LinearLayout
+                android:id="@+id/ll_refresh_suggest_books"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_refresh_black_24dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="换一批"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"/>
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lv_search_books_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,50 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- 全局使用的大小 -->
+    <dimen name="title_bar_txt_size">20sp</dimen>
+    <dimen name="default_btn_radius">5dp</dimen>
+    <dimen name="view_left_right_padding">28dp</dimen>
+    <dimen name="title_bar_height">40dp</dimen>
+
+    <!-- Login页面 -->
+    <dimen name="login_email_txt_size">18sp</dimen>
+    <dimen name="login_regist_head_icon_size">80dp</dimen>
+    <dimen name="add_friend_txt_size">18sp</dimen>
+    <dimen name="msg_del_offset">70dp</dimen>
+
+    <!-- 文字的大小 -->
+    <dimen name="text_minimum_size">10sp</dimen>
+    <dimen name="text_default_size">12sp</dimen>
+    <dimen name="text_small_size">14sp</dimen>
+    <dimen name="text_normal_size">16sp</dimen>
+    <dimen name="text_medium_size">18sp</dimen>
+    <dimen name="text_large_size">22sp</dimen>
+    <dimen name="default_padding_top">5dp</dimen>
+    <dimen name="default_padding_bottom">5dp</dimen>
+    <dimen name="default_padding_right">15dp</dimen>
+    <dimen name="default_padding_left">15dp</dimen>
+    <dimen name="contact_item_padding_left">5dp</dimen>
+    <dimen name="item_head_icon_size">50dp</dimen>
+    <dimen name="chat_head_icon_size">40dp</dimen>
+    <dimen name="save_btn_height">30dp</dimen>
+
+    <dimen name="me_head_icon_size">75dp</dimen>
+    <dimen name="drop_down_list_header_padding_top">12dp</dimen>
+    <dimen name="drop_down_list_header_padding_bottom">5dp</dimen>
+    <dimen name="drop_down_list_header_release_min_distance">0dp</dimen>
+    <dimen name="drop_down_list_header_progress_bar_height">36dp</dimen>
+
+    <!--  loginActivity-->
+
+    <dimen name="login_logo_top_pad">0dp</dimen>
+    <dimen name="login_weith">250dp</dimen>
+
+
+    <dimen name="tab_home_text_size">16sp</dimen>
+
+
+</resources>

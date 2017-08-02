@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">大钊阅读</string>
+
+    <string name="anti_hijacking_tips_home">大钊阅读切换至后台运行</string>
+    <string name="anti_hijacking_tips">大钊阅读切换至后台运行，当前大钊阅读所有，请注意！</string>
+
+    <string name="sys_file_provider">com.zhao.myreader.fileprovider</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="day">日间</string>
+    <string name="night">夜间</string>
+    <string name="chapter_list">【目录】</string>
+
+    <string name="positive_sort">正序</string>
+    <string name="inverted_sort">倒序</string>
+</resources>

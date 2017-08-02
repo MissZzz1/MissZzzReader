@@ -1,0 +1,7 @@
+int id notification_large_icon1 0x7f030001
+int id notification_large_icon2 0x7f030005
+int id notification_text 0x7f030003
+int id notification_title 0x7f030002
+int id upush_notification1 0x7f030000
+int id upush_notification2 0x7f030004
+int layout upush_notification 0x7f020000
