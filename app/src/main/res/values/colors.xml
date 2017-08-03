@@ -109,6 +109,8 @@
     <color name="sys_dialog_setting_bg">#292c29</color>
     <color name="sys_dialog_setting_line">#393839</color>
     <color name="sys_dialog_setting_word">#636563</color>
+    <color name="sys_dialog_setting_word_red">#e8554d</color>
+    <color name="sys_dialog_setting_word_bright">#d6d7d6</color>
 
 
     <color name="sys_suggest_line">#d6d7d6</color>

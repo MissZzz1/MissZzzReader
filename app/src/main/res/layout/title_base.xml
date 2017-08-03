@@ -18,11 +18,11 @@
             android:paddingLeft="10dp">
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_margin="5dip"
-                android:src="@mipmap/larrow3" />
+                android:src="@mipmap/larrow_black" />
         </LinearLayout>
 
         <TextView
@@ -34,6 +34,7 @@
             android:gravity="center"
             android:singleLine="true"
             android:text="title"
+            android:textColor="@color/black"
             android:textSize="19sp" />
 
     </RelativeLayout>
