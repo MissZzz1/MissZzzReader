@@ -3,7 +3,6 @@ package com.zhao.myreader.ui.search;
 
 import android.os.Bundle;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -14,6 +13,7 @@ import com.zhao.myreader.base.BaseActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import me.gujun.android.taggroup.TagGroup;
 
 public class SearchBookActivity extends BaseActivity {
 
@@ -27,8 +27,7 @@ public class SearchBookActivity extends BaseActivity {
     EditText etSearchKey;
     @InjectView(R.id.tv_search_conform)
     TextView tvSearchConform;
-    @InjectView(R.id.gv_suggest_book)
-    GridView gvSuggestBook;
+
     @InjectView(R.id.ll_refresh_suggest_books)
     LinearLayout llRefreshSuggestBooks;
     @InjectView(R.id.lv_search_books_list)
@@ -37,6 +36,14 @@ public class SearchBookActivity extends BaseActivity {
     LinearLayout llSuggestBooksView;
     @InjectView(R.id.pb_loading)
     ProgressBar pbLoading;
+    @InjectView(R.id.lv_history_list)
+    ListView lvHistoryList;
+    @InjectView(R.id.ll_clear_history)
+    LinearLayout llClearHistory;
+    @InjectView(R.id.ll_history_view)
+    LinearLayout llHistoryView;
+    @InjectView(R.id.tg_suggest_book)
+    TagGroup tgSuggestBook;
 
     private SearchBookPrensenter mSearchBookPrensenter;
 
@@ -48,6 +55,13 @@ public class SearchBookActivity extends BaseActivity {
         setStatusBar(R.color.sys_line);
         mSearchBookPrensenter = new SearchBookPrensenter(this);
         mSearchBookPrensenter.start();
+    }
+
+    @Override
+    public void onBackPressed() {
+       if (!mSearchBookPrensenter.onBackPressed()){
+           super.onBackPressed();
+       }
     }
 
     public LinearLayout getLlTitleBack() {
@@ -70,8 +84,8 @@ public class SearchBookActivity extends BaseActivity {
         return tvSearchConform;
     }
 
-    public GridView getGvSuggestBook() {
-        return gvSuggestBook;
+    public TagGroup getTgSuggestBook() {
+        return tgSuggestBook;
     }
 
     public LinearLayout getLlRefreshSuggestBooks() {
@@ -88,5 +102,17 @@ public class SearchBookActivity extends BaseActivity {
 
     public ProgressBar getPbLoading() {
         return pbLoading;
+    }
+
+    public ListView getLvHistoryList() {
+        return lvHistoryList;
+    }
+
+    public LinearLayout getLlClearHistory() {
+        return llClearHistory;
+    }
+
+    public LinearLayout getLlHistoryView() {
+        return llHistoryView;
     }
 }

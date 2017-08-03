@@ -50,15 +50,17 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'org.jsoup:jsoup:1.10.3'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2'
     //没有使用特殊Header，可以不加这行
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2'
+     //一个开源gif控件
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
-    //一个开源gif控件
+
     compile project(':PushSDK')
+    compile 'me.gujun.android.taggroup:library:1.4@aar'
 }
 
 greendao {
-    schemaVersion 4
+    schemaVersion 6
     daoPackage 'com.zhao.myreader.greendao.gen'
     targetGenDir 'src/main/java'
 }

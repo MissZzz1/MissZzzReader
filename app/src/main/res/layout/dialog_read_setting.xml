@@ -85,9 +85,11 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1"
+
+
                 android:maxHeight="1dp"
                 android:minHeight="1dp"
-                android:progressDrawable="@color/sys_dialog_setting_word"
+                android:progressDrawable="@drawable/seekbar_bg"
                 android:thumb="@mipmap/thumb" />
 
             <TextView

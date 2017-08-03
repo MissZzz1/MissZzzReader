@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.zhao.myreader.greendao.gen.BookDao;
 import com.zhao.myreader.greendao.gen.ChapterDao;
 import com.zhao.myreader.greendao.gen.DaoMaster;
+import com.zhao.myreader.greendao.gen.SearchHistoryDao;
 
 import org.greenrobot.greendao.database.Database;
 

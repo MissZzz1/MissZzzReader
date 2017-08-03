@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context=".ui.search.SearchBookActivity">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,36 +19,32 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:paddingTop="10dp">
 
             <EditText
                 android:id="@+id/et_search_key"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_weight="2"
+                android:background="@drawable/search_et_backcolor"
                 android:hint="输入关键词"
-                android:paddingLeft="10dp"
-                android:background="@drawable/search_et_backcolor"/>
+                android:paddingLeft="10dp" />
 
             <TextView
                 android:id="@+id/tv_search_conform"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_weight="8"
+                android:background="@drawable/search_btn_backcolor"
                 android:gravity="center"
-                android:textSize="18sp"
                 android:text="搜索"
                 android:textColor="@color/white"
-                android:background="@drawable/search_btn_backcolor"/>
-
-
-
-
+                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -56,43 +53,89 @@
             android:id="@+id/ll_suggest_books_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="vertical"
             android:background="@color/white"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <GridView
-                android:id="@+id/gv_suggest_book"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scrollbars="none"
-                android:numColumns="auto_fit">
-
-            </GridView>
+            <me.gujun.android.taggroup.TagGroup
+                android:id="@+id/tg_suggest_book"
+                style="@style/TagGroup"
+                android:layout_marginTop="10dp"
+                app:atg_borderColor="@color/sys_suggest_line"
+                app:atg_horizontalPadding="10dp"
+                app:atg_textColor="@color/black"
+                app:atg_textSize="14sp"
+                app:atg_verticalSpacing="10dp" />
 
             <LinearLayout
                 android:id="@+id/ll_refresh_suggest_books"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_refresh_black_24dp"/>
+                    android:src="@drawable/ic_refresh_black_24dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="换一批"
                     android:textColor="@color/black"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
 
             </LinearLayout>
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_history_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ListView
+                android:id="@+id/lv_history_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:divider="@color/nothing"
+                android:fadingEdge="none"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+            </ListView>
+
+            <LinearLayout
+                android:id="@+id/ll_clear_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/clear" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="清空历史记录"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -100,7 +143,10 @@
         <ListView
             android:id="@+id/lv_search_books_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fadingEdge="none"
+            android:overScrollMode="never"
+            android:scrollbars="none">
 
         </ListView>
 
@@ -111,8 +157,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone"/>
-
+        android:visibility="gone" />
 
 
 </RelativeLayout>

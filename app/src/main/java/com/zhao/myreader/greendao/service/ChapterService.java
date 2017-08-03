@@ -21,6 +21,7 @@ public class ChapterService extends BaseService {
         ArrayList<Chapter> chapters = new ArrayList<>();
         try {
             Cursor cursor = selectBySql(sql, selectionArgs);
+            if (cursor == null) return chapters;
             while (cursor.moveToNext()) {
                 Chapter chapter = new Chapter();
                 chapter.setId(cursor.getString(0));
@@ -33,6 +34,7 @@ public class ChapterService extends BaseService {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return chapters;
         }
         return chapters;
     }
@@ -54,6 +56,9 @@ public class ChapterService extends BaseService {
      * @return
      */
     public List<Chapter> findBookAllChapterByBookId(String bookId) {
+
+        if (StringHelper.isEmpty(bookId)) return new ArrayList<>();
+
 
         String sql = "select * from chapter where book_id = ? order by number";
 
@@ -82,6 +87,7 @@ public class ChapterService extends BaseService {
         try {
             String sql = "select id from chapter where book_id = ? and title = ?";
             Cursor cursor = selectBySql(sql, new String[]{bookId, title});
+            if (cursor == null) return null;
             if (cursor.moveToNext()) {
                 String id = cursor.getString(0);
                 chapter = getChapterById(id);

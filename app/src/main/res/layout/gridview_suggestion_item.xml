@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/suggest_item_bg"
+    android:gravity="center"
+    android:padding="3dp">
+
+    <TextView
+        android:id="@+id/tv_suggestion_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="suggest book"
+        android:textSize="14sp"/>
+
+
+
+
+
+
+</RelativeLayout>

@@ -41,7 +41,7 @@ public class BaseService {
             cursor = daoSession.getDatabase().rawQuery(sql, selectionArgs);
         } catch (Exception e) {
             e.printStackTrace();
-
+            return null;
         }
         return cursor;
     }

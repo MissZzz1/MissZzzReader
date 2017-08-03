@@ -111,5 +111,9 @@
     <color name="sys_dialog_setting_word">#636563</color>
 
 
+    <color name="sys_suggest_line">#d6d7d6</color>
+
+
+
 
 </resources>
