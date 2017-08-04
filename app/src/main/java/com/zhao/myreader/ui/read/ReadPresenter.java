@@ -124,6 +124,7 @@ public class ReadPresenter implements BasePresenter {
             }
         });
         mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
+
         mReadActivity.getLvContent().setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -246,7 +247,7 @@ public class ReadPresenter implements BasePresenter {
                 } else if (pointY > settingOnClickValidTo) {
 
                     mReadActivity.getLvContent().smoothScrollBy(BaseActivity.height, 200);
-                } else if (pointX < settingOnClickValidFrom) {
+                } else if (pointY < settingOnClickValidFrom) {
 
                     mReadActivity.getLvContent().smoothScrollBy(-BaseActivity.height, 200);
                 }
