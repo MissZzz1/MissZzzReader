@@ -414,7 +414,7 @@ public class ReadPresenter implements BasePresenter {
             mReadActivity.getTvChapterSort().setTextColor(mReadActivity.getResources().getColor(mSetting.getReadWordColor()));
         }else {
             mReadActivity.getTvBookList().setTextColor(mReadActivity.getResources().getColor(R.color.sys_night_word));
-            mReadActivity.getTvChapterSort().setTextColor(mReadActivity.getResources().getColor(mSetting.getReadWordColor()));
+            mReadActivity.getTvChapterSort().setTextColor(mReadActivity.getResources().getColor(R.color.sys_night_word));
         }
         if (mSetting.isDayStyle()) {
             mReadActivity.getLlChapterListView().setBackgroundResource(mSetting.getReadBgColor());
