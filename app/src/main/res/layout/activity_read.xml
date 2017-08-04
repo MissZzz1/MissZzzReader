@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:id="@+id/dl_read_activity"
-    android:background="@color/sys_protect_eye_bg"
     tools:context="com.zhao.myreader.ui.read.ReadActivity">
 
     <RelativeLayout
@@ -25,7 +24,8 @@
                 android:divider="@color/nothing"
                 android:overScrollMode="never"
                 android:dividerHeight="30dp"
-                android:fadingEdge="none">
+                android:fadingEdge="none"
+                android:listSelector="@color/nothing">
 
             </ListView>
 
@@ -44,15 +44,12 @@
     </RelativeLayout>
 
 
-
-
     <LinearLayout
         android:id="@+id/ll_chapter_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="start"
-        android:background="@color/sys_protect_eye_bg">
+        android:layout_gravity="start">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -78,7 +75,6 @@
                 android:text="倒序"
                 android:textSize="15sp"
                 android:padding="15dp"
-                android:visibility="gone"
                 android:textColor="@color/sys_protect_eye_word"/>
 
         </LinearLayout>
@@ -92,7 +88,8 @@
             android:scrollbars="none"
             android:divider="@color/nothing"
             android:overScrollMode="never"
-            android:fadingEdge="none">
+            android:fadingEdge="none"
+            android:listSelector="@color/nothing">
 
         </ListView>
 
@@ -100,8 +97,6 @@
 
 
     </LinearLayout>
-
-
 
 
 

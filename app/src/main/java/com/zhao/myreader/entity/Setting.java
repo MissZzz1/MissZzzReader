@@ -1,5 +1,6 @@
 package com.zhao.myreader.entity;
 
+import com.zhao.myreader.enums.Language;
 import com.zhao.myreader.enums.ReadStyle;
 
 import java.io.Serializable;
@@ -18,6 +19,33 @@ public class Setting implements Serializable {
     private ReadStyle readStyle;//阅读模式
 
     private boolean dayStyle;//是否日间模式
+    private int brightProgress;//亮度 1- 100
+    private boolean brightFollowSystem;//亮度跟随系统
+    private Language language;//简繁体
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public boolean isBrightFollowSystem() {
+        return brightFollowSystem;
+    }
+
+    public void setBrightFollowSystem(boolean brightFollowSystem) {
+        this.brightFollowSystem = brightFollowSystem;
+    }
+
+    public void setBrightProgress(int brightProgress) {
+        this.brightProgress = brightProgress;
+    }
+
+    public int getBrightProgress() {
+        return brightProgress;
+    }
 
     public boolean isDayStyle() {
         return dayStyle;

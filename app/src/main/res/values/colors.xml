@@ -103,8 +103,20 @@
     <color name="sys_protect_eye_bg">#ceebce</color>
     <color name="sys_protect_eye_word">#313031</color>
 
+    <color name="sys_common_bg">#f5f4f0</color>
+    <color name="sys_common_word">#313031</color>
+
+    <!--<color name="sys_leather_eye_bg">#ceebce</color>-->
+    <color name="sys_leather_word">#313031</color>
+
+    <color name="sys_blue_deep_bg">#001c29</color>
+    <color name="sys_blue_deep_word">#637079</color>
+
+    <color name="sys_breen_bg">#b5bd9a</color>
+    <color name="sys_breen_word">#313031</color>
+
     <color name="sys_night_bg">#393431</color>
-    <color name="sys_night_work">#94928c</color>
+    <color name="sys_night_word">#94928c</color>
 
     <color name="sys_dialog_setting_bg">#292c29</color>
     <color name="sys_dialog_setting_line">#393839</color>

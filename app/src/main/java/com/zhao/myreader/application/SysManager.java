@@ -3,6 +3,7 @@ package com.zhao.myreader.application;
 import com.zhao.myreader.R;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.entity.Setting;
+import com.zhao.myreader.enums.Language;
 import com.zhao.myreader.enums.ReadStyle;
 import com.zhao.myreader.util.CacheHelper;
 
@@ -50,6 +51,9 @@ public class SysManager {
         setting.setReadStyle(ReadStyle.protectedEye);
         setting.setReadWordSize(20);
         setting.setReadWordColor(R.color.sys_protect_eye_word);
+        setting.setBrightProgress(50);
+        setting.setBrightFollowSystem(true);
+        setting.setLanguage(Language.simplified);
         return setting;
     }
 

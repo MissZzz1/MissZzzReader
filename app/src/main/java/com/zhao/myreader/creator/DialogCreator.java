@@ -1,5 +1,6 @@
 package com.zhao.myreader.creator;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -17,13 +18,208 @@ import android.widget.TextView;
 
 import com.zhao.myreader.R;
 import com.zhao.myreader.application.MyApplication;
+import com.zhao.myreader.application.SysManager;
+import com.zhao.myreader.entity.Setting;
+import com.zhao.myreader.enums.Language;
+import com.zhao.myreader.enums.ReadStyle;
+import com.zhao.myreader.util.BrightUtil;
 import com.zhao.myreader.util.StringHelper;
+
+import butterknife.InjectView;
 
 /**
  * Created by zhao on 2017/1/11.
  */
 
 public class DialogCreator {
+
+    private static ImageView ivLastSelectd = null;
+
+
+    public static Dialog createReadDetailSetting(final Context context, final Setting setting,
+                                                 final OnReadStyleChangeListener onReadStyleChangeListener,
+                                                 final View.OnClickListener reduceSizeListener,
+                                                 final View.OnClickListener increaseSizeListener,
+                                                 final View.OnClickListener languageChangeListener) {
+        final Dialog dialog = new Dialog(context, R.style.jmui_default_dialog_style);
+        final View view = LayoutInflater.from(context).inflate(R.layout.dialog_read_setting_detail, null);
+        dialog.setContentView(view);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        //触摸外部关闭
+        view.findViewById(R.id.ll_bottom_view).setOnClickListener(null);
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                dialog.dismiss();
+                return false;
+            }
+        });
+        //设置全屏
+        Window window = dialog.getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        //阅读背景风格
+        final ImageView ivCommonStyle = (ImageView) view.findViewById(R.id.iv_common_style);
+        final ImageView ivLeatherStyle = (ImageView) view.findViewById(R.id.iv_leather_style);
+        final ImageView ivProtectEyeStyle = (ImageView) view.findViewById(R.id.iv_protect_eye_style);
+        final ImageView ivBreenStyle = (ImageView) view.findViewById(R.id.iv_breen_style);
+        final ImageView ivBlueDeepStyle = (ImageView) view.findViewById(R.id.iv_blue_deep_style);
+        switch (setting.getReadStyle()) {
+            case common:
+                ivCommonStyle.setSelected(true);
+                ivLastSelectd = ivCommonStyle;
+                break;
+            case leather:
+                ivLeatherStyle.setSelected(true);
+                ivLastSelectd = ivLeatherStyle;
+                break;
+            case protectedEye:
+                ivProtectEyeStyle.setSelected(true);
+                ivLastSelectd = ivProtectEyeStyle;
+                break;
+            case breen:
+                ivBreenStyle.setSelected(true);
+                ivLastSelectd = ivBreenStyle;
+                break;
+            case blueDeep:
+                ivBlueDeepStyle.setSelected(true);
+                ivLastSelectd = ivBlueDeepStyle;
+                break;
+        }
+        ivCommonStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedStyle(ivCommonStyle, ReadStyle.common, onReadStyleChangeListener);
+            }
+        });
+        ivLeatherStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedStyle(ivLeatherStyle, ReadStyle.leather, onReadStyleChangeListener);
+            }
+        });
+        ivProtectEyeStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedStyle(ivProtectEyeStyle, ReadStyle.protectedEye, onReadStyleChangeListener);
+            }
+        });
+        ivBlueDeepStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedStyle(ivBlueDeepStyle, ReadStyle.blueDeep, onReadStyleChangeListener);
+            }
+        });
+        ivBreenStyle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedStyle(ivBreenStyle, ReadStyle.breen, onReadStyleChangeListener);
+            }
+        });
+
+        //字体大小
+        TextView tvSizeReduce = (TextView) view.findViewById(R.id.tv_reduce_text_size);
+        TextView tvSizeIncrease = (TextView) view.findViewById(R.id.tv_increase_text_size);
+        final TextView tvSize = (TextView) view.findViewById(R.id.tv_text_size);
+        tvSize.setText(String.valueOf((int) setting.getReadWordSize()));
+        tvSizeReduce.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (setting.getReadWordSize() > 1) {
+                    tvSize.setText(String.valueOf((int) setting.getReadWordSize() - 1));
+                    if (reduceSizeListener != null) {
+                        reduceSizeListener.onClick(v);
+                    }
+                }
+            }
+        });
+        tvSizeIncrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (setting.getReadWordSize() < 30) {
+                    tvSize.setText(String.valueOf((int) setting.getReadWordSize() + 1));
+                    if (increaseSizeListener != null) {
+                        increaseSizeListener.onClick(v);
+                    }
+                }
+            }
+        });
+
+        //亮度调节
+        SeekBar seekBar = (SeekBar) view.findViewById(R.id.sb_brightness_progress);
+        final TextView tvBrightFollowSystem = (TextView) view.findViewById(R.id.tv_system_brightness);
+        seekBar.setProgress(setting.getBrightProgress());
+        tvBrightFollowSystem.setSelected(setting.isBrightFollowSystem());
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                BrightUtil.setBrightness((Activity) context, BrightUtil.progressToBright(progress));
+                tvBrightFollowSystem.setSelected(false);
+                setting.setBrightProgress(progress);
+                setting.setBrightFollowSystem(false);
+                SysManager.saveSetting(setting);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        tvBrightFollowSystem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvBrightFollowSystem.setSelected(!tvBrightFollowSystem.isSelected());
+                if (tvBrightFollowSystem.isSelected()) {
+                    BrightUtil.followSystemBright((Activity) context);
+                    setting.setBrightFollowSystem(true);
+                    SysManager.saveSetting(setting);
+                } else {
+                    BrightUtil.setBrightness((Activity) context, BrightUtil.progressToBright(setting.getBrightProgress()));
+                    setting.setBrightFollowSystem(false);
+                    SysManager.saveSetting(setting);
+                }
+            }
+        });
+        //简繁体
+        final TextView tvSimplifiedAndTraditional = (TextView) view.findViewById(R.id.tv_simplified_and_traditional);
+        if (setting.getLanguage() == Language.simplified) {
+            tvSimplifiedAndTraditional.setText("繁");
+        } else if (setting.getLanguage() == Language.traditional) {
+            tvSimplifiedAndTraditional.setText("简");
+        }
+        tvSimplifiedAndTraditional.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvSimplifiedAndTraditional.getText().toString().equals("简")) {
+                    tvSimplifiedAndTraditional.setText("繁");
+                } else {
+                    tvSimplifiedAndTraditional.setText("简");
+                }
+                if (languageChangeListener != null) {
+                    languageChangeListener.onClick(v);
+                }
+            }
+        });
+
+        dialog.show();
+        return dialog;
+    }
+
+    private static void selectedStyle(ImageView curSelected, ReadStyle readStyle, OnReadStyleChangeListener listener) {
+        ivLastSelectd.setSelected(false);
+        ivLastSelectd = curSelected;
+        curSelected.setSelected(true);
+        if (listener != null) {
+            listener.onChange(readStyle);
+        }
+    }
 
 
     /**
@@ -53,7 +249,7 @@ public class DialogCreator {
         dialog.setContentView(view);
         LinearLayout llBack = (LinearLayout) view.findViewById(R.id.ll_title_back);
         TextView tvLastChapter = (TextView) view.findViewById(R.id.tv_last_chapter);
-        TextView tvNextChapter = (TextView)view.findViewById(R.id.tv_next_chapter);
+        TextView tvNextChapter = (TextView) view.findViewById(R.id.tv_next_chapter);
         SeekBar sbChapterProgress = (SeekBar) view.findViewById(R.id.sb_read_chapter_progress);
         LinearLayout llChapterList = (LinearLayout) view.findViewById(R.id.ll_chapter_list);
         LinearLayout llNightAndDay = (LinearLayout) view.findViewById(R.id.ll_night_and_day);
@@ -100,14 +296,11 @@ public class DialogCreator {
                     ivNightAndDay.setImageResource(R.mipmap.z4);
                     tvNightAndDay.setText(context.getString(R.string.day));
                 }
-
                 if (onClickNightAndDayListener != null) {
                     onClickNightAndDayListener.onClick(dialog, view, isDay);
                 }
             }
         });
-
-
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
@@ -332,6 +525,14 @@ public class DialogCreator {
 
     public interface OnClickNightAndDayListener {
         void onClick(Dialog dialog, View view, boolean isDayStyle);
+    }
+
+    public interface OnReadStyleChangeListener {
+        void onChange(ReadStyle readStyle);
+    }
+
+    public interface OnBrightFollowSystemChangeListener {
+        void onChange(boolean isFollowSystem);
     }
 
 

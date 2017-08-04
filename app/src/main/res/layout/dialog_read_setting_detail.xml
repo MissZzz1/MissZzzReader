@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical" >
+    android:fitsSystemWindows="true"
+    android:layout_gravity="center_vertical">
 
 
 
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/sys_dialog_setting_bg"
         android:orientation="vertical"
+        android:padding="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
 
@@ -48,7 +50,6 @@
             <TextView
                 android:id="@+id/tv_system_brightness"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="7dp"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:gravity="center"
@@ -68,7 +69,7 @@
 
             <TextView
                 android:id="@+id/tv_reduce_text_size"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:background="@drawable/setting_btn_bg2"
@@ -80,14 +81,14 @@
                 android:id="@+id/tv_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="70"
+                android:text="20"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:textColor="@color/sys_dialog_setting_word_bright"/>
 
             <TextView
                 android:id="@+id/tv_increase_text_size"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:layout_weight="1"
@@ -108,10 +109,8 @@
                 android:text="繁"/>
 
             <TextView
-
                 android:id="@+id/tv_text_font"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="6dp"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:gravity="center"
@@ -127,8 +126,86 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:padding="10dp"
+            android:gravity="center|left">
 
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_common_style"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/setting_common_style_btn_bg"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_leather_style"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/setting_leather_style_btn_bg"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_protect_eye_style"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/setting_protect_eye_style_btn_bg"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_breen_style"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/setting_breen_style_btn_bg"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/iv_blue_deep_style"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/setting_blue_deep_style_btn_bg"/>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/tv_more_text_bg"
+                android:layout_marginLeft="10dp"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:src="@mipmap/add"
+                android:background="@drawable/setting_btn_bg"
+                android:textColor="@drawable/setting_btn_bg_color"/>
 
         </LinearLayout>
 

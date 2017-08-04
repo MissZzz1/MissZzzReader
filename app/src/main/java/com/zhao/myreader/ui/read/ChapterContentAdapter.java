@@ -12,10 +12,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.spreada.utils.chinese.ZHConverter;
 import com.zhao.myreader.R;
+import com.zhao.myreader.application.SysManager;
 import com.zhao.myreader.callback.ResultCallback;
+import com.zhao.myreader.entity.Setting;
+import com.zhao.myreader.enums.Language;
 import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.service.ChapterService;
+import com.zhao.myreader.util.ChschtUtil;
 import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.webapi.CommonApi;
 
@@ -28,16 +33,16 @@ import java.util.ArrayList;
 public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
 
     private int mResourceId;
-    private float mTextSize = 0;
-    private int mTextColor = 0;
-    private int mBgColor = 0;
+
     private ListView mListView;
     private ChapterService mChapterService;
+    private Setting mSetting;
 
     public ChapterContentAdapter(Context context, int resourceId, ArrayList<Chapter> datas) {
         super(context, resourceId, datas);
         mResourceId = resourceId;
         mChapterService = new ChapterService();
+        mSetting = SysManager.getSetting();
     }
 
     private Handler mHandler = new Handler() {
@@ -52,16 +57,12 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         }
     };
 
-    public void setmBgColor(int mBgColor) {
-        this.mBgColor = mBgColor;
-    }
 
-    public void setmTextColor(int mTextColor) {
-        this.mTextColor = mTextColor;
-    }
 
-    public void setmTextSize(int mTextSize) {
-        this.mTextSize = mTextSize;
+    @Override
+    public void notifyDataSetChanged() {
+        mSetting = SysManager.getSetting();
+        super.notifyDataSetChanged();
     }
 
     @NonNull
@@ -86,18 +87,26 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
     private void initView(final int postion, final ViewHolder viewHolder, View view) {
         final Chapter chapter = getItem(postion);
         viewHolder.tvErrorTips.setVisibility(View.GONE);
-        viewHolder.tvTitle.setText("【" + chapter.getTitle() + "】");
-        if (mTextColor != 0) {
-            viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(mTextColor));
-            viewHolder.tvContent.setTextColor(getContext().getResources().getColor(mTextColor));
+        if (mSetting.getLanguage() == Language.traditional){
+            viewHolder.tvTitle.setText("【" + ZHConverter.convert(chapter.getTitle(),ZHConverter.TRADITIONAL) + "】");
+        }else {
+            viewHolder.tvTitle.setText("【" + chapter.getTitle() + "】");
         }
-        if (mTextSize != 0) {
-            viewHolder.tvTitle.setTextSize(mTextSize);
-            viewHolder.tvContent.setTextSize(mTextSize);
+
+
+        if (mSetting.isDayStyle()) {
+            viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(mSetting.getReadWordColor()));
+            viewHolder.tvContent.setTextColor(getContext().getResources().getColor(mSetting.getReadWordColor()));
+        }else {
+            viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(R.color.sys_night_word));
+            viewHolder.tvContent.setTextColor(getContext().getResources().getColor(R.color.sys_night_word));
         }
-        if (mBgColor != 0) {
-            view.setBackgroundColor(getContext().getResources().getColor(mBgColor));
-        }
+
+
+        viewHolder.tvTitle.setTextSize(mSetting.getReadWordSize());
+        viewHolder.tvContent.setTextSize(mSetting.getReadWordSize());
+
+
         viewHolder.tvErrorTips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +116,12 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         if (StringHelper.isEmpty(chapter.getContent())) {
             getChapterContent(chapter, viewHolder);
         } else {
-            viewHolder.tvContent.setText(chapter.getContent());
+            if (mSetting.getLanguage() == Language.traditional){
+                viewHolder.tvContent.setText(ZHConverter.convert(chapter.getContent(),ZHConverter.TRADITIONAL));
+            }else {
+                viewHolder.tvContent.setText(chapter.getContent());
+            }
+
         }
 
         preLoading(postion);
@@ -127,16 +141,21 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         if (viewHolder != null) {
             viewHolder.tvErrorTips.setVisibility(View.GONE);
         }
-        Chapter cacheChapter = mChapterService.findChapterByBookIdAndTitle(chapter.getBookId(),chapter.getTitle());
+        Chapter cacheChapter = mChapterService.findChapterByBookIdAndTitle(chapter.getBookId(), chapter.getTitle());
 
-        if (cacheChapter != null && !StringHelper.isEmpty(cacheChapter.getContent())){
+        if (cacheChapter != null && !StringHelper.isEmpty(cacheChapter.getContent())) {
             chapter.setContent(cacheChapter.getContent());
             chapter.setId(cacheChapter.getId());
             if (viewHolder != null) {
-                viewHolder.tvContent.setText(chapter.getContent());
+                if (mSetting.getLanguage() == Language.traditional){
+                    viewHolder.tvContent.setText(ZHConverter.convert(chapter.getTitle(),ZHConverter.TRADITIONAL));
+                }else {
+                    viewHolder.tvContent.setText(chapter.getContent());
+                }
+
                 viewHolder.tvErrorTips.setVisibility(View.GONE);
             }
-        }else {
+        } else {
             CommonApi.getChapterContent(chapter.getUrl(), new ResultCallback() {
                 @Override
                 public void onFinish(final Object o, int code) {
@@ -146,7 +165,11 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                viewHolder.tvContent.setText((String) o);
+                                if (mSetting.getLanguage() == Language.traditional){
+                                    viewHolder.tvContent.setText(ZHConverter.convert((String) o,ZHConverter.TRADITIONAL));
+                                }else {
+                                    viewHolder.tvContent.setText((String) o);
+                                }
                                 viewHolder.tvErrorTips.setVisibility(View.GONE);
                             }
                         });

@@ -30,9 +30,13 @@ public class APPCONST {
     public static final String BOOK = "book";
 
 
+    public static final int[] READ_STYLE_NIGHT = {R.color.sys_night_word, R.color.sys_night_bg};//黑夜
+    public static final int[] READ_STYLE_PROTECTED_EYE = {R.color.sys_protect_eye_word, R.color.sys_protect_eye_bg};//护眼
+    public static final int[] READ_STYLE_COMMON = {R.color.sys_common_word, R.color.sys_common_bg};//普通
+    public static final int[] READ_STYLE_BLUE_DEEP = {R.color.sys_blue_deep_word, R.color.sys_blue_deep_bg};//深蓝
+    public static final int[] READ_STYLE_LEATHER = {R.color.sys_leather_word, R.mipmap.theme_leather_bg};//羊皮纸
+    public static final int[] READ_STYLE_BREEN_EYE = {R.color.sys_breen_word, R.color.sys_breen_bg};//棕绿色
 
-    public static final int[] READ_STYLE_PROTECTED_EYE = {R.color.sys_protect_eye_word, R.color.sys_protect_eye_bg};
-    public static final int[] READ_STYLE_NIGHT = {R.color.sys_night_work, R.color.sys_night_bg};
 
     public static final String FILE_NAME_SETTING = "setting";
     public static final String FILE_NAME_UPDATE_INFO = "updateInfo";

@@ -24,6 +24,7 @@ public class ChapterTitleAdapter extends ArrayAdapter<Chapter> {
 
     private int mResourceId;
     private Setting setting;
+    private int curChapterPosition = -1;
 
     public ChapterTitleAdapter(Context context, int resourceId, ArrayList<Chapter> datas){
         super(context,resourceId,datas);
@@ -56,14 +57,21 @@ public class ChapterTitleAdapter extends ArrayAdapter<Chapter> {
     private void initView(int postion,final ViewHolder viewHolder){
         final  Chapter chapter = getItem(postion);
         viewHolder.tvTitle.setText("【" + chapter.getTitle() + "】");
-        viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(setting.getReadWordColor()));
+        if (setting.isDayStyle()) {
+            viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(setting.getReadWordColor()));
+        }else {
+            viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(R.color.sys_night_word));
+        }
+
+        if (postion == curChapterPosition){
+            viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(R.color.sys_dialog_setting_word_red));
+        }
 
     }
 
-
-
-
-
+    public void setCurChapterPosition(int curChapterPosition) {
+        this.curChapterPosition = curChapterPosition;
+    }
 
     class ViewHolder{
 
