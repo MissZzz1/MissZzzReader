@@ -246,7 +246,7 @@ public class ReadPresenter implements BasePresenter {
                 } else if (pointY > settingOnClickValidTo) {
 
                     mReadActivity.getLvContent().smoothScrollBy(BaseActivity.height, 200);
-                } else if (pointX > settingOnClickValidFrom) {
+                } else if (pointX < settingOnClickValidFrom) {
 
                     mReadActivity.getLvContent().smoothScrollBy(-BaseActivity.height, 200);
                 }
