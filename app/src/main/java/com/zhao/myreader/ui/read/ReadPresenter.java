@@ -1,7 +1,9 @@
 package com.zhao.myreader.ui.read;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.ViewDragHelper;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.SeekBar;
 
@@ -26,12 +29,14 @@ import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.creator.DialogCreator;
 import com.zhao.myreader.entity.Setting;
+import com.zhao.myreader.enums.Font;
 import com.zhao.myreader.enums.Language;
 import com.zhao.myreader.enums.ReadStyle;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.service.BookService;
 import com.zhao.myreader.greendao.service.ChapterService;
+import com.zhao.myreader.ui.font.FontsActivity;
 import com.zhao.myreader.util.BrightUtil;
 import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.util.TextHelper;
@@ -40,6 +45,8 @@ import com.zhao.myreader.webapi.CommonApi;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by zhao on 2017/7/27.
@@ -61,6 +68,8 @@ public class ReadPresenter implements BasePresenter {
 
     private float pointX;
     private float pointY;
+    private float scrolledX;
+    private float scrolledY;
 
     private float settingOnClickValidFrom;
     private float settingOnClickValidTo;
@@ -108,8 +117,8 @@ public class ReadPresenter implements BasePresenter {
         } else {
             mReadActivity.getDlReadActivity().setBackgroundResource(R.color.sys_night_bg);
         }
-        if (!mSetting.isBrightFollowSystem()){
-            BrightUtil.setBrightness(mReadActivity,mSetting.getBrightProgress());
+        if (!mSetting.isBrightFollowSystem()) {
+            BrightUtil.setBrightness(mReadActivity, mSetting.getBrightProgress());
         }
         mBook = (Book) mReadActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
         settingOnClickValidFrom = BaseActivity.height / 4;
@@ -170,9 +179,8 @@ public class ReadPresenter implements BasePresenter {
                     }, new DialogCreator.OnClickNightAndDayListener() {
                         @Override
                         public void onClick(Dialog dialog, View view, boolean isDayStyle) {//日夜切换
+
                             changeNightAndDaySetting(isDayStyle);
-
-
                         }
                     }, new View.OnClickListener() {
                         @Override
@@ -197,14 +205,20 @@ public class ReadPresenter implements BasePresenter {
                                     }, new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            if (mSetting.getLanguage() == Language.simplified){
+                                            if (mSetting.getLanguage() == Language.simplified) {
                                                 mSetting.setLanguage(Language.traditional);
-                                            }else {
+                                            } else {
                                                 mSetting.setLanguage(Language.simplified);
                                             }
                                             SysManager.saveSetting(mSetting);
                                             settingChange = true;
                                             init();
+                                        }
+                                    }, new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(mReadActivity, FontsActivity.class);
+                                            mReadActivity.startActivityForResult(intent, APPCONST.REQUEST_FONT);
                                         }
                                     });
 
@@ -219,6 +233,7 @@ public class ReadPresenter implements BasePresenter {
                                 public void onFinish(Object o, int code) {
                                     mChapters.get(chapterNum).setContent((String) o);
                                     mChapterService.saveOrUpdateChapter(mChapters.get(chapterNum));
+                                    mBook.setHisttoryChapterNum(chapterNum);
                                     mHandler.sendMessage(mHandler.obtainMessage(1));
                                 }
 
@@ -244,125 +259,112 @@ public class ReadPresenter implements BasePresenter {
                 } else if (pointY > settingOnClickValidTo) {
 
                     mReadActivity.getLvContent().scrollListBy(BaseActivity.height);
-                }else if (pointY < settingOnClickValidFrom){
+                } else if (pointY < settingOnClickValidFrom) {
 
                     mReadActivity.getLvContent().scrollListBy(-BaseActivity.height);
                 }
             }
         });
-        mReadActivity.getLvChapterList(). setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                        //关闭侧滑菜单
-                        mReadActivity.getDlReadActivity().closeDrawer(GravityCompat.START);
-                       final int position;
-                        if (curSortflag == 0){
-                            position = i;
-                        }else {
-                            position = mChapters.size() - 1 - i;
-                        }
-                        mBook.setHisttoryChapterNum(position);
+        mReadActivity.getLvChapterList().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                //关闭侧滑菜单
+                mReadActivity.getDlReadActivity().closeDrawer(GravityCompat.START);
+                final int position;
+                if (curSortflag == 0) {
+                    position = i;
+                } else {
+                    position = mChapters.size() - 1 - i;
+                }
+                mBook.setHisttoryChapterNum(position);
 
-                        if (StringHelper.isEmpty(mChapters.get(position).getContent())) {
-                            mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
-                            CommonApi.getChapterContent(mChapters.get(position).getUrl(), new ResultCallback() {
-                                @Override
-                                public void onFinish(Object o, int code) {
-                                    mChapters.get(position).setContent((String) o);
-                                    mHandler.sendMessage(mHandler.obtainMessage(3, position, 0));
-                                }
-
-                                @Override
-                                public void onError(Exception e) {
-
-                                }
-                            });
-                        } else {
-                            mReadActivity.getLvContent().setSelection(position);
+                if (StringHelper.isEmpty(mChapters.get(position).getContent())) {
+                    mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
+                    CommonApi.getChapterContent(mChapters.get(position).getUrl(), new ResultCallback() {
+                        @Override
+                        public void onFinish(Object o, int code) {
+                            mChapters.get(position).setContent((String) o);
+                            mHandler.sendMessage(mHandler.obtainMessage(3, position, 0));
                         }
 
-                    }
-                });
+                        @Override
+                        public void onError(Exception e) {
+
+                        }
+                    });
+                } else {
+                    mReadActivity.getLvContent().setSelection(position);
+                }
+
+            }
+        });
 
         mReadActivity.getTvChapterSort().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (curSortflag == 0) {//当前正序
-                            mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.positive_sort));
-                            curSortflag = 1;
-                            changeChapterSort();
-                        } else {//当前倒序
-                            mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.inverted_sort));
-                            curSortflag = 0;
-                            changeChapterSort();
-                        }
-                    }
-                });
+            @Override
+            public void onClick(View view) {
+                if (curSortflag == 0) {//当前正序
+                    mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.positive_sort));
+                    curSortflag = 1;
+                    changeChapterSort();
+                } else {//当前倒序
+                    mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.inverted_sort));
+                    curSortflag = 0;
+                    changeChapterSort();
+                }
+            }
+        });
 
         mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
-        setDrawerLeftEdgeSize(mReadActivity,mReadActivity.getDlReadActivity(),0);
+        //关闭手势滑动
+        mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mReadActivity.getDlReadActivity().addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                //打开手势滑动
+                mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                //关闭手势滑动
+                mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
         getData();
     }
 
     /**
-     * 缩小字体
+     * 字体结果回调
+     * @param requestCode
+     * @param resultCode
+     * @param data
      */
-    private void reduceTextSize(){
-       if (mSetting.getReadWordSize() > 1){
-           mSetting.setReadWordSize(mSetting.getReadWordSize() - 1);
-           SysManager.saveSetting(mSetting);
-           settingChange = true;
-           initContent();
-       }
-    }
-
-    /**
-     * 增大字体
-     */
-    private void increaseTextSize(){
-        if (mSetting.getReadWordSize() < 30){
-            mSetting.setReadWordSize(mSetting.getReadWordSize() + 1);
-            SysManager.saveSetting(mSetting);
-            settingChange = true;
-            initContent();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case APPCONST.REQUEST_FONT:
+                if (resultCode == RESULT_OK){
+                    mSetting.setFont((Font) data.getSerializableExtra(APPCONST.FONT));
+                    settingChange = true;
+                    initContent();
+                }
+                break;
         }
     }
 
-    /**
-     * 改变阅读风格
-     *
-     * @param readStyle
-     */
-    private void changeStyle(ReadStyle readStyle) {
-        settingChange = true;
-        if (!mSetting.isDayStyle()) mSetting.setDayStyle(true);
-        mSetting.setReadStyle(readStyle);
-        switch (readStyle) {
-            case common:
-                mSetting.setReadBgColor(R.color.sys_common_bg);
-                mSetting.setReadWordColor(R.color.sys_common_word);
-                break;
-            case leather:
-                mSetting.setReadBgColor(R.mipmap.theme_leather_bg);
-                mSetting.setReadWordColor(R.color.sys_leather_word);
-                break;
-            case protectedEye:
-                mSetting.setReadBgColor(R.color.sys_protect_eye_bg);
-                mSetting.setReadWordColor(R.color.sys_protect_eye_word);
-                break;
-            case breen:
-                mSetting.setReadBgColor(R.color.sys_breen_bg);
-                mSetting.setReadWordColor(R.color.sys_breen_word);
-                break;
-            case blueDeep:
-                mSetting.setReadBgColor(R.color.sys_blue_deep_bg);
-                mSetting.setReadWordColor(R.color.sys_blue_deep_word);
-                break;
-        }
-        SysManager.saveSetting(mSetting);
-        init();
-    }
 
+    /**
+     * 初始化
+     */
     private void init() {
         initContent();
         initChapterTitleList();
@@ -378,7 +380,7 @@ public class ReadPresenter implements BasePresenter {
             mReadActivity.getDlReadActivity().setBackgroundResource(R.color.sys_night_bg);
         }
         if (mChapterContentAdapter == null) {
-            mChapterContentAdapter = new ChapterContentAdapter(mReadActivity, R.layout.listview_chapter_content_item, mChapters,mBook);
+            mChapterContentAdapter = new ChapterContentAdapter(mReadActivity, R.layout.listview_chapter_content_item, mChapters, mBook);
             mReadActivity.getLvContent().setAdapter(mChapterContentAdapter);
         } else {
             mChapterContentAdapter.notifyDataSetChanged();
@@ -392,7 +394,10 @@ public class ReadPresenter implements BasePresenter {
         mReadActivity.getSrlContent().finishLoadmore();
     }
 
-    private void changeChapterSort(){
+    /**
+     * 改变章节列表排序（正倒序）
+     */
+    private void changeChapterSort() {
         //设置布局管理器
         if (curSortflag == 0) {
             mChapterTitleAdapter = new ChapterTitleAdapter(mReadActivity, R.layout.listview_chapter_title_item, mChapters);
@@ -410,7 +415,7 @@ public class ReadPresenter implements BasePresenter {
         if (mSetting.isDayStyle()) {
             mReadActivity.getTvBookList().setTextColor(mReadActivity.getResources().getColor(mSetting.getReadWordColor()));
             mReadActivity.getTvChapterSort().setTextColor(mReadActivity.getResources().getColor(mSetting.getReadWordColor()));
-        }else {
+        } else {
             mReadActivity.getTvBookList().setTextColor(mReadActivity.getResources().getColor(R.color.sys_night_word));
             mReadActivity.getTvChapterSort().setTextColor(mReadActivity.getResources().getColor(R.color.sys_night_word));
         }
@@ -419,21 +424,21 @@ public class ReadPresenter implements BasePresenter {
         } else {
             mReadActivity.getLlChapterListView().setBackgroundResource(R.color.sys_night_bg);
         }
-        int selectedPostion,curChapterPosition;
+        int selectedPostion, curChapterPosition;
 
         //设置布局管理器
         if (curSortflag == 0) {
             mChapterTitleAdapter = new ChapterTitleAdapter(mReadActivity, R.layout.listview_chapter_title_item, mChapters);
             curChapterPosition = mReadActivity.getLvContent().getLastVisiblePosition();
             selectedPostion = curChapterPosition - 5;
-            if (selectedPostion < 0)  selectedPostion = 0;
+            if (selectedPostion < 0) selectedPostion = 0;
             if (mChapters.size() - 1 - curChapterPosition < 5) selectedPostion = mChapters.size();
             mChapterTitleAdapter.setCurChapterPosition(curChapterPosition);
         } else {
             mChapterTitleAdapter = new ChapterTitleAdapter(mReadActivity, R.layout.listview_chapter_title_item, mInvertedOrderChapters);
             curChapterPosition = mChapters.size() - 1 - mReadActivity.getLvContent().getLastVisiblePosition();
             selectedPostion = curChapterPosition - 5;
-            if (selectedPostion < 0)  selectedPostion = 0;
+            if (selectedPostion < 0) selectedPostion = 0;
             if (mChapters.size() - 1 - curChapterPosition < 5) selectedPostion = mChapters.size();
             mChapterTitleAdapter.setCurChapterPosition(curChapterPosition);
         }
@@ -517,6 +522,11 @@ public class ReadPresenter implements BasePresenter {
 
     }
 
+    /**
+     * 获取章节内容
+     * @param chapter
+     * @param resultCallback
+     */
     private void getChapterContent(final Chapter chapter, ResultCallback resultCallback) {
 
         if (!StringHelper.isEmpty(chapter.getContent())) {
@@ -559,47 +569,63 @@ public class ReadPresenter implements BasePresenter {
         init();
     }
 
-
-
-
-    private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
-//        mToolbar.setBackgroundResource(colorPrimary);
-        mReadActivity.getSrlContent().setPrimaryColorsId(colorPrimary, android.R.color.white);
-        if (Build.VERSION.SDK_INT >= 21) {
-            mReadActivity.getWindow().setStatusBarColor(ContextCompat.getColor(mReadActivity, colorPrimaryDark));
+    /**
+     * 缩小字体
+     */
+    private void reduceTextSize() {
+        if (mSetting.getReadWordSize() > 1) {
+            mSetting.setReadWordSize(mSetting.getReadWordSize() - 1);
+            SysManager.saveSetting(mSetting);
+            settingChange = true;
+            initContent();
         }
     }
 
     /**
-     * 设置DrawerLayout滑动范围
-     *
-     * @param activity
-     * @param drawerLayout
-     * @param displayWidthPercentage 1 全屏滑动
+     * 增大字体
      */
-    private void setDrawerLeftEdgeSize(Activity activity, DrawerLayout drawerLayout, float displayWidthPercentage) {
-        if (activity == null || drawerLayout == null) return;
-        try {
-            // 找到 ViewDragHelper 并设置 Accessible 为true
-            Field leftDraggerField =
-                    drawerLayout.getClass().getDeclaredField("mLeftDragger");//Right
-            leftDraggerField.setAccessible(true);
-            ViewDragHelper leftDragger = (ViewDragHelper) leftDraggerField.get(drawerLayout);
-
-            // 找到 edgeSizeField 并设置 Accessible 为true
-            Field edgeSizeField = leftDragger.getClass().getDeclaredField("mEdgeSize");
-            edgeSizeField.setAccessible(true);
-            int edgeSize = edgeSizeField.getInt(leftDragger);
-
-            // 设置新的边缘大小
-            Point displaySize = new Point();
-            activity.getWindowManager().getDefaultDisplay().getSize(displaySize);
-            edgeSizeField.setInt(leftDragger, Math.max(edgeSize, (int) (displaySize.x *
-                    displayWidthPercentage)));
-        } catch (NoSuchFieldException e) {
-        } catch (IllegalArgumentException e) {
-        } catch (IllegalAccessException e) {
+    private void increaseTextSize() {
+        if (mSetting.getReadWordSize() < 40) {
+            mSetting.setReadWordSize(mSetting.getReadWordSize() + 1);
+            SysManager.saveSetting(mSetting);
+            settingChange = true;
+            initContent();
         }
+    }
+
+    /**
+     * 改变阅读风格
+     *
+     * @param readStyle
+     */
+    private void changeStyle(ReadStyle readStyle) {
+        settingChange = true;
+        if (!mSetting.isDayStyle()) mSetting.setDayStyle(true);
+        mSetting.setReadStyle(readStyle);
+        switch (readStyle) {
+            case common:
+                mSetting.setReadBgColor(R.color.sys_common_bg);
+                mSetting.setReadWordColor(R.color.sys_common_word);
+                break;
+            case leather:
+                mSetting.setReadBgColor(R.mipmap.theme_leather_bg);
+                mSetting.setReadWordColor(R.color.sys_leather_word);
+                break;
+            case protectedEye:
+                mSetting.setReadBgColor(R.color.sys_protect_eye_bg);
+                mSetting.setReadWordColor(R.color.sys_protect_eye_word);
+                break;
+            case breen:
+                mSetting.setReadBgColor(R.color.sys_breen_bg);
+                mSetting.setReadWordColor(R.color.sys_breen_word);
+                break;
+            case blueDeep:
+                mSetting.setReadBgColor(R.color.sys_blue_deep_bg);
+                mSetting.setReadWordColor(R.color.sys_blue_deep_word);
+                break;
+        }
+        SysManager.saveSetting(mSetting);
+        init();
     }
 
 

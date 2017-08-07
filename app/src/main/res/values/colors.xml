@@ -128,6 +128,11 @@
     <color name="sys_suggest_line">#d6d7d6</color>
 
 
+    <color name="sys_font_example_word">#9b9a9c</color>
+    <color name="sys_font_example_bg">#adaaad</color>
+
+    <color name="sys_font_using_btn">#9c9a9c</color>
+    <color name="sys_font_use_btn">#31cf4a</color>
 
 
 </resources>

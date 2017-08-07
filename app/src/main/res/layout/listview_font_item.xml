@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="10dp">
+
+        <TextView
+            android:id="@+id/tv_font_example"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/font_example_bg"
+            android:gravity="center"
+            android:text="@string/font_example"
+            android:textSize="40sp" />
+
+
+        <TextView
+            android:id="@+id/tv_font_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:textColor="#313031"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_font_use"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:background="@drawable/font_use_btn_bg"
+            android:text="@string/font_use"
+            android:textColor="@color/sys_font_use_btn"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

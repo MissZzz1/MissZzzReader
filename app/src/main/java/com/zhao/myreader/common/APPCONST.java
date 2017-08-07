@@ -28,6 +28,7 @@ public class APPCONST {
     public static final int exitConfirmTime = 2000;
 
     public static final String BOOK = "book";
+    public static final String FONT = "font";
 
 
     public static final int[] READ_STYLE_NIGHT = {R.color.sys_night_word, R.color.sys_night_bg};//黑夜
@@ -40,6 +41,8 @@ public class APPCONST {
 
     public static final String FILE_NAME_SETTING = "setting";
     public static final String FILE_NAME_UPDATE_INFO = "updateInfo";
+
+    public static final int REQUEST_FONT = 1001;
 
 
 

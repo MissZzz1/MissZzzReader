@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -36,11 +37,23 @@ public class DialogCreator {
     private static ImageView ivLastSelectd = null;
 
 
+    /**
+     * 阅读详细设置对话框
+     * @param context
+     * @param setting
+     * @param onReadStyleChangeListener
+     * @param reduceSizeListener
+     * @param increaseSizeListener
+     * @param languageChangeListener
+     * @param onFontClickListener
+     * @return
+     */
     public static Dialog createReadDetailSetting(final Context context, final Setting setting,
                                                  final OnReadStyleChangeListener onReadStyleChangeListener,
                                                  final View.OnClickListener reduceSizeListener,
                                                  final View.OnClickListener increaseSizeListener,
-                                                 final View.OnClickListener languageChangeListener) {
+                                                 final View.OnClickListener languageChangeListener,
+                                                 final View.OnClickListener onFontClickListener) {
         final Dialog dialog = new Dialog(context, R.style.jmui_default_dialog_style);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_read_setting_detail, null);
         dialog.setContentView(view);
@@ -137,7 +150,7 @@ public class DialogCreator {
         tvSizeIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (setting.getReadWordSize() < 30) {
+                if (setting.getReadWordSize() < 40) {
                     tvSize.setText(String.valueOf((int) setting.getReadWordSize() + 1));
                     if (increaseSizeListener != null) {
                         increaseSizeListener.onClick(v);
@@ -208,6 +221,10 @@ public class DialogCreator {
             }
         });
 
+        //选择字体
+        TextView tvFont = (TextView)view.findViewById(R.id.tv_text_font);
+        tvFont.setOnClickListener(onFontClickListener);
+
         dialog.show();
         return dialog;
     }
@@ -262,7 +279,9 @@ public class DialogCreator {
 
         Window window = dialog.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(dialog.getContext().getResources().getColor(R.color.sys_dialog_setting_bg));
+        if (Build.VERSION.SDK_INT >= 21) {
+            window.setStatusBarColor(dialog.getContext().getResources().getColor(R.color.sys_dialog_setting_bg));
+        }
 
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override

@@ -1,5 +1,6 @@
 package com.zhao.myreader.entity;
 
+import com.zhao.myreader.enums.Font;
 import com.zhao.myreader.enums.Language;
 import com.zhao.myreader.enums.ReadStyle;
 
@@ -22,6 +23,15 @@ public class Setting implements Serializable {
     private int brightProgress;//亮度 1- 100
     private boolean brightFollowSystem;//亮度跟随系统
     private Language language;//简繁体
+    private Font font;//字体
+
+    public Font getFont() {
+        return font;
+    }
+
+    public void setFont(Font font) {
+        this.font = font;
+    }
 
     public Language getLanguage() {
         return language;

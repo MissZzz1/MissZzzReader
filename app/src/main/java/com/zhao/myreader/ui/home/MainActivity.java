@@ -42,7 +42,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed(){
-
         if(System.currentTimeMillis()  - APPCONST.exitTime > APPCONST.exitConfirmTime){
             TextHelper.showText("再按一次退出");
             APPCONST.exitTime = System.currentTimeMillis();

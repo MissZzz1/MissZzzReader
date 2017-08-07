@@ -3,6 +3,7 @@ package com.zhao.myreader.application;
 import com.zhao.myreader.R;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.entity.Setting;
+import com.zhao.myreader.enums.Font;
 import com.zhao.myreader.enums.Language;
 import com.zhao.myreader.enums.ReadStyle;
 import com.zhao.myreader.util.CacheHelper;
@@ -54,6 +55,7 @@ public class SysManager {
         setting.setBrightProgress(50);
         setting.setBrightFollowSystem(true);
         setting.setLanguage(Language.simplified);
+        setting.setFont(Font.默认字体);
         return setting;
     }
 

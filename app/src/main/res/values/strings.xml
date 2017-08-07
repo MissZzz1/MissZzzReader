@@ -15,4 +15,11 @@
 
     <string name="positive_sort">正序</string>
     <string name="inverted_sort">倒序</string>
+
+
+    <string name="font_using">正在使用</string>
+    <string name="font_example">钊</string>
+    <string name="font_use">立即使用</string>
+
+    <string name="font">字体</string>
 </resources>
