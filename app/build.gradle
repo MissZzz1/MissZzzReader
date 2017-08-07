@@ -39,9 +39,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    //没有使用特殊Header，可以不加这行
-    //一个开源gif控件
-
 
     compile project(':PushSDK')
     compile 'com.android.support:appcompat-v7:25.3.1'
