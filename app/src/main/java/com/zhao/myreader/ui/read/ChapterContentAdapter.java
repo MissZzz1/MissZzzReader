@@ -18,7 +18,9 @@ import com.zhao.myreader.application.SysManager;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.entity.Setting;
 import com.zhao.myreader.enums.Language;
+import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.Chapter;
+import com.zhao.myreader.greendao.service.BookService;
 import com.zhao.myreader.greendao.service.ChapterService;
 import com.zhao.myreader.util.ChschtUtil;
 import com.zhao.myreader.util.StringHelper;
@@ -36,13 +38,17 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
 
     private ListView mListView;
     private ChapterService mChapterService;
+    private BookService mBookService;
     private Setting mSetting;
+    private Book mBook;
 
-    public ChapterContentAdapter(Context context, int resourceId, ArrayList<Chapter> datas) {
+    public ChapterContentAdapter(Context context, int resourceId, ArrayList<Chapter> datas, Book book) {
         super(context, resourceId, datas);
         mResourceId = resourceId;
         mChapterService = new ChapterService();
+        mBookService = new BookService();
         mSetting = SysManager.getSetting();
+        mBook = book;
     }
 
     private Handler mHandler = new Handler() {
@@ -56,7 +62,6 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
             }
         }
     };
-
 
 
     @Override
@@ -87,9 +92,9 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
     private void initView(final int postion, final ViewHolder viewHolder, View view) {
         final Chapter chapter = getItem(postion);
         viewHolder.tvErrorTips.setVisibility(View.GONE);
-        if (mSetting.getLanguage() == Language.traditional){
-            viewHolder.tvTitle.setText("【" + ZHConverter.convert(chapter.getTitle(),ZHConverter.TRADITIONAL) + "】");
-        }else {
+        if (mSetting.getLanguage() == Language.traditional) {
+            viewHolder.tvTitle.setText("【" + ZHConverter.convert(chapter.getTitle(), ZHConverter.TRADITIONAL) + "】");
+        } else {
             viewHolder.tvTitle.setText("【" + chapter.getTitle() + "】");
         }
 
@@ -97,13 +102,13 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         if (mSetting.isDayStyle()) {
             viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(mSetting.getReadWordColor()));
             viewHolder.tvContent.setTextColor(getContext().getResources().getColor(mSetting.getReadWordColor()));
-        }else {
+        } else {
             viewHolder.tvTitle.setTextColor(getContext().getResources().getColor(R.color.sys_night_word));
             viewHolder.tvContent.setTextColor(getContext().getResources().getColor(R.color.sys_night_word));
         }
 
 
-        viewHolder.tvTitle.setTextSize(mSetting.getReadWordSize());
+        viewHolder.tvTitle.setTextSize(mSetting.getReadWordSize() + 2);
         viewHolder.tvContent.setTextSize(mSetting.getReadWordSize());
 
 
@@ -116,9 +121,9 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         if (StringHelper.isEmpty(chapter.getContent())) {
             getChapterContent(chapter, viewHolder);
         } else {
-            if (mSetting.getLanguage() == Language.traditional){
-                viewHolder.tvContent.setText(ZHConverter.convert(chapter.getContent(),ZHConverter.TRADITIONAL));
-            }else {
+            if (mSetting.getLanguage() == Language.traditional) {
+                viewHolder.tvContent.setText(ZHConverter.convert(chapter.getContent(), ZHConverter.TRADITIONAL));
+            } else {
                 viewHolder.tvContent.setText(chapter.getContent());
             }
 
@@ -127,6 +132,8 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         preLoading(postion);
 
         lastLoading(postion);
+
+        saveHistory(postion);
 
     }
 
@@ -147,9 +154,9 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
             chapter.setContent(cacheChapter.getContent());
             chapter.setId(cacheChapter.getId());
             if (viewHolder != null) {
-                if (mSetting.getLanguage() == Language.traditional){
-                    viewHolder.tvContent.setText(ZHConverter.convert(chapter.getTitle(),ZHConverter.TRADITIONAL));
-                }else {
+                if (mSetting.getLanguage() == Language.traditional) {
+                    viewHolder.tvContent.setText(ZHConverter.convert(chapter.getTitle(), ZHConverter.TRADITIONAL));
+                } else {
                     viewHolder.tvContent.setText(chapter.getContent());
                 }
 
@@ -165,9 +172,9 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
                         mHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                if (mSetting.getLanguage() == Language.traditional){
-                                    viewHolder.tvContent.setText(ZHConverter.convert((String) o,ZHConverter.TRADITIONAL));
-                                }else {
+                                if (mSetting.getLanguage() == Language.traditional) {
+                                    viewHolder.tvContent.setText(ZHConverter.convert((String) o, ZHConverter.TRADITIONAL));
+                                } else {
                                     viewHolder.tvContent.setText((String) o);
                                 }
                                 viewHolder.tvErrorTips.setVisibility(View.GONE);
@@ -212,6 +219,13 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
             if (StringHelper.isEmpty(chapter.getContent())) {
                 getChapterContent(chapter, null);
             }
+        }
+    }
+
+    public void saveHistory(int position) {
+        if (!StringHelper.isEmpty(mBook.getId())) {
+            mBook.setHisttoryChapterNum(position);
+            mBookService.updateEntity(mBook);
         }
     }
 

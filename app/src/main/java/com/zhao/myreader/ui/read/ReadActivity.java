@@ -52,11 +52,7 @@ public class ReadActivity extends BaseActivity {
 
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        mReadPresenter.saveHistory();
-    }
+
 
 
     public TextView getTvChapterSort() {

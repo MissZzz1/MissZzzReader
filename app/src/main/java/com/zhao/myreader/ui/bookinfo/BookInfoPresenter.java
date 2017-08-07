@@ -3,6 +3,7 @@ package com.zhao.myreader.ui.bookinfo;
 import android.content.Intent;
 import android.view.View;
 
+import com.bumptech.glide.Glide;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.greendao.entity.Book;
@@ -75,6 +76,9 @@ public class BookInfoPresenter implements BasePresenter {
 
             }
         });
+        Glide.with(mBookInfoActivity)
+                .load(mBook.getImgUrl())
+                .into(mBookInfoActivity.getIvBookImg());
     }
 
     private boolean isBookCollected(){

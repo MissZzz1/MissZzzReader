@@ -148,7 +148,6 @@ public class ReadPresenter implements BasePresenter {
                         public void onClick(View view) {//上一章
                             int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
                             if (curPosition > 0) {
-                                mBook.setHisttoryChapterNum(curPosition - 1);
                                 mReadActivity.getLvContent().setSelection(curPosition - 1);
                             }
                         }
@@ -157,7 +156,6 @@ public class ReadPresenter implements BasePresenter {
                         public void onClick(View view) {//下一章
                             int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
                             if (curPosition < mChapters.size() - 1) {
-                                mBook.setHisttoryChapterNum(curPosition + 1);
                                 mReadActivity.getLvContent().setSelection(curPosition + 1);
                             }
                         }
@@ -216,7 +214,6 @@ public class ReadPresenter implements BasePresenter {
                         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                             mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
                             final int chapterNum = (mChapters.size() - 1) * i / 100;
-                            mBook.setHisttoryChapterNum(chapterNum);
                             getChapterContent(mChapters.get(chapterNum), new ResultCallback() {
                                 @Override
                                 public void onFinish(Object o, int code) {
@@ -246,10 +243,10 @@ public class ReadPresenter implements BasePresenter {
 
                 } else if (pointY > settingOnClickValidTo) {
 
-                    mReadActivity.getLvContent().smoothScrollBy(BaseActivity.height, 200);
-                } else if (pointY < settingOnClickValidFrom) {
+                    mReadActivity.getLvContent().scrollListBy(BaseActivity.height);
+                }else if (pointY < settingOnClickValidFrom){
 
-                    mReadActivity.getLvContent().smoothScrollBy(-BaseActivity.height, 200);
+                    mReadActivity.getLvContent().scrollListBy(-BaseActivity.height);
                 }
             }
         });
@@ -381,7 +378,7 @@ public class ReadPresenter implements BasePresenter {
             mReadActivity.getDlReadActivity().setBackgroundResource(R.color.sys_night_bg);
         }
         if (mChapterContentAdapter == null) {
-            mChapterContentAdapter = new ChapterContentAdapter(mReadActivity, R.layout.listview_chapter_content_item, mChapters);
+            mChapterContentAdapter = new ChapterContentAdapter(mReadActivity, R.layout.listview_chapter_content_item, mChapters,mBook);
             mReadActivity.getLvContent().setAdapter(mChapterContentAdapter);
         } else {
             mChapterContentAdapter.notifyDataSetChanged();
@@ -563,12 +560,7 @@ public class ReadPresenter implements BasePresenter {
     }
 
 
-    public void saveHistory() {
-        if (!StringHelper.isEmpty(mBook.getId())) {
-            mBook.setHisttoryChapterNum(mReadActivity.getLvContent().getLastVisiblePosition());
-            mBookService.updateEntity(mBook);
-        }
-    }
+
 
     private void setThemeColor(int colorPrimary, int colorPrimaryDark) {
 //        mToolbar.setBackgroundResource(colorPrimary);

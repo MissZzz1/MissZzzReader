@@ -33,6 +33,9 @@ public class TianLaiReadUtil {
         Matcher matcher = pattern.matcher(html);
         if (matcher.find()) {
             String content = Html.fromHtml(matcher.group(0)).toString();
+            char c = 160;
+            String spaec = "" + c;
+            content = content.replace(spaec,"  ");
             return content;
         } else {
             return "";
