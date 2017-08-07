@@ -33,8 +33,8 @@ public class FontsPresenter implements BasePresenter {
     };
 
     public FontsPresenter(FontsActivity fontsActivity) {
-        mFontsActivity = fontsActivity;
 
+        mFontsActivity = fontsActivity;
     }
 
 
