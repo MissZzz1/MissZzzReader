@@ -114,8 +114,6 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
 
         viewHolder.tvTitle.setTextSize(mSetting.getReadWordSize() + 2);
         viewHolder.tvContent.setTextSize(mSetting.getReadWordSize());
-
-
         viewHolder.tvErrorTips.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

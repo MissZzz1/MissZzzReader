@@ -459,9 +459,9 @@ public class ReadPresenter implements BasePresenter {
                 final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
                 if (mChapters.size() < chapters.size()) {
                     mChapters.addAll(chapters.subList(mChapters.size(), chapters.size()));
-                } else {
+                } /*else {
                     settingChange = false;
-                }
+                }*/
                 mInvertedOrderChapters.clear();
                 mInvertedOrderChapters.addAll(mChapters);
                 Collections.reverse(mInvertedOrderChapters);
@@ -495,7 +495,6 @@ public class ReadPresenter implements BasePresenter {
                         }
                     }
                 }
-
             }
 
             @Override
