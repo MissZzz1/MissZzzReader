@@ -46,8 +46,7 @@ public class BookcaseAdapter extends ArrayAdapter<Book> {
             convertView = LayoutInflater.from(getContext()).inflate(mResourceId, null);
             viewHolder.ivBookImg = (ImageView) convertView.findViewById(R.id.iv_book_img);
             viewHolder.tvBookName = (TextView) convertView.findViewById(R.id.tv_book_name);
-            viewHolder.tvNoReadNum = (TextView)convertView.findViewById(R.id.tv_no_read_num);
-
+            viewHolder.tvNoReadNum = (TextView) convertView.findViewById(R.id.tv_no_read_num);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -68,15 +67,15 @@ public class BookcaseAdapter extends ArrayAdapter<Book> {
                 .placeholder(R.mipmap.no_image)
                 .into(viewHolder.ivBookImg);
         viewHolder.tvBookName.setText(book.getName());
-        if (book.getNoReadNum() != 0){
+        if (book.getNoReadNum() != 0) {
             viewHolder.tvNoReadNum.setVisibility(View.VISIBLE);
-            if (book.getNoReadNum() > 99){
+            if (book.getNoReadNum() > 99) {
                 viewHolder.tvNoReadNum.setText("...");
-            }else {
+            } else {
                 viewHolder.tvNoReadNum.setText(String.valueOf(book.getNoReadNum()));
             }
 
-        }else {
+        } else {
             viewHolder.tvNoReadNum.setVisibility(View.GONE);
         }
 

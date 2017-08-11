@@ -39,10 +39,10 @@ public class BookcasePresenter implements BasePresenter {
     private BookService mBookService;
     private ChapterService mChapterService;
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case 1:
                     mBookcaseAdapter.notifyDataSetChanged();
                     break;
@@ -127,8 +127,8 @@ public class BookcasePresenter implements BasePresenter {
 
     public void getData() {
         mBooks = (ArrayList<Book>) mBookService.getAllBooks();
-        for (int i = 0; i < mBooks.size(); i++){
-            if (mBooks.get(i).getSortCode() != i + 1){
+        for (int i = 0; i < mBooks.size(); i++) {
+            if (mBooks.get(i).getSortCode() != i + 1) {
                 mBooks.get(i).setSortCode(i + 1);
                 mBookService.updateEntity(mBooks.get(i));
             }
@@ -136,17 +136,17 @@ public class BookcasePresenter implements BasePresenter {
         init();
     }
 
-    private void initNoReadNum(){
-        for (final Book book : mBooks){
+    private void initNoReadNum() {
+        for (final Book book : mBooks) {
             CommonApi.getBookChapters(book.getChapterUrl(), new ResultCallback() {
                 @Override
                 public void onFinish(Object o, int code) {
                     final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
                     int noReadNum = chapters.size() - book.getChapterTotalNum();
-                    if (noReadNum > 0){
+                    if (noReadNum > 0) {
                         book.setNoReadNum(noReadNum);
                         mHandler.sendMessage(mHandler.obtainMessage(1));
-                    }else {
+                    } else {
                         book.setNoReadNum(0);
                     }
                     mBookService.updateEntity(book);

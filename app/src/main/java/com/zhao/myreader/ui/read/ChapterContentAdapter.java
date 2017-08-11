@@ -43,6 +43,7 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
     private Setting mSetting;
     private Book mBook;
     private Typeface mTypeFace;
+    private TextView curTextView;
 
     public ChapterContentAdapter(Context context, int resourceId, ArrayList<Chapter> datas, Book book) {
         super(context, resourceId, datas);
@@ -126,12 +127,18 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
             viewHolder.tvContent.setText(getLanguageContext(chapter.getContent()));
         }
 
+
+        curTextView = viewHolder.tvContent;
         preLoading(postion);
 
         lastLoading(postion);
 
         saveHistory(postion);
 
+    }
+
+    public TextView getCurTextView() {
+        return curTextView;
     }
 
     private String getLanguageContext(String content) {
