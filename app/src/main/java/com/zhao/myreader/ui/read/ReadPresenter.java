@@ -349,10 +349,6 @@ public class ReadPresenter implements BasePresenter {
     }
 
 
-
-
-
-
     /**
      * 字体结果回调
      *
@@ -469,7 +465,9 @@ public class ReadPresenter implements BasePresenter {
             public void onFinish(Object o, int code) {
                 final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
                 mBook.setChapterTotalNum(chapters.size());
-                mBookService.updateEntity(mBook);
+                if (!StringHelper.isEmpty(mBook.getId())){
+                    mBookService.updateEntity(mBook);
+                }
                 updateAllOldChapterData(chapters);
                 mInvertedOrderChapters.clear();
                 mInvertedOrderChapters.addAll(mChapters);
@@ -480,8 +478,7 @@ public class ReadPresenter implements BasePresenter {
                     settingChange = false;
                 } else {
                     if (mBook.getHisttoryChapterNum() < 0) mBook.setHisttoryChapterNum(0);
-                    else if (mBook.getHisttoryChapterNum() >= chapters.size())
-                        mBook.setHisttoryChapterNum(chapters.size() - 1);
+                    else if (mBook.getHisttoryChapterNum() >= chapters.size()) mBook.setHisttoryChapterNum(chapters.size() - 1);
                     getChapterContent(mChapters.get(mBook.getHisttoryChapterNum()), new ResultCallback() {
                         @Override
                         public void onFinish(Object o, int code) {
@@ -585,7 +582,6 @@ public class ReadPresenter implements BasePresenter {
                         chapter.setContent((String) o);
                         mChapterService.saveOrUpdateChapter(chapter);
                     }
-
                     @Override
                     public void onError(Exception e) {
 
