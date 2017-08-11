@@ -345,14 +345,15 @@ public class ReadPresenter implements BasePresenter {
 
     /**
      * 字体结果回调
+     *
      * @param requestCode
      * @param resultCode
      * @param data
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case APPCONST.REQUEST_FONT:
-                if (resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     mSetting.setFont((Font) data.getSerializableExtra(APPCONST.FONT));
                     settingChange = true;
                     initContent();
@@ -457,11 +458,9 @@ public class ReadPresenter implements BasePresenter {
             @Override
             public void onFinish(Object o, int code) {
                 final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
-                if (mChapters.size() < chapters.size()) {
-                    mChapters.addAll(chapters.subList(mChapters.size(), chapters.size()));
-                } /*else {
-                    settingChange = false;
-                }*/
+                mBook.setChapterTotalNum(chapters.size());
+                mBookService.updateEntity(mBook);
+                updateAllOldChapterData(chapters);
                 mInvertedOrderChapters.clear();
                 mInvertedOrderChapters.addAll(mChapters);
                 Collections.reverse(mInvertedOrderChapters);
@@ -470,8 +469,9 @@ public class ReadPresenter implements BasePresenter {
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
                     settingChange = false;
                 } else {
-                    if (mBook.getHisttoryChapterNum() < 0) mBook.setHisttoryChapterNum(0);
-                    getChapterContent(chapters.get(mBook.getHisttoryChapterNum()), new ResultCallback() {
+                    if (mBook.getHisttoryChapterNum() < 0 ) mBook.setHisttoryChapterNum(0);
+                    else  if (mBook.getHisttoryChapterNum() >= chapters.size()) mBook.setHisttoryChapterNum(chapters.size() - 1);
+                    getChapterContent(mChapters.get(mBook.getHisttoryChapterNum()), new ResultCallback() {
                         @Override
                         public void onFinish(Object o, int code) {
                             mChapters.get(mBook.getHisttoryChapterNum()).setContent((String) o);
@@ -499,10 +499,44 @@ public class ReadPresenter implements BasePresenter {
 
             @Override
             public void onError(Exception e) {
-                mHandler.sendMessage(mHandler.obtainMessage(2));
-                settingChange = false;
+//                settingChange = true;
+                mHandler.sendMessage(mHandler.obtainMessage(1));
             }
         });
+    }
+
+    /**
+     * 更新所有章节
+     *
+     * @param newChapters
+     */
+    private void updateAllOldChapterData(ArrayList<Chapter> newChapters) {
+        int i;
+        for (i = 0; i < mChapters.size() && i < newChapters.size(); i++) {
+            Chapter oldChapter = mChapters.get(i);
+            Chapter newChapter = newChapters.get(i);
+            if (!oldChapter.getTitle().equals(newChapter.getTitle())) {
+                oldChapter.setTitle(newChapter.getTitle());
+                oldChapter.setUrl(newChapter.getTitle());
+                oldChapter.setContent(null);
+                mChapterService.updateEntity(oldChapter);
+            }
+        }
+
+        if (mChapters.size() < newChapters.size()) {
+            for (int j = mChapters.size(); j < newChapters.size(); j++) {
+
+                mChapters.add(newChapters.get(j));
+//                mChapterService.addChapter(newChapters.get(j));
+            }
+        } else if (mChapters.size() > newChapters.size()) {
+            for (int j = newChapters.size(); j < mChapters.size(); j++) {
+                mChapterService.deleteEntity(mChapters.get(j));
+            }
+            mChapters.subList(0, newChapters.size());
+        }
+
+
     }
 
     /**
@@ -523,6 +557,7 @@ public class ReadPresenter implements BasePresenter {
 
     /**
      * 获取章节内容
+     *
      * @param chapter
      * @param resultCallback
      */

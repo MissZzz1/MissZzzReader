@@ -142,11 +142,9 @@ public class BookcasePresenter implements BasePresenter {
                 @Override
                 public void onFinish(Object o, int code) {
                     final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
-                    final ArrayList<Chapter> localChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(book.getId());
-                    int noReadNum =   chapters.size() - localChapters.size();
+                    int noReadNum = chapters.size() - book.getChapterTotalNum();
                     if (noReadNum > 0){
                         book.setNoReadNum(noReadNum);
-
                         mHandler.sendMessage(mHandler.obtainMessage(1));
                     }else {
                         book.setNoReadNum(0);

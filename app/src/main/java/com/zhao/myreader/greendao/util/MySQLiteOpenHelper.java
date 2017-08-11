@@ -27,7 +27,7 @@ public class MySQLiteOpenHelper extends DaoMaster.OpenHelper {
     @Override
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
         //加入你要新建的或者修改的表的信息
-        GreenDaoUpgrade.getInstance().migrate(db, BookDao.class,ChapterDao.class);
+        GreenDaoUpgrade.getInstance().migrate(db, BookDao.class,ChapterDao.class,SearchHistoryDao.class);
 
     }
 

@@ -46,13 +46,16 @@ public class Book implements Serializable {
 
     private int noReadNum;//未读章数量
 
+    private int chapterTotalNum;//总章节数
 
-    @Generated(hash = 616026888)
+
+    @Generated(hash = 335172433)
     public Book(String id, String name, String chapterUrl, String imgUrl,
             String desc, String author, String type, String updateDate,
             String newestChapterId, String newestChapterTitle,
             String newestChapterUrl, String historyChapterId,
-            int histtoryChapterNum, int sortCode, int noReadNum) {
+            int histtoryChapterNum, int sortCode, int noReadNum,
+            int chapterTotalNum) {
         this.id = id;
         this.name = name;
         this.chapterUrl = chapterUrl;
@@ -68,6 +71,7 @@ public class Book implements Serializable {
         this.histtoryChapterNum = histtoryChapterNum;
         this.sortCode = sortCode;
         this.noReadNum = noReadNum;
+        this.chapterTotalNum = chapterTotalNum;
     }
     @Generated(hash = 1839243756)
     public Book() {
@@ -161,6 +165,12 @@ public class Book implements Serializable {
     }
     public void setNoReadNum(int noReadNum) {
         this.noReadNum = noReadNum;
+    }
+    public int getChapterTotalNum() {
+        return this.chapterTotalNum;
+    }
+    public void setChapterTotalNum(int chapterTotalNum) {
+        this.chapterTotalNum = chapterTotalNum;
     }
 
 

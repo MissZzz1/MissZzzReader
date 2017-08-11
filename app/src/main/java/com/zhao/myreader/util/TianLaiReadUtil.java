@@ -51,15 +51,22 @@ public class TianLaiReadUtil {
     public static ArrayList<Chapter> getChaptersFromHtml(String html) {
         ArrayList<Chapter> chapters = new ArrayList<>();
         Pattern pattern = Pattern.compile("<dd><a href=\"([\\s\\S]*?)</a>");
+//        Pattern pattern = Pattern.compile("<dd><a href=\"([\\s\\S]*?)\"");
         Matcher matcher = pattern.matcher(html);
+        String lastTile = null;
         int i = 0;
         while (matcher.find()) {
-            Chapter chapter = new Chapter();
             String content = matcher.group();
+            String title = content.substring(content.indexOf("\">") + 2, content.lastIndexOf("<"));
+            if (!StringHelper.isEmpty(lastTile) && title.equals(lastTile)){
+                continue;
+            }
+            Chapter chapter = new Chapter();
             chapter.setNumber(i++);
-            chapter.setTitle(content.substring(content.indexOf("\">") + 2, content.lastIndexOf("<")));
-            chapter.setUrl(content.substring(content.indexOf("\"") + 1, content.lastIndexOf("\"")));
+            chapter.setTitle(title);
+            chapter.setUrl(content.substring(content.indexOf("\"") + 1, content.lastIndexOf("l\"") + 1));
             chapters.add(chapter);
+            lastTile = title;
         }
         return chapters;
     }

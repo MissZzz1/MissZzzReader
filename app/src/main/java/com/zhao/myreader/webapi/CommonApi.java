@@ -42,7 +42,10 @@ public class CommonApi extends BaseApi{
      * @param callback
      */
     public static void getChapterContent(String url, final ResultCallback callback){
-
+        int tem = url.indexOf("\"");
+        if (tem != -1){
+            url = url.substring(0,tem);
+        }
         getCommonReturnHtmlStringApi(URLCONST.nameSpace + url, null, "GBK", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
