@@ -126,7 +126,7 @@ public class ReadPresenter implements BasePresenter {
         mBook = (Book) mReadActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
         settingOnClickValidFrom = BaseActivity.height / 4;
         settingOnClickValidTo = BaseActivity.height / 4 * 3;
-        mReadActivity.getSrlContent().setEnableAutoLoadmore(false);
+        mReadActivity.getSrlContent().setEnableLoadmore(false);
         mReadActivity.getSrlContent().setEnableRefresh(false);
         mReadActivity.getSrlContent().setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override

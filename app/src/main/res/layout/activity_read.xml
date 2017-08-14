@@ -30,7 +30,6 @@
             </ListView>
 
 
-
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
@@ -42,7 +41,6 @@
             android:visibility="gone" />
 
     </RelativeLayout>
-
 
     <LinearLayout
         android:id="@+id/ll_chapter_list_view"

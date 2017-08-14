@@ -9,7 +9,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 25
         versionCode 14
-        versionName "1.4.0"
+        versionName "1.4.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -51,8 +51,9 @@ dependencies {
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'org.jsoup:jsoup:1.10.3'
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.2'
-    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.2'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
