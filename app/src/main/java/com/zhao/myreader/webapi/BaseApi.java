@@ -107,7 +107,6 @@ public class BaseApi {
                     noSuccess(jsonModel,callback);
                 }
             }
-
             @Override
             public void onError(Exception e) {
               error(e,callback);
@@ -175,8 +174,6 @@ public class BaseApi {
     private static void error(Exception e, final ResultCallback callback){
         if (e.toString().contains("SocketTimeoutException") || e.toString().contains("UnknownHostException")) {
             TextHelper.showText("网络连接超时，请检查网络");
-        } else {
-            TextHelper.showText("服务器错误");
         }
         e.printStackTrace();
         callback.onError(e);

@@ -557,7 +557,6 @@ public class ReadPresenter implements BasePresenter {
                 }
             }
         });
-
     }
 
     /**

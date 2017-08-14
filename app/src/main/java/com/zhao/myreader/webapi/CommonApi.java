@@ -15,6 +15,8 @@ import java.util.Map;
 public class CommonApi extends BaseApi{
 
 
+
+
     /**
      * 获取章节列表
      * @param url
@@ -46,7 +48,7 @@ public class CommonApi extends BaseApi{
         if (tem != -1){
             url = url.substring(0,tem);
         }
-        getCommonReturnHtmlStringApi(URLCONST.nameSpace + url, null, "GBK", new ResultCallback() {
+        getCommonReturnHtmlStringApi(URLCONST.nameSpace_tianlai + url, null, "GBK", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(TianLaiReadUtil.getContentFormHtml((String)o),0);
@@ -83,6 +85,10 @@ public class CommonApi extends BaseApi{
 
             }
         });
+    }
+
+    public static void getNewestAppVersion(final ResultCallback callback){
+        getCommonReturnStringApi(URLCONST.method_getCurAppVersion,null,callback);
     }
 
 

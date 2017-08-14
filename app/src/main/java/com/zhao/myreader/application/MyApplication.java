@@ -22,6 +22,7 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.entity.UMessage;
 import com.zhao.myreader.base.BaseActivity;
+import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.creator.DialogCreator;
@@ -32,6 +33,7 @@ import com.zhao.myreader.util.HttpUtil;
 import com.zhao.myreader.util.OpenFileHelper;
 import com.zhao.myreader.util.TextHelper;
 import com.zhao.myreader.util.UriFileUtil;
+import com.zhao.myreader.webapi.CommonApi;
 
 import java.io.File;
 import java.util.Map;
@@ -57,7 +59,7 @@ public class MyApplication extends Application {
         application = this;
         initPush();
         HttpUtil.trustAllHosts();//信任所有证书
-        mFixedThreadPool = Executors.newFixedThreadPool(3);//初始化线程池
+        mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());//初始化线程池
         BaseActivity.setCloseAntiHijacking(true);
 
 
@@ -198,6 +200,30 @@ public class MyApplication extends Application {
                 updateApp(activity, updateInfo.getDownLoadUrl(), versionCode);
             }
         }
+    }
+
+    /**
+     * 检查更新
+     */
+    public static void checkVersionByServer(final Activity activity) {
+        CommonApi.getNewestAppVersion(new ResultCallback() {
+            @Override
+            public void onFinish(Object o, int code) {
+                int versionCode = getVersionCode();
+                int newestVersion = Integer.valueOf((String)o) ;
+
+                if (newestVersion > versionCode) {
+                    updateApp(activity,URLCONST.method_downloadApp, versionCode);
+                }
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+
     }
 
     /**

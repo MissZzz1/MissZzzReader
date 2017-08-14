@@ -40,13 +40,13 @@ public class SearchBookPrensenter implements BasePresenter {
     private SearchHistoryService mSearchHistoryService;
 
     private SearchHistoryAdapter mSearchHistoryAdapter;
-    private SuggestBookAdapter mSuggestBookAdapter;
+
 
 
     private int inputConfirm = 0;//搜索输入确认
     private int confirmTime = 1000;//搜索输入确认时间（毫秒）
 
-    private static String[] suggestion = {"不朽凡人", "圣墟", "龙王传说", "武炼巅峰", "一念永恒", "雪鹰领主", "大主宰", "蛮荒记"};
+    private static String[] suggestion = {"不朽凡人", "圣墟", "我是至尊" ,"龙王传说", "武炼巅峰", "一念永恒", "雪鹰领主", "大主宰"};
 
 
     private Handler mHandler = new Handler() {
