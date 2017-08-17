@@ -1,10 +1,10 @@
 package com.zhao.myreader.ui.read;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -18,7 +18,6 @@ import com.zhao.myreader.base.BaseActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ReadActivity extends BaseActivity {
 
@@ -27,8 +26,6 @@ public class ReadActivity extends BaseActivity {
     ProgressBar pbLoading;
     @InjectView(R.id.srl_content)
     SmartRefreshLayout srlContent;
-    @InjectView(R.id.lv_content)
-    ListView lvContent;
     @InjectView(R.id.lv_chapter_list)
     ListView lvChapterList;
 
@@ -40,6 +37,8 @@ public class ReadActivity extends BaseActivity {
     TextView tvBookList;
     @InjectView(R.id.tv_chapter_sort)
     TextView tvChapterSort;
+    @InjectView(R.id.rv_content)
+    RecyclerView rvContent;
 
     private ReadPresenter mReadPresenter;
 
@@ -58,6 +57,10 @@ public class ReadActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mReadPresenter.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public RecyclerView getRvContent() {
+        return rvContent;
     }
 
     public TextView getTvChapterSort() {
@@ -82,9 +85,6 @@ public class ReadActivity extends BaseActivity {
         return pbLoading;
     }
 
-    public ListView getLvContent() {
-        return lvContent;
-    }
 
     public ListView getLvChapterList() {
         return lvChapterList;

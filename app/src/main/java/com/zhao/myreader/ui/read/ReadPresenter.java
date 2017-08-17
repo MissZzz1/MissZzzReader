@@ -1,25 +1,17 @@
 package com.zhao.myreader.ui.read;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Point;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ViewDragHelper;
-import android.util.Log;
-import android.util.SparseArray;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -45,7 +37,6 @@ import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.util.TextHelper;
 import com.zhao.myreader.webapi.CommonApi;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -64,8 +55,12 @@ public class ReadPresenter implements BasePresenter {
     private ChapterService mChapterService;
     private BookService mBookService;
     private ChapterContentAdapter mChapterContentAdapter;
+    private ReadContentAdapter mReadContentAdapter;
     private ChapterTitleAdapter mChapterTitleAdapter;
     private Setting mSetting;
+    private LinearLayoutManager mLinearLayoutManager;
+
+    private boolean isFirstInit = true;
 
     private boolean settingChange;//是否是设置改变
 
@@ -97,8 +92,28 @@ public class ReadPresenter implements BasePresenter {
                     mReadActivity.getSrlContent().finishLoadmore();
                     break;
                 case 3:
-                    mReadActivity.getLvContent().setSelection(msg.arg1);
+                    int position = msg.arg1;
+                    mReadActivity.getRvContent().scrollToPosition(position);
+                    if (position >= mChapters.size() - 1) {
+                        delayTurnToChapter(position);
+                    }
                     mReadActivity.getPbLoading().setVisibility(View.GONE);
+                    break;
+                case 4:
+                    position = msg.arg1;
+                    mReadActivity.getRvContent().scrollToPosition(position);
+                    if (mBook.getHisttoryChapterNum() < position){
+                        delayTurnToChapter(position);
+                    }
+                    mReadActivity.getPbLoading().setVisibility(View.GONE);
+                    break;
+                case 5:
+                    saveLastChapterReadPosition(msg.arg1);
+                    break;
+                case 6:
+                    mReadActivity.getRvContent().scrollBy(0,mBook.getLastReadPosition());
+                    mBook.setLastReadPosition(0);
+                    mBookService.updateEntity(mBook);
                     break;
             }
         }
@@ -138,19 +153,141 @@ public class ReadPresenter implements BasePresenter {
         mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
 
 
-        mReadActivity.getLvContent().setOnTouchListener(new View.OnTouchListener() {
+        mReadActivity.getLvChapterList().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                pointX = motionEvent.getX();
-                pointY = motionEvent.getY();
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                //关闭侧滑菜单
+                mReadActivity.getDlReadActivity().closeDrawer(GravityCompat.START);
+                final int position;
+                if (curSortflag == 0) {
+                    position = i;
+                } else {
+                    position = mChapters.size() - 1 - i;
+                }
+                if (StringHelper.isEmpty(mChapters.get(position).getContent())) {
+                    mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
+                    CommonApi.getChapterContent(mChapters.get(position).getUrl(), new ResultCallback() {
+                        @Override
+                        public void onFinish(Object o, int code) {
+                            mChapters.get(position).setContent((String) o);
+                            mChapterService.saveOrUpdateChapter(mChapters.get(position));
+                            mHandler.sendMessage(mHandler.obtainMessage(4, position, 0));
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+
+                        }
+                    });
+                } else {
+//                    mReadActivity.getLvContent().setSelection(position);
+                    mReadActivity.getRvContent().scrollToPosition(position);
+                    if (position > mBook.getHisttoryChapterNum()) {
+                        delayTurnToChapter(position);
+                    }
+                }
+
+            }
+        });
+        mReadActivity.getRvContent().addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, final int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                //页面初始化的时候不要执行
+                if (!isFirstInit) {
+                    MyApplication.getApplication().newThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            saveLastChapterReadPosition(dy);
+                        }
+                    });
+                }else {
+                    isFirstInit = false;
+                }
+            }
+        });
+
+        mReadActivity.getTvChapterSort().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (curSortflag == 0) {//当前正序
+                    mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.positive_sort));
+                    curSortflag = 1;
+                    changeChapterSort();
+                } else {//当前倒序
+                    mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.inverted_sort));
+                    curSortflag = 0;
+                    changeChapterSort();
+                }
+            }
+        });
+
+
+        mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
+
+        //关闭手势滑动
+        mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        mReadActivity.getDlReadActivity().addDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                //打开手势滑动
+                mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                //关闭手势滑动
+                mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+        getData();
+    }
+
+    /**
+     * 保存最后阅读章节的进度
+     *
+     * @param dy
+     */
+    private void saveLastChapterReadPosition(int dy) {
+        if (mLinearLayoutManager.findFirstVisibleItemPosition() != mLinearLayoutManager.findLastVisibleItemPosition()
+                || dy == 0) {
+            mBook.setLastReadPosition(0);
+        } else {
+            mBook.setLastReadPosition(mBook.getLastReadPosition() + dy);
+        }
+        mBook.setHisttoryChapterNum(mLinearLayoutManager.findLastVisibleItemPosition());
+        mBookService.updateEntity(mBook);
+
+    }
+
+    private void initReadViewOnClick() {
+        mReadContentAdapter.setmOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+//                pointX = event.getX();
+                pointY = event.getRawY();
                 return false;
             }
         });
-        mReadActivity.getLvContent().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        mReadContentAdapter.setmOnClickItemListener(new ReadContentAdapter.OnClickItemListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onClick(View view, final int positon) {
                 if (pointY > settingOnClickValidFrom && pointY < settingOnClickValidTo) {
-                    int progress = mReadActivity.getLvContent().getLastVisiblePosition() * 100 / (mChapters.size() - 1);
+//                    int progress = mReadActivity.getLvContent().getLastVisiblePosition() * 100 / (mChapters.size() - 1);
+                    int progress = mLinearLayoutManager.findLastVisibleItemPosition() * 100 / (mChapters.size() - 1);
+
                     mDialog = DialogCreator.createReadSetting(mReadActivity, mSetting.isDayStyle(), progress, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {//返回
@@ -159,17 +296,27 @@ public class ReadPresenter implements BasePresenter {
                     }, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {//上一章
-                            int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
+//                            int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
+                            int curPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+
+
                             if (curPosition > 0) {
-                                mReadActivity.getLvContent().setSelection(curPosition - 1);
+//                                mReadActivity.getLvContent().setSelection(curPosition - 1);
+                                mReadActivity.getRvContent().scrollToPosition(curPosition - 1);
+
                             }
                         }
                     }, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {//下一章
-                            int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
+//                            int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
+                            int curPosition = mLinearLayoutManager.findLastVisibleItemPosition();
                             if (curPosition < mChapters.size() - 1) {
-                                mReadActivity.getLvContent().setSelection(curPosition + 1);
+//                                mReadActivity.getLvContent().setSelection(curPosition + 1);
+                                mReadActivity.getRvContent().scrollToPosition(curPosition + 1);
+//                                if (curPosition + 1 >= mChapters.size() - 1) {
+                                    delayTurnToChapter(curPosition + 1);
+//                                }
                             }
                         }
                     }, new View.OnClickListener() {
@@ -237,8 +384,7 @@ public class ReadPresenter implements BasePresenter {
                                 public void onFinish(Object o, int code) {
                                     mChapters.get(chapterNum).setContent((String) o);
                                     mChapterService.saveOrUpdateChapter(mChapters.get(chapterNum));
-                                    mBook.setHisttoryChapterNum(chapterNum);
-                                    mHandler.sendMessage(mHandler.obtainMessage(1));
+                                    mHandler.sendMessage(mHandler.obtainMessage(4,chapterNum,0));
                                 }
 
                                 @Override
@@ -262,90 +408,51 @@ public class ReadPresenter implements BasePresenter {
 
                 } else if (pointY > settingOnClickValidTo) {
 
-                    mReadActivity.getLvContent().scrollListBy(BaseActivity.height);
+//                    mReadActivity.getLvContent().scrollListBy(BaseActivity.height);
+                    mReadActivity.getRvContent().scrollBy(0, BaseActivity.height);
                 } else if (pointY < settingOnClickValidFrom) {
 
-                    mReadActivity.getLvContent().scrollListBy(-BaseActivity.height);
+//                    mReadActivity.getLvContent().scrollListBy(-BaseActivity.height);
+                    mReadActivity.getRvContent().scrollBy(0, -BaseActivity.height);
                 }
             }
         });
-        mReadActivity.getLvChapterList().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    }
+
+    /**
+     * 延迟跳转章节(防止跳到章节尾部)
+     */
+    private void delayTurnToChapter(final int position) {
+        MyApplication.getApplication().newThread(new Runnable() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                //关闭侧滑菜单
-                mReadActivity.getDlReadActivity().closeDrawer(GravityCompat.START);
-                final int position;
-                if (curSortflag == 0) {
-                    position = i;
-                } else {
-                    position = mChapters.size() - 1 - i;
-                }
-                mBook.setHisttoryChapterNum(position);
-
-                if (StringHelper.isEmpty(mChapters.get(position).getContent())) {
-                    mReadActivity.getPbLoading().setVisibility(View.VISIBLE);
-                    CommonApi.getChapterContent(mChapters.get(position).getUrl(), new ResultCallback() {
-                        @Override
-                        public void onFinish(Object o, int code) {
-                            mChapters.get(position).setContent((String) o);
-                            mHandler.sendMessage(mHandler.obtainMessage(3, position, 0));
-                        }
-
-                        @Override
-                        public void onError(Exception e) {
-
-                        }
-                    });
-                } else {
-                    mReadActivity.getLvContent().setSelection(position);
-                }
-
-            }
-        });
-
-        mReadActivity.getTvChapterSort().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (curSortflag == 0) {//当前正序
-                    mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.positive_sort));
-                    curSortflag = 1;
-                    changeChapterSort();
-                } else {//当前倒序
-                    mReadActivity.getTvChapterSort().setText(mReadActivity.getString(R.string.inverted_sort));
-                    curSortflag = 0;
-                    changeChapterSort();
+            public void run() {
+                try {
+                    Thread.sleep(50);
+                    mHandler.sendMessage(mHandler.obtainMessage(4, position, 0));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
 
-        mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
-        //关闭手势滑动
-        mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        mReadActivity.getDlReadActivity().addDrawerListener(new DrawerLayout.DrawerListener() {
+    }
+
+    /**
+     * 延迟跳转章节位置
+     */
+    private void delayTurnToLastChapterReadPosion() {
+        MyApplication.getApplication().newThread(new Runnable() {
             @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                //打开手势滑动
-                mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                //关闭手势滑动
-                mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
+            public void run() {
+                try {
+                    Thread.sleep(100);
+                    mHandler.sendMessage(mHandler.obtainMessage(6));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
-        getData();
     }
 
 
@@ -387,13 +494,23 @@ public class ReadPresenter implements BasePresenter {
             mReadActivity.getDlReadActivity().setBackgroundResource(R.color.sys_night_bg);
         }
         if (mChapterContentAdapter == null) {
-            mChapterContentAdapter = new ChapterContentAdapter(mReadActivity, R.layout.listview_chapter_content_item, mChapters, mBook);
-            mReadActivity.getLvContent().setAdapter(mChapterContentAdapter);
+//            mChapterContentAdapter = new ChapterContentAdapter(mReadActivity, R.layout.listview_chapter_content_item, mChapters, mBook);
+//            mReadActivity.getLvContent().setAdapter(mChapterContentAdapter);
+            //设置布局管理器
+            mLinearLayoutManager = new LinearLayoutManager(mReadActivity);
+            mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            mReadActivity.getRvContent().setLayoutManager(mLinearLayoutManager);
+            mReadContentAdapter = new ReadContentAdapter(mReadActivity, R.layout.listview_chapter_content_item, mChapters, mBook);
+            initReadViewOnClick();
+            mReadActivity.getRvContent().setAdapter(mReadContentAdapter);
         } else {
             mChapterContentAdapter.notifyDataSetChanged();
         }
         if (!settingChange) {
-            mReadActivity.getLvContent().setSelection(mBook.getHisttoryChapterNum());
+//            mReadActivity.getLvContent().setSelection(mBook.getHisttoryChapterNum());
+            mReadActivity.getRvContent().scrollToPosition(mBook.getHisttoryChapterNum());
+            delayTurnToLastChapterReadPosion();
+
         } else {
             settingChange = false;
         }
@@ -436,14 +553,16 @@ public class ReadPresenter implements BasePresenter {
         //设置布局管理器
         if (curSortflag == 0) {
             mChapterTitleAdapter = new ChapterTitleAdapter(mReadActivity, R.layout.listview_chapter_title_item, mChapters);
-            curChapterPosition = mReadActivity.getLvContent().getLastVisiblePosition();
+//            curChapterPosition = mReadActivity.getRvContent().getLastVisiblePosition();
+            curChapterPosition = mLinearLayoutManager.findLastVisibleItemPosition();
             selectedPostion = curChapterPosition - 5;
             if (selectedPostion < 0) selectedPostion = 0;
             if (mChapters.size() - 1 - curChapterPosition < 5) selectedPostion = mChapters.size();
             mChapterTitleAdapter.setCurChapterPosition(curChapterPosition);
         } else {
             mChapterTitleAdapter = new ChapterTitleAdapter(mReadActivity, R.layout.listview_chapter_title_item, mInvertedOrderChapters);
-            curChapterPosition = mChapters.size() - 1 - mReadActivity.getLvContent().getLastVisiblePosition();
+//            curChapterPosition = mChapters.size() - 1 - mReadActivity.getLvContent().getLastVisiblePosition();
+            curChapterPosition = mChapters.size() - 1 - mLinearLayoutManager.findLastVisibleItemPosition();
             selectedPostion = curChapterPosition - 5;
             if (selectedPostion < 0) selectedPostion = 0;
             if (mChapters.size() - 1 - curChapterPosition < 5) selectedPostion = mChapters.size();
@@ -465,7 +584,7 @@ public class ReadPresenter implements BasePresenter {
             public void onFinish(Object o, int code) {
                 final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
                 mBook.setChapterTotalNum(chapters.size());
-                if (!StringHelper.isEmpty(mBook.getId())){
+                if (!StringHelper.isEmpty(mBook.getId())) {
                     mBookService.updateEntity(mBook);
                 }
                 updateAllOldChapterData(chapters);
@@ -478,7 +597,8 @@ public class ReadPresenter implements BasePresenter {
                     settingChange = false;
                 } else {
                     if (mBook.getHisttoryChapterNum() < 0) mBook.setHisttoryChapterNum(0);
-                    else if (mBook.getHisttoryChapterNum() >= chapters.size()) mBook.setHisttoryChapterNum(chapters.size() - 1);
+                    else if (mBook.getHisttoryChapterNum() >= chapters.size())
+                        mBook.setHisttoryChapterNum(chapters.size() - 1);
                     getChapterContent(mChapters.get(mBook.getHisttoryChapterNum()), new ResultCallback() {
                         @Override
                         public void onFinish(Object o, int code) {
@@ -581,6 +701,7 @@ public class ReadPresenter implements BasePresenter {
                         chapter.setContent((String) o);
                         mChapterService.saveOrUpdateChapter(chapter);
                     }
+
                     @Override
                     public void onError(Exception e) {
 

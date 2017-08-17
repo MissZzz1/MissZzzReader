@@ -45,6 +45,7 @@ public class BookService extends BaseService {
                 book.setSortCode(cursor.getInt(13));
                 book.setNoReadNum(cursor.getInt(14));
                 book.setChapterTotalNum(cursor.getInt(15));
+                book.setLastReadPosition(cursor.getInt(16));
                 books.add(book);
             }
         } catch (Exception e) {

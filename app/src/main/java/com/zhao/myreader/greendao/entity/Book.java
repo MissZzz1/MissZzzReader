@@ -48,14 +48,16 @@ public class Book implements Serializable {
 
     private int chapterTotalNum;//总章节数
 
+    private int lastReadPosition;//上次阅读到的章节的位置
 
-    @Generated(hash = 335172433)
+
+    @Generated(hash = 1524295773)
     public Book(String id, String name, String chapterUrl, String imgUrl,
             String desc, String author, String type, String updateDate,
             String newestChapterId, String newestChapterTitle,
             String newestChapterUrl, String historyChapterId,
             int histtoryChapterNum, int sortCode, int noReadNum,
-            int chapterTotalNum) {
+            int chapterTotalNum, int lastReadPosition) {
         this.id = id;
         this.name = name;
         this.chapterUrl = chapterUrl;
@@ -72,6 +74,7 @@ public class Book implements Serializable {
         this.sortCode = sortCode;
         this.noReadNum = noReadNum;
         this.chapterTotalNum = chapterTotalNum;
+        this.lastReadPosition = lastReadPosition;
     }
     @Generated(hash = 1839243756)
     public Book() {
@@ -171,6 +174,12 @@ public class Book implements Serializable {
     }
     public void setChapterTotalNum(int chapterTotalNum) {
         this.chapterTotalNum = chapterTotalNum;
+    }
+    public int getLastReadPosition() {
+        return this.lastReadPosition;
+    }
+    public void setLastReadPosition(int lastReadPosition) {
+        this.lastReadPosition = lastReadPosition;
     }
 
 

@@ -172,9 +172,9 @@ public class BaseApi {
      * @param callback
      */
     private static void error(Exception e, final ResultCallback callback){
-        if (e.toString().contains("SocketTimeoutException") || e.toString().contains("UnknownHostException")) {
+      /*  if (e.toString().contains("SocketTimeoutException") || e.toString().contains("UnknownHostException")) {
             TextHelper.showText("网络连接超时，请检查网络");
-        }
+        }*/
         e.printStackTrace();
         callback.onError(e);
     }

@@ -8,7 +8,7 @@ import android.widget.TextView;
  * Created by zhao on 2017/8/16.
  */
 
-public class ReadTextView extends TextView {
+public class ReadTextView extends AppCompatTextView {
 
     public ReadTextView(Context context){
         super(context);

@@ -16,8 +16,20 @@
             android:layout_height="match_parent"
             android:id="@+id/srl_content">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/nothing"
+                android:overScrollMode="never"
+                android:dividerHeight="30dp"
+                android:fadingEdge="none"
+                android:listSelector="@color/nothing">
 
-            <ListView
+            </android.support.v7.widget.RecyclerView>
+
+
+          <!--  <ListView
                 android:id="@+id/lv_content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -27,7 +39,7 @@
                 android:fadingEdge="none"
                 android:listSelector="@color/nothing">
 
-            </ListView>
+            </ListView>-->
 
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>

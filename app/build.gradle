@@ -8,8 +8,8 @@ android {
         applicationId "com.zhao.myreader"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 141
-        versionName "1.4.1 "
+        versionCode 150
+        versionName "1.5.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -61,7 +61,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 7
+    schemaVersion 8
     daoPackage 'com.zhao.myreader.greendao.gen'
     targetGenDir 'src/main/java'
 }
