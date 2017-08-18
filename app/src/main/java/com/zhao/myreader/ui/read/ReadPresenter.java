@@ -54,7 +54,7 @@ public class ReadPresenter implements BasePresenter {
     private ArrayList<Chapter> mInvertedOrderChapters = new ArrayList<>();
     private ChapterService mChapterService;
     private BookService mBookService;
-    private ChapterContentAdapter mChapterContentAdapter;
+//    private ChapterContentAdapter mChapterContentAdapter;
     private ReadContentAdapter mReadContentAdapter;
     private ChapterTitleAdapter mChapterTitleAdapter;
     private Setting mSetting;
@@ -493,7 +493,7 @@ public class ReadPresenter implements BasePresenter {
         } else {
             mReadActivity.getDlReadActivity().setBackgroundResource(R.color.sys_night_bg);
         }
-        if (mChapterContentAdapter == null) {
+        if (mReadContentAdapter == null) {
 //            mChapterContentAdapter = new ChapterContentAdapter(mReadActivity, R.layout.listview_chapter_content_item, mChapters, mBook);
 //            mReadActivity.getLvContent().setAdapter(mChapterContentAdapter);
             //设置布局管理器
@@ -504,7 +504,7 @@ public class ReadPresenter implements BasePresenter {
             initReadViewOnClick();
             mReadActivity.getRvContent().setAdapter(mReadContentAdapter);
         } else {
-            mChapterContentAdapter.notifyDataSetChanged();
+            mReadContentAdapter.notifyDataSetChangedBySetting();
         }
         if (!settingChange) {
 //            mReadActivity.getLvContent().setSelection(mBook.getHisttoryChapterNum());

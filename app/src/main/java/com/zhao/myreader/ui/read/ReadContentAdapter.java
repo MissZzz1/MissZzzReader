@@ -111,6 +111,8 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         return viewHolder;
     }
 
+
+
     /**
      * 设置值
      */
@@ -170,6 +172,15 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
 
 //        saveHistory(postion);
 
+    }
+
+
+
+
+    public void notifyDataSetChangedBySetting() {
+        mSetting = SysManager.getSetting();
+        initFont();
+        super.notifyDataSetChanged();
     }
 
     public TextView getCurTextView() {
