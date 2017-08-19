@@ -18,6 +18,7 @@ import com.zhao.myreader.R;
 import com.zhao.myreader.application.SysManager;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.custom.ContainsEmojiEditText;
+import com.zhao.myreader.custom.MyTextView;
 import com.zhao.myreader.entity.Setting;
 import com.zhao.myreader.enums.Font;
 import com.zhao.myreader.enums.Language;
@@ -41,6 +42,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     private ArrayList<Chapter> mDatas;
     private OnClickItemListener mOnClickItemListener;
     private View.OnTouchListener mOnTouchListener;
+
     private ChapterService mChapterService;
     private BookService mBookService;
     private Setting mSetting;
@@ -81,8 +83,8 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
             super(arg0);
         }
 
-        TextView tvTitle;
-        TextView tvContent;
+        MyTextView tvTitle;
+        MyTextView tvContent;
         TextView tvErrorTips;
     }
 
@@ -105,8 +107,8 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
         if (rvContent == null) rvContent = (RecyclerView) viewGroup;
         View view = mInflater.inflate(mResourceId, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
-        viewHolder.tvTitle = (TextView) view.findViewById(R.id.tv_title);
-        viewHolder.tvContent = (TextView) view.findViewById(R.id.tv_content);
+        viewHolder.tvTitle = (MyTextView) view.findViewById(R.id.tv_title);
+        viewHolder.tvContent = (MyTextView) view.findViewById(R.id.tv_content);
         viewHolder.tvErrorTips = (TextView) view.findViewById(R.id.tv_loading_error_tips);
         return viewHolder;
     }
@@ -119,6 +121,19 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
         initView(i, viewHolder);
+
+       /* if (mOnTouchListener != null){
+            viewHolder.tvContent.setmOnTouchListener(mOnTouchListener);
+        }
+
+        viewHolder.tvContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnClickItemListener != null) {
+                    mOnClickItemListener.onClick(viewHolder.itemView, i);
+                }
+            }
+        });*/
         if (mOnTouchListener != null){
             viewHolder.itemView.setOnTouchListener(mOnTouchListener);
         }
@@ -131,6 +146,7 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
                 }
             }
         });
+
     }
 
     private void initView(final int postion, final ViewHolder viewHolder) {

@@ -10,24 +10,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.zhao.myreader.custom.MyTextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.5"
             android:textColor="@color/sys_protect_eye_word"
-            android:textIsSelectable="true"
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <TextView
+        <com.zhao.myreader.custom.MyTextView
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:lineSpacingMultiplier="1.5"
             android:textColor="@color/sys_protect_eye_word"
-            android:textIsSelectable="true"
             android:textSize="20sp" />
 
     </LinearLayout>

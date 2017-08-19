@@ -23,6 +23,7 @@ import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.creator.DialogCreator;
+import com.zhao.myreader.custom.MyTextView;
 import com.zhao.myreader.entity.Setting;
 import com.zhao.myreader.enums.Font;
 import com.zhao.myreader.enums.Language;
@@ -279,7 +280,6 @@ public class ReadPresenter implements BasePresenter {
         mReadContentAdapter.setmOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-//                pointX = event.getX();
                 pointY = event.getRawY();
                 return false;
             }
