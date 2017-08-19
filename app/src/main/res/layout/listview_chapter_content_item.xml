@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.5"
             android:textStyle="bold"
+            android:textIsSelectable="true"
             android:textColor="@color/sys_protect_eye_word"
             android:textSize="22sp" />
 
@@ -24,6 +25,7 @@
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textIsSelectable="true"
             android:lineSpacingMultiplier="1.5"
             android:textColor="@color/sys_protect_eye_word"
             android:textSize="20sp" />
