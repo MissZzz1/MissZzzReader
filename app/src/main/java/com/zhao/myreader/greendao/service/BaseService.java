@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import com.zhao.myreader.greendao.GreenDaoManager;
 import com.zhao.myreader.greendao.gen.DaoSession;
+import com.zhao.myreader.util.StringHelper;
 
 /**
  * Created by zhao on 2017/7/24.
@@ -17,6 +18,7 @@ public class BaseService {
     }
 
     public void updateEntity(Object entity){
+
         DaoSession daoSession  = GreenDaoManager.getInstance().getSession();
         daoSession.update(entity);
     }

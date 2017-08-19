@@ -113,7 +113,9 @@ public class ReadPresenter implements BasePresenter {
                 case 6:
                     mReadActivity.getRvContent().scrollBy(0,mBook.getLastReadPosition());
                     mBook.setLastReadPosition(0);
-                    mBookService.updateEntity(mBook);
+                    if (!StringHelper.isEmpty(mBook.getId())){
+                        mBookService.updateEntity(mBook);
+                    }
                     break;
             }
         }
@@ -267,7 +269,9 @@ public class ReadPresenter implements BasePresenter {
             mBook.setLastReadPosition(mBook.getLastReadPosition() + dy);
         }
         mBook.setHisttoryChapterNum(mLinearLayoutManager.findLastVisibleItemPosition());
-        mBookService.updateEntity(mBook);
+        if (!StringHelper.isEmpty(mBook.getId())){
+            mBookService.updateEntity(mBook);
+        }
 
     }
 

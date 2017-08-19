@@ -15,36 +15,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.5"
-            android:textStyle="bold"
-            android:textIsSelectable="true"
             android:textColor="@color/sys_protect_eye_word"
-            android:textSize="22sp" />
+            android:textIsSelectable="true"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:layout_marginTop="50dp"
             android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true"
+            android:layout_marginTop="50dp"
             android:lineSpacingMultiplier="1.5"
             android:textColor="@color/sys_protect_eye_word"
+            android:textIsSelectable="true"
             android:textSize="20sp" />
 
     </LinearLayout>
 
 
-
-
     <TextView
         android:id="@+id/tv_loading_error_tips"
-        android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="加载失败，点击重新加载"
+        android:layout_centerInParent="true"
         android:gravity="center"
-        android:visibility="gone"/>
-
-
+        android:text="加载失败，点击重新加载"
+        android:visibility="gone" />
 
 
 </RelativeLayout>
