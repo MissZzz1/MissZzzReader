@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
     android:padding="10dp">
 
     <LinearLayout
@@ -25,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:lineSpacingMultiplier="1.5"
+            android:textIsSelectable="true"
             android:textColor="@color/sys_protect_eye_word"
             android:textSize="20sp" />
 
