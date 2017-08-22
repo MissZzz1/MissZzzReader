@@ -12,14 +12,6 @@ android {
         versionName "1.5.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
-    signingConfigs {
-        release {
-            storeFile file("myReader_key.jks")
-            storePassword "78451296"
-            keyAlias "key0"
-            keyPassword "78451296"
-        }
-    }
 
     buildTypes {
         release {
@@ -30,7 +22,7 @@ android {
             }
         }
         debug {
-            signingConfig signingConfigs.release
+
             ndk {
                 abiFilters "x86", "armeabi", "armeabi-v7a"
             }

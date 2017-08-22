@@ -9,7 +9,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,6 +19,7 @@ import com.spreada.utils.chinese.ZHConverter;
 import com.zhao.myreader.R;
 import com.zhao.myreader.application.SysManager;
 import com.zhao.myreader.callback.ResultCallback;
+import com.zhao.myreader.custom.MyTextView;
 import com.zhao.myreader.entity.Setting;
 import com.zhao.myreader.enums.Font;
 import com.zhao.myreader.enums.Language;
@@ -27,6 +30,7 @@ import com.zhao.myreader.greendao.service.ChapterService;
 import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.webapi.CommonApi;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
@@ -82,8 +86,8 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(mResourceId, null);
-            viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tv_title);
-            viewHolder.tvContent = (TextView) convertView.findViewById(R.id.tv_content);
+            viewHolder.tvTitle = (MyTextView) convertView.findViewById(R.id.tv_title);
+            viewHolder.tvContent = (MyTextView) convertView.findViewById(R.id.tv_content);
             viewHolder.tvErrorTips = (TextView) convertView.findViewById(R.id.tv_loading_error_tips);
             convertView.setTag(viewHolder);
         } else {
@@ -100,6 +104,9 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         viewHolder.tvContent.setTypeface(mTypeFace);
         viewHolder.tvTitle.setTypeface(mTypeFace);
         viewHolder.tvErrorTips.setVisibility(View.GONE);
+
+       /* hiddenSoftInput(viewHolder.tvContent);
+        hiddenSoftInput(viewHolder.tvTitle);*/
 
         viewHolder.tvTitle.setText("【" + getLanguageContext(chapter.getTitle()) + "】");
 
@@ -245,11 +252,24 @@ public class ChapterContentAdapter extends ArrayAdapter<Chapter> {
         }
     }
 
+    private void hiddenSoftInput(EditText editText){
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        try {
+            Class<EditText> cls = EditText.class;
+            Method setSoftInputShownOnFocus = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
+            setSoftInputShownOnFocus.setAccessible(true);
+            setSoftInputShownOnFocus.invoke(editText, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     class ViewHolder {
 
-        TextView tvTitle;
-        TextView tvContent;
+        MyTextView tvTitle;
+        MyTextView tvContent;
         TextView tvErrorTips;
     }
 

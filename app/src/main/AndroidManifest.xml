@@ -86,7 +86,8 @@
             android:name=".ui.search.SearchBookActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity android:name=".ui.bookinfo.BookInfoActivity" />
-        <activity android:name=".ui.read.ReadActivity" />
+        <activity android:name=".ui.read.ReadActivity"
+            android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".ui.font.FontsActivity"></activity>
     </application>
 

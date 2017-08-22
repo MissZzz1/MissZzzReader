@@ -6,10 +6,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,6 +32,7 @@ import com.zhao.myreader.greendao.service.ChapterService;
 import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.webapi.CommonApi;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -151,6 +155,10 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
 
     private void initView(final int postion, final ViewHolder viewHolder) {
         final Chapter chapter = getItem(postion);
+
+
+//        hiddenSoftInput(viewHolder.tvContent);
+//        hiddenSoftInput(viewHolder.tvTitle);
         viewHolder.tvContent.setTypeface(mTypeFace);
         viewHolder.tvTitle.setTypeface(mTypeFace);
         viewHolder.tvErrorTips.setVisibility(View.GONE);
@@ -303,6 +311,19 @@ public class ReadContentAdapter extends RecyclerView.Adapter<ReadContentAdapter.
             mTypeFace = null;
         } else {
             mTypeFace = Typeface.createFromAsset(mContext.getAssets(), mSetting.getFont().path);
+        }
+    }
+
+    private void hiddenSoftInput(EditText editText){
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        try {
+            Class<EditText> cls = EditText.class;
+            Method setSoftInputShownOnFocus = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
+            setSoftInputShownOnFocus.setAccessible(true);
+            setSoftInputShownOnFocus.invoke(editText, false);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

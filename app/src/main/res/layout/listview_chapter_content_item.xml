@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:descendantFocusability="blocksDescendants"
     android:padding="10dp">
 
     <LinearLayout
@@ -15,6 +14,9 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/nothing"
+            android:cursorVisible="false"
+            android:inputType="none"
             android:lineSpacingMultiplier="1.5"
             android:textColor="@color/sys_protect_eye_word"
             android:textSize="22sp"
@@ -25,8 +27,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:background="@color/nothing"
+            android:cursorVisible="false"
+            android:inputType="none"
             android:lineSpacingMultiplier="1.5"
-            android:textIsSelectable="true"
             android:textColor="@color/sys_protect_eye_word"
             android:textSize="20sp" />
 
