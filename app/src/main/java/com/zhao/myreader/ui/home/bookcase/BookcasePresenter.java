@@ -108,10 +108,10 @@ public class BookcasePresenter implements BasePresenter {
                 return true;
             }
         });
-        getData();
     }
 
     private void init() {
+        initBook();
         if (mBooks == null || mBooks.size() == 0) {
             mBookcaseFragment.getGvBook().setVisibility(View.GONE);
             mBookcaseFragment.getLlNoDataTips().setVisibility(View.VISIBLE);
@@ -120,13 +120,16 @@ public class BookcasePresenter implements BasePresenter {
             mBookcaseFragment.getGvBook().setAdapter(mBookcaseAdapter);
             mBookcaseFragment.getLlNoDataTips().setVisibility(View.GONE);
             mBookcaseFragment.getGvBook().setVisibility(View.VISIBLE);
-            initNoReadNum();
         }
-
     }
 
 
     public void getData() {
+        init();
+        initNoReadNum();
+    }
+
+    private void initBook() {
         mBooks = (ArrayList<Book>) mBookService.getAllBooks();
         for (int i = 0; i < mBooks.size(); i++) {
             if (mBooks.get(i).getSortCode() != i + 1) {
@@ -134,7 +137,6 @@ public class BookcasePresenter implements BasePresenter {
                 mBookService.updateEntity(mBooks.get(i));
             }
         }
-        init();
     }
 
     private void initNoReadNum() {
