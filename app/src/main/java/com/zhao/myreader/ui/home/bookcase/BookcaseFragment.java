@@ -55,7 +55,7 @@ public class BookcaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mBookcasePresenter.getData();
+//        mBookcasePresenter.getData();
     }
 
     public LinearLayout getLlNoDataTips() {

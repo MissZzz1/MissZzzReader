@@ -53,7 +53,8 @@ public class DialogCreator {
                                                  final View.OnClickListener reduceSizeListener,
                                                  final View.OnClickListener increaseSizeListener,
                                                  final View.OnClickListener languageChangeListener,
-                                                 final View.OnClickListener onFontClickListener) {
+                                                 final View.OnClickListener onFontClickListener,
+                                                 View.OnClickListener autoScrollListener) {
         final Dialog dialog = new Dialog(context, R.style.jmui_default_dialog_style);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_read_setting_detail, null);
         dialog.setContentView(view);
@@ -185,6 +186,7 @@ public class DialogCreator {
             }
         });
 
+        //亮度跟随系统
         tvBrightFollowSystem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -225,6 +227,29 @@ public class DialogCreator {
         TextView tvFont = (TextView)view.findViewById(R.id.tv_text_font);
         tvFont.setOnClickListener(onFontClickListener);
 
+        //自动滚屏速度
+        SeekBar sbScrollSpeed = (SeekBar)view.findViewById(R.id.sb_auto_scroll_progress);
+        TextView tvAutoScroll = (TextView)view.findViewById(R.id.tv_auto_scroll);
+        sbScrollSpeed.setProgress(100 - setting.getAutoScrollSpeed() );
+        sbScrollSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                setting.setAutoScrollSpeed(100 - progress);
+                SysManager.saveSetting(setting);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        tvAutoScroll.setOnClickListener(autoScrollListener);
+
         dialog.show();
         return dialog;
     }
@@ -260,7 +285,8 @@ public class DialogCreator {
                                            View.OnClickListener chapterListListener,
                                            final OnClickNightAndDayListener onClickNightAndDayListener,
                                            View.OnClickListener settingListener,
-                                           SeekBar.OnSeekBarChangeListener onSeekBarChangeListener) {
+                                           SeekBar.OnSeekBarChangeListener onSeekBarChangeListener,
+                                           View.OnClickListener voiceOnClickListener) {
         final Dialog dialog = new Dialog(context, R.style.jmui_default_dialog_style);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_read_setting, null);
         dialog.setContentView(view);
@@ -273,6 +299,7 @@ public class DialogCreator {
         LinearLayout llSetting = (LinearLayout) view.findViewById(R.id.ll_setting);
         final ImageView ivNightAndDay = (ImageView) view.findViewById(R.id.iv_night_and_day);
         final TextView tvNightAndDay = (TextView) view.findViewById(R.id.tv_night_and_day);
+        ImageView ivVoice  = (ImageView)view.findViewById(R.id.iv_voice_read);
 
         view.findViewById(R.id.rl_title_view).setOnClickListener(null);
         view.findViewById(R.id.ll_bottom_view).setOnClickListener(null);
@@ -302,6 +329,7 @@ public class DialogCreator {
         llChapterList.setOnClickListener(chapterListListener);
         llSetting.setOnClickListener(settingListener);
         sbChapterProgress.setOnSeekBarChangeListener(onSeekBarChangeListener);
+        ivVoice.setOnClickListener(voiceOnClickListener);
         llNightAndDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

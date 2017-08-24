@@ -88,7 +88,7 @@
                 android:maxHeight="1dp"
                 android:minHeight="1dp"
                 android:progressDrawable="@drawable/seekbar_bg"
-                android:thumb="@mipmap/thumb" />
+                android:thumb="@mipmap/thumb"/>
 
             <TextView
                 android:id="@+id/tv_next_chapter"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="下一章"
                 android:textColor="@color/sys_dialog_setting_word"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
 
         </LinearLayout>
 

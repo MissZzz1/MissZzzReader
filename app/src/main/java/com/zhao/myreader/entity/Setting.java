@@ -25,6 +25,16 @@ public class Setting implements Serializable {
     private Language language;//简繁体
     private Font font;//字体
 
+    private int autoScrollSpeed = 5;//自动滑屏速度
+
+    public int getAutoScrollSpeed() {
+        return autoScrollSpeed;
+    }
+
+    public void setAutoScrollSpeed(int autoScrollSpeed) {
+        this.autoScrollSpeed = autoScrollSpeed;
+    }
+
     public Font getFont() {
         return font;
     }

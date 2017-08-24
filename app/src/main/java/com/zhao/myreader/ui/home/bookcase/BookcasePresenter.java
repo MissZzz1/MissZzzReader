@@ -45,6 +45,7 @@ public class BookcasePresenter implements BasePresenter {
             switch (msg.what) {
                 case 1:
                     mBookcaseAdapter.notifyDataSetChanged();
+                    mBookcaseFragment.getSrlContent().finishRefresh();
                     break;
 
             }
@@ -64,7 +65,6 @@ public class BookcasePresenter implements BasePresenter {
         mBookcaseFragment.getSrlContent().setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(1000);
                 initNoReadNum();
             }
         });
@@ -108,6 +108,7 @@ public class BookcasePresenter implements BasePresenter {
                 return true;
             }
         });
+        getData();
     }
 
     private void init() {

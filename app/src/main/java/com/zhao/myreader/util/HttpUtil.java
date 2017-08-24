@@ -193,7 +193,11 @@ public class HttpUtil {
             @Override
             public void run() {
                 try{
-                    OkHttpClient client = new OkHttpClient();
+                    OkHttpClient client = new OkHttpClient.Builder()
+                            .readTimeout(5000,TimeUnit.SECONDS)//设置读取超时时间
+                            .writeTimeout(5000,TimeUnit.SECONDS)//设置写的超时时间
+                            .connectTimeout(5000,TimeUnit.SECONDS)//设置连接超时时间
+                            .build();
                     Request request = new Request.Builder()
                             .url(address)
                             .build();

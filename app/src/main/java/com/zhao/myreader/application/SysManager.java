@@ -56,6 +56,7 @@ public class SysManager {
         setting.setBrightFollowSystem(true);
         setting.setLanguage(Language.simplified);
         setting.setFont(Font.默认字体);
+        setting.setAutoScrollSpeed(50);
         return setting;
     }
 

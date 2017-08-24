@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MyApplication.checkVersionByServer(this);
+//        MyApplication.checkVersionByServer(this);
     }
 
     public CircleImageView getCivAvatar() {
