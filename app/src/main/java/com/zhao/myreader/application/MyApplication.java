@@ -60,8 +60,8 @@ public class MyApplication extends Application {
         initPush();
         HttpUtil.trustAllHosts();//信任所有证书
         mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());//初始化线程池
-        BaseActivity.setCloseAntiHijacking(true);
 
+        BaseActivity.setCloseAntiHijacking(true);
 
     }
 
@@ -123,7 +123,17 @@ public class MyApplication extends Application {
 
     public void newThread(Runnable runnable) {
 
-        mFixedThreadPool.execute(runnable);
+        try {
+            mFixedThreadPool.execute(runnable);
+        } catch (Exception e) {
+            e.printStackTrace();
+            mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());//初始化线程池
+            mFixedThreadPool.execute(runnable);
+        }
+    }
+
+    public void shutdownThreadPool(){
+        mFixedThreadPool.shutdownNow();
     }
 
 

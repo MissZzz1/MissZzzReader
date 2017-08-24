@@ -105,17 +105,16 @@
             android:layout_height="1px"
             android:src="@color/sys_dialog_setting_line" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
             android:paddingTop="10dp">
 
             <LinearLayout
                 android:id="@+id/ll_chapter_list"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center">
@@ -129,6 +128,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+
                     android:text="目录"
                     android:textColor="@color/sys_dialog_setting_word" />
 
@@ -136,10 +136,35 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_night_and_day"
-                android:layout_width="wrap_content"
+                android:id="@+id/ll_download_cache"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/download" />
+
+                <TextView
+                    android:id="@+id/tv_download_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="缓存"
+                    android:textColor="@color/sys_dialog_setting_word" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_night_and_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -162,9 +187,9 @@
 
             <LinearLayout
                 android:id="@+id/ll_setting"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center">
 
@@ -184,10 +209,12 @@
             </LinearLayout>
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
     </LinearLayout>
+
+
 
 
 </RelativeLayout>

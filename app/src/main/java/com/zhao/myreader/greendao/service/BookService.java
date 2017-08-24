@@ -132,7 +132,6 @@ public class BookService extends BaseService {
             Cursor cursor = selectBySql("select count(*) n from book ",null);
             if (cursor.moveToNext()){
                 num = cursor.getInt(0);
-
             }
         } catch (Exception e) {
             e.printStackTrace();

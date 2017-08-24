@@ -37,7 +37,7 @@ public class BookcasePresenter implements BasePresenter {
     private ArrayList<Book> mBooks;//书目数组
     private BookcaseAdapter mBookcaseAdapter;
     private BookService mBookService;
-    private ChapterService mChapterService;
+//    private ChapterService mChapterService;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -45,6 +45,9 @@ public class BookcasePresenter implements BasePresenter {
             switch (msg.what) {
                 case 1:
                     mBookcaseAdapter.notifyDataSetChanged();
+                    mBookcaseFragment.getSrlContent().finishRefresh();
+                    break;
+                case 2:
                     mBookcaseFragment.getSrlContent().finishRefresh();
                     break;
 
@@ -55,7 +58,7 @@ public class BookcasePresenter implements BasePresenter {
     public BookcasePresenter(BookcaseFragment bookcaseFragment) {
         mBookcaseFragment = bookcaseFragment;
         mBookService = new BookService();
-        mChapterService = new ChapterService();
+//        mChapterService = new ChapterService();
     }
 
     @Override
@@ -79,6 +82,7 @@ public class BookcasePresenter implements BasePresenter {
 
             }
         });
+
         mBookcaseFragment.getLlNoDataTips().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,6 +90,7 @@ public class BookcasePresenter implements BasePresenter {
                 mBookcaseFragment.startActivity(intent);
             }
         });
+
         mBookcaseFragment.getGvBook().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
@@ -151,13 +156,14 @@ public class BookcasePresenter implements BasePresenter {
                         mHandler.sendMessage(mHandler.obtainMessage(1));
                     } else {
                         book.setNoReadNum(0);
+                        mHandler.sendMessage(mHandler.obtainMessage(2));
                     }
                     mBookService.updateEntity(book);
                 }
 
                 @Override
                 public void onError(Exception e) {
-
+                    mHandler.sendMessage(mHandler.obtainMessage(1));
                 }
             });
         }

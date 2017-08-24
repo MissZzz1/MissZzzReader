@@ -286,7 +286,8 @@ public class DialogCreator {
                                            final OnClickNightAndDayListener onClickNightAndDayListener,
                                            View.OnClickListener settingListener,
                                            SeekBar.OnSeekBarChangeListener onSeekBarChangeListener,
-                                           View.OnClickListener voiceOnClickListener) {
+                                           View.OnClickListener voiceOnClickListener,
+                                           final OnClickDownloadAllChapterListener onClickDownloadAllChapterListener) {
         final Dialog dialog = new Dialog(context, R.style.jmui_default_dialog_style);
         final View view = LayoutInflater.from(context).inflate(R.layout.dialog_read_setting, null);
         dialog.setContentView(view);
@@ -330,6 +331,7 @@ public class DialogCreator {
         llSetting.setOnClickListener(settingListener);
         sbChapterProgress.setOnSeekBarChangeListener(onSeekBarChangeListener);
         ivVoice.setOnClickListener(voiceOnClickListener);
+        //日夜切换
         llNightAndDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -348,6 +350,19 @@ public class DialogCreator {
                 }
             }
         });
+
+        //缓存全部章节
+        final TextView tvDownloadProgress = (TextView)view.findViewById(R.id.tv_download_progress);
+        LinearLayout llDonwloadCache = (LinearLayout)view.findViewById(R.id.ll_download_cache);
+        llDonwloadCache.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onClickDownloadAllChapterListener != null){
+                    onClickDownloadAllChapterListener.onClick(dialog,v,tvDownloadProgress);
+                }
+            }
+        });
+
         dialog.setCancelable(true);
         dialog.setCanceledOnTouchOutside(true);
         dialog.show();
@@ -580,6 +595,10 @@ public class DialogCreator {
 
     public interface OnBrightFollowSystemChangeListener {
         void onChange(boolean isFollowSystem);
+    }
+
+    public interface OnClickDownloadAllChapterListener {
+        void onClick(Dialog dialog, View view,TextView tvDownloadProgress);
     }
 
 

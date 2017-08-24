@@ -22,4 +22,8 @@
     <string name="font_use">立即使用</string>
 
     <string name="font">字体</string>
+
+    <string name="tip">提示</string>
+
+    <string name="download_no_add_tips">缓存书籍需要先加入书架，您确定要添加本书到书架吗？</string>
 </resources>

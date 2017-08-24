@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhao.myreader.R;
+import com.zhao.myreader.application.MyApplication;
 import com.zhao.myreader.base.BaseActivity;
 
 import butterknife.ButterKnife;
@@ -97,4 +98,11 @@ public class ReadActivity extends BaseActivity {
     public LinearLayout getLlChapterListView() {
         return llChapterListView;
     }
+
+    @Override
+    protected void onDestroy() {
+        MyApplication.getApplication().shutdownThreadPool();
+        super.onDestroy();
+    }
+
 }
