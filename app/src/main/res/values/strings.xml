@@ -26,4 +26,6 @@
     <string name="tip">提示</string>
 
     <string name="download_no_add_tips">缓存书籍需要先加入书架，您确定要添加本书到书架吗？</string>
+
+    <string name="download_already_all_tips">书籍已经缓存整本！</string>
 </resources>

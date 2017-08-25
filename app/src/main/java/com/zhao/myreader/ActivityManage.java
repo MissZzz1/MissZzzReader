@@ -11,7 +11,7 @@ public class ActivityManage {
 
     private static ArrayList<Activity> activities = new ArrayList<Activity>();
 
-    public static void addActivity(Activity activity ){
+    public static void addActivity(Activity activity){
         activities.add(activity);
     }
 

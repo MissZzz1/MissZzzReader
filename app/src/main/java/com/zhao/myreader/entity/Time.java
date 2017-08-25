@@ -1,5 +1,8 @@
 package com.zhao.myreader.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,7 +11,7 @@ import java.util.Date;
  * Created by zhao on 2016/12/7.
  */
 
-public class Time {
+public class Time implements Parcelable{
     private int year;
     private int month;
     private int date;
@@ -158,4 +161,43 @@ public class Time {
     public void setYear(int year) {
         this.year = year;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.year);
+        dest.writeInt(this.month);
+        dest.writeInt(this.date);
+        dest.writeInt(this.hour);
+        dest.writeInt(this.minute);
+        dest.writeInt(this.second);
+    }
+
+    public Time() {
+    }
+
+    protected Time(Parcel in) {
+        this.year = in.readInt();
+        this.month = in.readInt();
+        this.date = in.readInt();
+        this.hour = in.readInt();
+        this.minute = in.readInt();
+        this.second = in.readInt();
+    }
+
+    public static final Creator<Time> CREATOR = new Creator<Time>() {
+        @Override
+        public Time createFromParcel(Parcel source) {
+            return new Time(source);
+        }
+
+        @Override
+        public Time[] newArray(int size) {
+            return new Time[size];
+        }
+    };
 }

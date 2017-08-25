@@ -109,7 +109,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp"
-            android:paddingTop="10dp">
+            android:paddingTop="10dp"
+            android:gravity="center">
 
             <LinearLayout
                 android:id="@+id/ll_chapter_list"
@@ -163,7 +164,6 @@
                 android:id="@+id/ll_night_and_day"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">

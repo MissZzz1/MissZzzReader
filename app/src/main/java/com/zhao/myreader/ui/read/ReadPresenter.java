@@ -760,7 +760,6 @@ public class ReadPresenter implements BasePresenter {
      */
     private void getAllChapterData(final TextView tvDownloadProgress) {
         curCacheChapterNum = 0;
-
         MyApplication.getApplication().newThread(new Runnable() {
             @Override
             public void run() {
@@ -783,6 +782,9 @@ public class ReadPresenter implements BasePresenter {
                     }else {
                         curCacheChapterNum ++;
                     }
+                }
+                if (curCacheChapterNum == mChapters.size()){
+                    TextHelper.showText(mReadActivity.getString(R.string.download_already_all_tips));
                 }
             }
         });
