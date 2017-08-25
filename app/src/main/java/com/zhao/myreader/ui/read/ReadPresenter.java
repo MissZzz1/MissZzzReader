@@ -705,14 +705,6 @@ public class ReadPresenter implements BasePresenter {
 
                         }
                     });
-                    if (!StringHelper.isEmpty(mBook.getId())) {
-                        for (Chapter chapter : mChapters) {
-                            chapter.setBookId(mBook.getId());
-                            if (StringHelper.isEmpty(chapter.getId())) {
-                                mChapterService.addChapter(chapter);
-                            }
-                        }
-                    }
                 }
             }
 
@@ -742,11 +734,14 @@ public class ReadPresenter implements BasePresenter {
             }
         }
         if (mChapters.size() < newChapters.size()) {
+            int start = mChapters.size();
             for (int j = mChapters.size(); j < newChapters.size(); j++) {
-
+                newChapters.get(j).setId(StringHelper.getStringRandom(25));
+                newChapters.get(j).setBookId(mBook.getId());
                 mChapters.add(newChapters.get(j));
 //                mChapterService.addChapter(newChapters.get(j));
             }
+            mChapterService.addChapters(mChapters.subList(start,mChapters.size()));
         } else if (mChapters.size() > newChapters.size()) {
             for (int j = newChapters.size(); j < mChapters.size(); j++) {
                 mChapterService.deleteEntity(mChapters.get(j));
@@ -807,7 +802,6 @@ public class ReadPresenter implements BasePresenter {
      */
     private void getChapterContent(final Chapter chapter, ResultCallback resultCallback) {
         if (StringHelper.isEmpty(chapter.getBookId())) chapter.setId(mBook.getId());
-
         if (!StringHelper.isEmpty(chapter.getContent())) {
             if (resultCallback != null) {
                 resultCallback.onFinish(chapter.getContent(), 0);
@@ -830,7 +824,6 @@ public class ReadPresenter implements BasePresenter {
 
                 });
             }
-
         }
     }
 
@@ -841,7 +834,6 @@ public class ReadPresenter implements BasePresenter {
      * @param isCurDayStyle
      */
     private void changeNightAndDaySetting(boolean isCurDayStyle) {
-
         mSetting.setDayStyle(!isCurDayStyle);
         SysManager.saveSetting(mSetting);
         settingChange = true;

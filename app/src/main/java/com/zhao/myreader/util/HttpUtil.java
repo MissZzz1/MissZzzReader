@@ -53,6 +53,21 @@ import static java.lang.String.valueOf;
 public class HttpUtil {
 
     private static String sessionid;
+    //最好只使用一个共享的OkHttpClient 实例，将所有的网络请求都通过这个实例处理。
+    //因为每个OkHttpClient 实例都有自己的连接池和线程池，重用这个实例能降低延时，减少内存消耗，而重复创建新实例则会浪费资源。
+    private static OkHttpClient mClient;
+
+    private static synchronized OkHttpClient getOkHttpClient(){
+        if (mClient == null){
+           mClient = new OkHttpClient.Builder()
+                    .readTimeout(5000,TimeUnit.SECONDS)//设置读取超时时间
+                    .writeTimeout(5000,TimeUnit.SECONDS)//设置写的超时时间
+                    .connectTimeout(5000,TimeUnit.SECONDS)//设置连接超时时间
+                    .build();
+        }
+        return mClient;
+
+    }
 
     /**
      * 图片发送
@@ -192,17 +207,46 @@ public class HttpUtil {
        MyApplication.getApplication().newThread(new Runnable() {
             @Override
             public void run() {
+             /*   HttpURLConnection connection = null;
+                try {
+                    URL url = new URL(address);
+                    connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setRequestProperty("Content-type", "text/html");
+                    connection.setRequestProperty("Accept-Charset", "gbk");
+                    connection.setRequestProperty("contentType", "gbk");
+                    connection.setConnectTimeout(5 * 1000);
+                    connection.setReadTimeout(5 * 1000);
+                    connection.setDoInput(true);
+                    connection.setDoOutput(true);
+                    if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
+                        Log.e("Http", "网络错误异常！!!!");
+                    }
+                    InputStream in = connection.getInputStream();
+                    Log.d("Http", "connection success");
+                    if (callback != null) {
+                        callback.onFinish(in);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("Http", e.toString());
+                    if (callback != null) {
+                        callback.onError(e);
+                    }
+                } finally {
+                    if (connection != null) {
+                        connection.disconnect();
+                    }
+                }*/
                 try{
-                    OkHttpClient client = new OkHttpClient.Builder()
-                            .readTimeout(5000,TimeUnit.SECONDS)//设置读取超时时间
-                            .writeTimeout(5000,TimeUnit.SECONDS)//设置写的超时时间
-                            .connectTimeout(5000,TimeUnit.SECONDS)//设置连接超时时间
-                            .build();
+                     OkHttpClient client = getOkHttpClient();
                     Request request = new Request.Builder()
                             .url(address)
                             .build();
+
                     Response response = client.newCall(request).execute();
                     callback.onFinish(response.body().byteStream());
+
                 }catch(Exception e){
                     e.printStackTrace();
                     callback.onError(e);

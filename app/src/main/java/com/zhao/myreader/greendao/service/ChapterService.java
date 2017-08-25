@@ -146,4 +146,12 @@ public class ChapterService extends BaseService {
         }
     }
 
+    /**
+     * 批量添加章节
+     */
+    public void addChapters(List<Chapter> chapters) {
+        ChapterDao chapterDao = GreenDaoManager.getInstance().getSession().getChapterDao();
+        chapterDao.insertInTx(chapters);
+    }
+
 }

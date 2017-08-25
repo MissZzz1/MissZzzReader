@@ -3,8 +3,13 @@ package com.zhao.myreader.greendao.service;
 import android.database.Cursor;
 
 import com.zhao.myreader.greendao.GreenDaoManager;
+import com.zhao.myreader.greendao.gen.DaoMaster;
 import com.zhao.myreader.greendao.gen.DaoSession;
 import com.zhao.myreader.util.StringHelper;
+
+import org.greenrobot.greendao.annotation.Entity;
+
+import java.util.List;
 
 /**
  * Created by zhao on 2017/7/24.
@@ -57,4 +62,8 @@ public class BaseService {
         DaoSession daoSession  = GreenDaoManager.getInstance().getSession();
         Cursor cursor = daoSession.getDatabase().rawQuery(sql,selectionArgs);
     }
+
+
+
+
 }
