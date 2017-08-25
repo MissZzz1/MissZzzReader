@@ -245,9 +245,6 @@ public class ReadPresenter implements BasePresenter {
             }
         });
 
-
-        mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
-
         //关闭手势滑动
         mReadActivity.getDlReadActivity().setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         mReadActivity.getDlReadActivity().addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -675,6 +672,7 @@ public class ReadPresenter implements BasePresenter {
         CommonApi.getBookChapters(mBook.getChapterUrl(), new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
+                mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
                 final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;
                 mBook.setChapterTotalNum(chapters.size());
                 if (!StringHelper.isEmpty(mBook.getId())) {

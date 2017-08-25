@@ -8,8 +8,8 @@ android {
         applicationId "com.zhao.myreader"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 170
-        versionName "1.7.0"
+        versionCode 171
+        versionName "1.7.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -22,7 +22,6 @@ android {
             }
         }
         debug {
-
             ndk {
                 abiFilters "x86", "armeabi", "armeabi-v7a"
             }
