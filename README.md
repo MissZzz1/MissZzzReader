@@ -22,3 +22,6 @@ v1.7.2 优化章节数巨大（>1000）的小说的加载速度
 
  
 demo v1.7.2 下载体验：https://pan.baidu.com/s/1eRUfmbK
+
+
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png) 
