@@ -9,6 +9,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -50,6 +51,8 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class ReadPresenter implements BasePresenter {
+
+
 
     private ReadActivity mReadActivity;
     private Book mBook;
@@ -606,6 +609,7 @@ public class ReadPresenter implements BasePresenter {
         }
         mReadActivity.getPbLoading().setVisibility(View.GONE);
         mReadActivity.getSrlContent().finishLoadmore();
+
     }
 
     /**
