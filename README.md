@@ -25,3 +25,7 @@ demo v1.7.2 下载体验：https://pan.baidu.com/s/1eRUfmbK
 
 
 ![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png) 
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)
