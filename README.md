@@ -22,3 +22,14 @@ v1.7.2 优化章节数巨大（>1000）的小说的加载速度
 
  
 demo v1.7.2 下载体验：https://pan.baidu.com/s/1eRUfmbK
+
+
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/2.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/3.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/4.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/5.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/6.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/7.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/8.png)
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/9.png)
