@@ -8,19 +8,22 @@
 
     <com.scwang.smartrefresh.header.MaterialHeader
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:gravity="center">
+        android:padding="10dp"
+        android:scrollbars="none">
+
 
         <LinearLayout
-            android:layout_centerInParent="true"
             android:id="@+id/ll_no_data_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="gone">
@@ -42,16 +45,16 @@
         <com.zhao.myreader.custom.DragSortGridView
             android:id="@+id/gv_book"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="auto_fit"
-            android:scrollbars="none"
+            android:layout_height="wrap_content"
             android:columnWidth="100dp"
             android:horizontalSpacing="10dp"
-            android:verticalSpacing="10dp"
             android:listSelector="@android:color/transparent"
-            android:padding="10dp">
+            android:numColumns="auto_fit"
+            android:scrollbars="none"
+            android:verticalSpacing="10dp">
 
         </com.zhao.myreader.custom.DragSortGridView>
+
 
     </RelativeLayout>
 

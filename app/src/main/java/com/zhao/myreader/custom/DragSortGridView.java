@@ -280,10 +280,11 @@ public class DragSortGridView extends FrameLayout {
                 handleScrollAndCreMirror(ev);
             } else {
                 // 交给子控件自己处理
-                if (canScroll)
+                if (canScroll) {
                     mScrollView.dispatchTouchEvent(ev);
-                else
+                } else {
                     mGridView.dispatchTouchEvent(ev);
+                }
             }
             // 处理拖动
             detector.onTouchEvent(ev);
@@ -335,6 +336,7 @@ public class DragSortGridView extends FrameLayout {
                 }
                 // 内容太多时,移动到边缘会自动滚动
                 if (canScroll) {
+
                     int touchArea = decodeTouchArea(ev);
                     if (touchArea != mTouchArea) {
                         onTouchAreaChange(touchArea);

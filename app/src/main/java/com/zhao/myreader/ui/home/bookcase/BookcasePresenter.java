@@ -68,6 +68,7 @@ public class BookcasePresenter implements BasePresenter {
 
     @Override
     public void start() {
+        mBookcaseFragment.getSrlContent().setEnableRefresh(false);
         mBookcaseFragment.getSrlContent().setEnableHeaderTranslationContent(false);
         mBookcaseFragment.getSrlContent().setEnableLoadmore(false);
         mBookcaseFragment.getSrlContent().setOnRefreshListener(new OnRefreshListener() {
@@ -85,7 +86,6 @@ public class BookcasePresenter implements BasePresenter {
                 mBookcaseFragment.startActivity(intent);
             }
         });
-
 
         mBookcaseFragment.getGvBook().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -108,7 +108,7 @@ public class BookcasePresenter implements BasePresenter {
             public void onClick(View v) {
                 mMainActivity.getRlCommonTitle().setVisibility(View.VISIBLE);
                 mMainActivity.getRlEditTitile().setVisibility(View.GONE);
-                mBookcaseFragment.getSrlContent().setEnableRefresh(true);
+//                mBookcaseFragment.getSrlContent().setEnableRefresh(true);
                 mBookcaseFragment.getGvBook().setDragModel(-1);
                 mBookcaseAdapter.setmEditState(false);
                 mBookcaseAdapter.notifyDataSetChanged();
