@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhao.myreader.R;
+import com.zhao.myreader.custom.DragSortGridView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -21,12 +22,12 @@ import butterknife.InjectView;
 public class BookcaseFragment extends Fragment {
 
 
-    @InjectView(R.id.gv_book)
-    GridView gvBook;
     @InjectView(R.id.srl_content)
     SmartRefreshLayout srlContent;
     @InjectView(R.id.ll_no_data_tips)
     LinearLayout llNoDataTips;
+    @InjectView(R.id.gv_book)
+    DragSortGridView gvBook;
 
     private BookcasePresenter mBookcasePresenter;
 
@@ -62,7 +63,7 @@ public class BookcaseFragment extends Fragment {
         return llNoDataTips;
     }
 
-    public GridView getGvBook() {
+    public DragSortGridView getGvBook() {
         return gvBook;
     }
 

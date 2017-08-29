@@ -5,9 +5,10 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.zhao.myreader.R;
-import com.zhao.myreader.application.MyApplication;
 import com.zhao.myreader.base.BaseActivity;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.custom.CircleImageView;
@@ -27,8 +28,15 @@ public class MainActivity extends BaseActivity {
     ImageView ivSearch;
     @InjectView(R.id.vp_content)
     ViewPager vpContent;
+    @InjectView(R.id.rl_common_title)
+    RelativeLayout rlCommonTitle;
+    @InjectView(R.id.tv_edit_finish)
+    TextView tvEditFinish;
+    @InjectView(R.id.rl_edit_titile)
+    RelativeLayout rlEditTitile;
 
     private MainPrensenter mMainPrensenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +49,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed(){
-        if(System.currentTimeMillis()  - APPCONST.exitTime > APPCONST.exitConfirmTime){
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - APPCONST.exitTime > APPCONST.exitConfirmTime) {
             TextHelper.showText("再按一次退出");
             APPCONST.exitTime = System.currentTimeMillis();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -55,6 +63,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
 //        MyApplication.checkVersionByServer(this);
     }
+
 
     public CircleImageView getCivAvatar() {
         return civAvatar;
@@ -70,6 +79,18 @@ public class MainActivity extends BaseActivity {
 
     public ViewPager getVpContent() {
         return vpContent;
+    }
+
+    public RelativeLayout getRlCommonTitle() {
+        return rlCommonTitle;
+    }
+
+    public TextView getTvEditFinish() {
+        return tvEditFinish;
+    }
+
+    public RelativeLayout getRlEditTitile() {
+        return rlEditTitile;
     }
 
 }

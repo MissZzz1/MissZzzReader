@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 public class Custom implements Serializable {
 
+    private static final long serialVersionUID = 5088810102696918656L;
+
     private String id;
     private String type;//类型
 

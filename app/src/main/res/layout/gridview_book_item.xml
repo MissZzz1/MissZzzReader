@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="100dp"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
 
 
@@ -42,10 +41,20 @@
         android:textSize="12sp"
         android:visibility="gone"
         android:layout_marginTop="3dp"
-        android:layout_marginRight="7dp"
+        android:layout_marginRight="10dp"/>
 
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+       android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:src="@mipmap/delete"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
 
-        />
+      />
 
 
 

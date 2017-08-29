@@ -9,6 +9,9 @@ import java.io.Serializable;
 
 
 public class JsonModel implements Serializable {
+
+    private static final long serialVersionUID = -7169864463597942730L;
+
     private int error;//错误码
     private boolean success;//请求是否成功
     private String result;//服务器返回的json数据存放与此

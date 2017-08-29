@@ -20,8 +20,9 @@ v1.7.2 优化章节数巨大（>1000）的小说的加载速度
 
   修复对章节数巨大（>1000）的小说进行缓存操作时，程序会挂掉的问题
 
+v1.8.0 新增书架整理功能（书架长按任意一本书进入编辑状态，可进行删除和位置拖放等操作）
  
-demo v1.7.2 下载体验：https://pan.baidu.com/s/1eRUfmbK
+demo v1.8.0 下载体验：https://pan.baidu.com/s/1pLfYrTD
 
 
 ![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)

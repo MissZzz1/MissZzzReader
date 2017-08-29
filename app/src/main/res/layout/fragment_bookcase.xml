@@ -39,7 +39,7 @@
 
         </LinearLayout>
 
-        <GridView
+        <com.zhao.myreader.custom.DragSortGridView
             android:id="@+id/gv_book"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,7 +51,7 @@
             android:listSelector="@android:color/transparent"
             android:padding="10dp">
 
-        </GridView>
+        </com.zhao.myreader.custom.DragSortGridView>
 
     </RelativeLayout>
 

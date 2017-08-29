@@ -1,6 +1,7 @@
 package com.zhao.myreader.greendao.service;
 
 import android.database.Cursor;
+import android.widget.ListView;
 
 import com.zhao.myreader.greendao.GreenDaoManager;
 import com.zhao.myreader.greendao.entity.Book;
@@ -138,4 +139,14 @@ public class BookService extends BaseService {
         }
         return num;
     }
+
+    /**
+     * 更新书
+     * @param books
+     */
+    public void updateBooks(List<Book> books){
+        BookDao bookDao = GreenDaoManager.getInstance().getSession().getBookDao();
+        bookDao.updateInTx(books);
+    }
+
 }

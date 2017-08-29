@@ -13,6 +13,8 @@ import java.io.Serializable;
 
 public class Setting implements Serializable {
 
+    private static final long serialVersionUID = 2295691810299441757L;
+
     private int readWordColor;//阅读字体颜色
     private int readBgColor;//阅读背景颜色
     private float readWordSize;//阅读字体大小

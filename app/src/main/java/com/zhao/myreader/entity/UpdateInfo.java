@@ -8,6 +8,8 @@ import java.io.Serializable;
 
 public class UpdateInfo implements Serializable{
 
+    private static final long serialVersionUID = 8136214121542689902L;
+
     private int newestVersionCode;
     private String newestVersionName;
     private String downLoadUrl;

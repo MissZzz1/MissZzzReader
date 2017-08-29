@@ -9,9 +9,11 @@
     tools:context="com.zhao.myreader.ui.home.MainActivity">
 
     <RelativeLayout
+        android:id="@+id/rl_common_title"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white">
+        android:background="@color/white"
+        >
 
         <com.zhao.myreader.custom.CircleImageView
             android:id="@+id/civ_avatar"
@@ -45,6 +47,33 @@
             android:layout_marginRight="5dp"
             android:padding="10dp"
             android:src="@mipmap/search" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_edit_titile"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="编辑"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"/>
+
+       <TextView
+           android:id="@+id/tv_edit_finish"
+           android:layout_width="50dp"
+           android:layout_height="match_parent"
+           android:gravity="center"
+           android:layout_centerInParent="true"
+           android:layout_alignParentRight="true"
+           android:textSize="16sp"
+           android:text="完成"/>
 
 
     </RelativeLayout>

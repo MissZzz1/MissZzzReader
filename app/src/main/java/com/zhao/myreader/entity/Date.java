@@ -10,6 +10,9 @@ import java.io.Serializable;
  */
 
 public class Date implements Serializable {
+
+    private static final long serialVersionUID = -1251952358800941760L;
+
     private int year; //年
     private int month; //月
     private int date; //日

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 
 public class ContactsTree implements Serializable {
 
+    private static final long serialVersionUID = 7184368467231587092L;
+
     //根节点赋值字段（部门节点）
     private String DepartId;//部门id
     private String DepartName;//部门名
