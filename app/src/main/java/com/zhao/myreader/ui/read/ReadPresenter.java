@@ -445,6 +445,10 @@ public class ReadPresenter implements BasePresenter {
 
     }
 
+    /**
+     * 添加到书架并缓存整本
+     * @param tvDownloadProgress
+     */
     private void addBookToCaseAndDownload(final TextView tvDownloadProgress){
         DialogCreator.createCommonDialog(mReadActivity, mReadActivity.getString(R.string.tip), mReadActivity.getString(R.string.download_no_add_tips), true, new DialogInterface.OnClickListener() {
             @Override
@@ -715,6 +719,7 @@ public class ReadPresenter implements BasePresenter {
             @Override
             public void onError(Exception e) {
 //                settingChange = true;
+                mChapters = (ArrayList<Chapter>) mChapterService.findBookAllChapterByBookId(mBook.getId());
                 mHandler.sendMessage(mHandler.obtainMessage(1));
             }
         });

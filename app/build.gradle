@@ -8,8 +8,8 @@ android {
         applicationId "com.zhao.myreader"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 181
-        versionName "1.8.1"
+        versionCode 182
+        versionName "1.8.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
