@@ -25,8 +25,10 @@ v1.8.0 新增书架整理功能（书架长按任意一本书进入编辑状态�
 v1.8.1 移除书架下拉刷新，改为自动刷新；
 
   修复由于书架多于一页上下滑动时与下拉刷新冲突的问题
+
+v1.8.2 修复断网后离线阅读小说内容加载不出来的的问题
  
-demo v1.8.1 下载体验：https://pan.baidu.com/s/1kVwv7mR
+demo v1.8.2 下载体验：https://pan.baidu.com/s/1qXXORNI
 
 
 ![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)
