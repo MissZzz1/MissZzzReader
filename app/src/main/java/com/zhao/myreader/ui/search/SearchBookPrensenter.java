@@ -46,7 +46,7 @@ public class SearchBookPrensenter implements BasePresenter {
     private int inputConfirm = 0;//搜索输入确认
     private int confirmTime = 1000;//搜索输入确认时间（毫秒）
 
-    private static String[] suggestion = {"不朽凡人", "圣墟", "我是至尊" ,"龙王传说", "武炼巅峰", "一念永恒", "雪鹰领主", "大主宰"};
+    private static String[] suggestion = {"不朽凡人", "圣墟", "我是至尊" ,"龙王传说", "太古神王", "一念永恒", "雪鹰领主", "大主宰"};
 
 
     private Handler mHandler = new Handler() {
@@ -103,25 +103,6 @@ public class SearchBookPrensenter implements BasePresenter {
                 if (StringHelper.isEmpty(searchKey)) {
                     search();
                 }
-              /*  //每次输入确认标志+1
-                inputConfirm++;
-                //当前标志
-                final int now = inputConfirm;
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            //等待确认时间
-                            Thread.sleep(confirmTime);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        if (now == inputConfirm) {
-                            searchKey = editable.toString();
-                            mHandler.sendMessage(mHandler.obtainMessage(1));
-                        }
-                    }
-                }).start();*/
 
             }
 
@@ -254,3 +235,4 @@ public class SearchBookPrensenter implements BasePresenter {
 
 
 }
+
