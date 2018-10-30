@@ -15,12 +15,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.MsgConstant;
-import com.umeng.message.PushAgent;
-import com.umeng.message.UmengMessageHandler;
-import com.umeng.message.UmengNotificationClickHandler;
-import com.umeng.message.entity.UMessage;
 import com.zhao.myreader.base.BaseActivity;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
@@ -50,14 +44,13 @@ public class MyApplication extends Application {
     private static Handler handler = new Handler();
     private static MyApplication application;
     private ExecutorService mFixedThreadPool;
-    private PushAgent mPushAgent;
+
 
 
     @Override
     public void onCreate() {
         super.onCreate();
         application = this;
-        initPush();
         HttpUtil.trustAllHosts();//信任所有证书
         mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());//初始化线程池
 
@@ -65,55 +58,7 @@ public class MyApplication extends Application {
 
     }
 
-    /**
-     * 初始化推送设置
-     */
-    public void initPush() {
 
-        mPushAgent = PushAgent.getInstance(this);
-        mPushAgent.setDebugMode(false);
-
-        //注册推送服务，每次调用register方法都会回调该接口
-        mPushAgent.register(new IUmengRegisterCallback() {
-            @Override
-            public void onSuccess(String deviceToken) {
-                //注册成功会返回device token
-                Log.i("UPush", deviceToken);
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-                Log.d("UPush", s + "  " + s1);
-            }
-        });
-        //监听推送消息
-        mPushAgent.setMessageHandler(new UmengMessageHandler() {
-            @Override
-            public Notification getNotification(Context context, UMessage uMessage) {
-                Log.i("UPush", "title:" + uMessage.title + "  text:" + uMessage.text);
-                Map<String, String> extra = uMessage.extra;
-                if (extra != null) {
-                    String json = extra.get(APPCONST.FILE_NAME_UPDATE_INFO);
-                    UpdateInfo updateInfo = new Gson().fromJson(json, UpdateInfo.class);
-                    CacheHelper.saveObject(updateInfo, APPCONST.FILE_NAME_UPDATE_INFO);
-                }
-
-                return super.getNotification(context, uMessage);
-            }
-        });
-        //通知推送点击事件
-        mPushAgent.setNotificationClickHandler(new UmengNotificationClickHandler() {
-            @Override
-            public void dealWithCustomAction(Context context, UMessage msg) {
-
-            }
-        });
-        mPushAgent.setDisplayNotificationNumber(10);//最大显示通知数
-        mPushAgent.setNotificationPlaySound(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE); //声音
-        mPushAgent.setNotificationPlayLights(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);//呼吸灯
-        mPushAgent.setNotificationPlayVibrate(MsgConstant.NOTIFICATION_PLAY_SDK_ENABLE);//振动
-
-    }
 
 
     public static Context getmContext() {

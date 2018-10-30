@@ -14,27 +14,27 @@ import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.custom.CircleImageView;
 import com.zhao.myreader.util.TextHelper;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 
 
 public class MainActivity extends BaseActivity {
 
-    @InjectView(R.id.civ_avatar)
-    CircleImageView civAvatar;
-    @InjectView(R.id.tl_tab_menu)
-    TabLayout tlTabMenu;
-    @InjectView(R.id.iv_search)
-    ImageView ivSearch;
-    @InjectView(R.id.vp_content)
-    ViewPager vpContent;
-    @InjectView(R.id.rl_common_title)
-    RelativeLayout rlCommonTitle;
-    @InjectView(R.id.tv_edit_finish)
-    TextView tvEditFinish;
-    @InjectView(R.id.rl_edit_titile)
-    RelativeLayout rlEditTitile;
 
+    @BindView(R.id.civ_avatar)
+    CircleImageView civAvatar;
+    @BindView(R.id.tl_tab_menu)
+    TabLayout tlTabMenu;
+    @BindView(R.id.iv_search)
+    ImageView ivSearch;
+    @BindView(R.id.rl_common_title)
+    RelativeLayout rlCommonTitle;
+    @BindView(R.id.tv_edit_finish)
+    TextView tvEditFinish;
+    @BindView(R.id.rl_edit_titile)
+    RelativeLayout rlEditTitile;
+    @BindView(R.id.vp_content)
+    ViewPager vpContent;
     private MainPrensenter mMainPrensenter;
 
 
@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setStatusBar(R.color.sys_line);
         mMainPrensenter = new MainPrensenter(this);
         mMainPrensenter.start();

@@ -18,27 +18,27 @@ import com.zhao.myreader.application.MyApplication;
 import com.zhao.myreader.base.BaseActivity;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 public class ReadActivity extends BaseActivity {
 
 
-    @InjectView(R.id.pb_loading)
+    @BindView(R.id.pb_loading)
     ProgressBar pbLoading;
-    @InjectView(R.id.srl_content)
+    @BindView(R.id.srl_content)
     SmartRefreshLayout srlContent;
-    @InjectView(R.id.lv_chapter_list)
+    @BindView(R.id.lv_chapter_list)
     ListView lvChapterList;
 
-    @InjectView(R.id.dl_read_activity)
+    @BindView(R.id.dl_read_activity)
     DrawerLayout dlReadActivity;
-    @InjectView(R.id.ll_chapter_list_view)
+    @BindView(R.id.ll_chapter_list_view)
     LinearLayout llChapterListView;
-    @InjectView(R.id.tv_book_list)
+    @BindView(R.id.tv_book_list)
     TextView tvBookList;
-    @InjectView(R.id.tv_chapter_sort)
+    @BindView(R.id.tv_chapter_sort)
     TextView tvChapterSort;
-    @InjectView(R.id.rv_content)
+    @BindView(R.id.rv_content)
     RecyclerView rvContent;
 
     private ReadPresenter mReadPresenter;
@@ -49,7 +49,7 @@ public class ReadActivity extends BaseActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE); // 隐藏应用程序的标题栏，即当前activity的label
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // 隐藏android系统的状态栏
         setContentView(R.layout.activity_read);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         mReadPresenter = new ReadPresenter(this);
         mReadPresenter.start();
 

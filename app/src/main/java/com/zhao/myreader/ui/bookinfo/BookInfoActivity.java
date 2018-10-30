@@ -10,29 +10,29 @@ import com.zhao.myreader.R;
 import com.zhao.myreader.base.BaseActivity;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
 
 public class BookInfoActivity extends BaseActivity {
 
-    @InjectView(R.id.ll_title_back)
+    @BindView(R.id.ll_title_back)
     LinearLayout llTitleBack;
-    @InjectView(R.id.tv_title_text)
+    @BindView(R.id.tv_title_text)
     TextView tvTitleText;
-    @InjectView(R.id.system_title)
+    @BindView(R.id.system_title)
     LinearLayout systemTitle;
-    @InjectView(R.id.iv_book_img)
+    @BindView(R.id.iv_book_img)
     ImageView ivBookImg;
-    @InjectView(R.id.tv_book_name)
+    @BindView(R.id.tv_book_name)
     TextView tvBookName;
-    @InjectView(R.id.tv_book_author)
+    @BindView(R.id.tv_book_author)
     TextView tvBookAuthor;
-    @InjectView(R.id.tv_book_type)
+    @BindView(R.id.tv_book_type)
     TextView tvBookType;
-    @InjectView(R.id.tv_book_desc)
+    @BindView(R.id.tv_book_desc)
     TextView tvBookDesc;
-    @InjectView(R.id.btn_add_bookcase)
+    @BindView(R.id.btn_add_bookcase)
     Button btnAddBookcase;
-    @InjectView(R.id.btn_read_book)
+    @BindView(R.id.btn_read_book)
     Button btnReadBook;
 
     private BookInfoPresenter mBookInfoPresenter;
@@ -41,7 +41,7 @@ public class BookInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_info);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
         setStatusBar(R.color.sys_line);
         mBookInfoPresenter = new BookInfoPresenter(this);
         mBookInfoPresenter.start();

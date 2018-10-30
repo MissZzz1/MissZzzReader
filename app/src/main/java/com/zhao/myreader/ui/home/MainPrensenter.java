@@ -47,7 +47,7 @@ public class MainPrensenter implements BasePresenter {
         mFragments.add(new BBSFragment());
         mFragments.add(new BookcaseFragment());
         mFragments.add(new BookStoreFragment());
-        mMainActivity.getVpContent().setAdapter(new FragmentPagerAdapter( mMainActivity.getSupportFragmentManager()) {
+        mMainActivity.getVpContent().setAdapter(new FragmentPagerAdapter(mMainActivity.getSupportFragmentManager()) {
 
             @Override
             public Fragment getItem(int position) {

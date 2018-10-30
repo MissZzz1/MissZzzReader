@@ -12,7 +12,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.umeng.message.PushAgent;
 import com.zhao.myreader.ActivityManage;
 import com.zhao.myreader.util.Anti_hijackingUtils;
 import com.zhao.myreader.util.SystemBarTintManager;
@@ -49,9 +48,7 @@ public class BaseActivity extends AppCompatActivity {
             width = dm.widthPixels;
             height = dm.heightPixels;
         }
-        //app推送必要方法，如果不调用此方法，不仅会导致按照"几天不活跃"条件来推送失效，还将导致广播发送不成功以及设备描述红色等问题发生。
-        // 可以只在应用的主Activity中调用此方法，但是由于SDK的日志发送策略，有可能由于主activity的日志没有发送成功，而导致未统计到日活数据。
-        PushAgent.getInstance(this).onAppStart();
+
         mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 

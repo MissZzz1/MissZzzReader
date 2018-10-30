@@ -14,7 +14,8 @@ import com.zhao.myreader.R;
 import com.zhao.myreader.custom.DragSortGridView;
 
 import butterknife.ButterKnife;
-import butterknife.InjectView;
+import butterknife.BindView;
+import butterknife.Unbinder;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,12 +23,14 @@ import butterknife.InjectView;
 public class BookcaseFragment extends Fragment {
 
 
-    @InjectView(R.id.srl_content)
+    @BindView(R.id.srl_content)
     SmartRefreshLayout srlContent;
-    @InjectView(R.id.ll_no_data_tips)
+    @BindView(R.id.ll_no_data_tips)
     LinearLayout llNoDataTips;
-    @InjectView(R.id.gv_book)
+    @BindView(R.id.gv_book)
     DragSortGridView gvBook;
+
+    Unbinder unbinder;
 
     private BookcasePresenter mBookcasePresenter;
 
@@ -41,7 +44,7 @@ public class BookcaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bookcase, container, false);
-        ButterKnife.inject(this, view);
+        unbinder = ButterKnife.bind(this, view);
         mBookcasePresenter = new BookcasePresenter(this);
         mBookcasePresenter.start();
         return view;
@@ -50,7 +53,7 @@ public class BookcaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ButterKnife.reset(this);
+        unbinder.unbind();
     }
 
     @Override

@@ -26,7 +26,7 @@ import com.zhao.myreader.enums.ReadStyle;
 import com.zhao.myreader.util.BrightUtil;
 import com.zhao.myreader.util.StringHelper;
 
-import butterknife.InjectView;
+import butterknife.BindView;
 
 /**
  * Created by zhao on 2017/1/11.
