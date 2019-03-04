@@ -1,9 +1,10 @@
-package com.zhao.myreader.util;
+package com.zhao.myreader.util.crawler;
 
 import android.text.Html;
 
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.Chapter;
+import com.zhao.myreader.util.StringHelper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
