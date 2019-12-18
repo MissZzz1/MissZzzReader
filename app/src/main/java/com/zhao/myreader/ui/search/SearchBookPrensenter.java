@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.zhao.myreader.R;
+import com.zhao.myreader.application.MyApplication;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
@@ -77,6 +78,7 @@ public class SearchBookPrensenter implements BasePresenter {
 
     @Override
     public void start() {
+
         mSearchBookActivity.getTvTitleText().setText("搜索");
         mSearchBookActivity.getLlTitleBack().setOnClickListener(new View.OnClickListener() {
             @Override

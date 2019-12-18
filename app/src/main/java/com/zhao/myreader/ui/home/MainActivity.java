@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhao.myreader.R;
+import com.zhao.myreader.application.MyApplication;
 import com.zhao.myreader.base.BaseActivity;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.custom.CircleImageView;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity {
         setStatusBar(R.color.sys_line);
         mMainPrensenter = new MainPrensenter(this);
         mMainPrensenter.start();
+
     }
 
     @Override

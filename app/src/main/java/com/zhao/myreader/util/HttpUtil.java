@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.zhao.myreader.application.MyApplication;
+import com.zhao.myreader.application.TrustAllCerts;
 import com.zhao.myreader.callback.HttpCallback;
 import com.zhao.myreader.callback.JsonCallback;
 import com.zhao.myreader.callback.URLConnectionCallback;
@@ -23,6 +24,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -30,8 +32,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -57,12 +62,32 @@ public class HttpUtil {
     //因为每个OkHttpClient 实例都有自己的连接池和线程池，重用这个实例能降低延时，减少内存消耗，而重复创建新实例则会浪费资源。
     private static OkHttpClient mClient;
 
+    private static SSLSocketFactory createSSLSocketFactory() {
+        SSLSocketFactory ssfFactory = null;
+
+        try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, new TrustManager[]{new TrustAllCerts()}, new SecureRandom());
+
+            ssfFactory = sc.getSocketFactory();
+        } catch (Exception e) {
+        }
+
+        return ssfFactory;
+    }
+
     private static synchronized OkHttpClient getOkHttpClient(){
         if (mClient == null){
-           mClient = new OkHttpClient.Builder()
-                    .readTimeout(5000,TimeUnit.SECONDS)//设置读取超时时间
-                    .writeTimeout(5000,TimeUnit.SECONDS)//设置写的超时时间
-                    .connectTimeout(5000,TimeUnit.SECONDS)//设置连接超时时间
+            OkHttpClient.Builder builder = new OkHttpClient.Builder();
+            builder.connectTimeout(30000, TimeUnit.SECONDS);
+            builder.sslSocketFactory(createSSLSocketFactory());
+            builder.hostnameVerifier(new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            });
+           mClient = builder
                     .build();
         }
         return mClient;
@@ -239,6 +264,7 @@ public class HttpUtil {
                     }
                 }*/
                 try{
+
                      OkHttpClient client = getOkHttpClient();
                     Request request = new Request.Builder()
                             .url(address)
