@@ -3,7 +3,7 @@ package com.zhao.myreader.webapi;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.common.URLCONST;
-import com.zhao.myreader.util.TianLaiReadUtil;
+import com.zhao.myreader.util.crawler.TianLaiReadUtil;
 
 import java.util.HashMap;
 import java.util.Map;
