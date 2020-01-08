@@ -28,8 +28,9 @@ v1.8.1 移除书架下拉刷新，改为自动刷新；
 
 v1.8.2 修复断网后离线阅读小说内容加载不出来的的问题
 
+v2.0.0 更新搜索源，解决由于抓取的网站更新导致的相关问题，修复一系列容易导致崩溃bug
 
-demo v1.8.2 下载体验：https://pan.baidu.com/s/1qXXORNI
+demo v2.0.0 下载体验： https://pan.baidu.com/s/1vwReYlnvPSXECg0jkx0Kag 提取码: 897f
 
 
 ![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)
