@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 
 import com.zhao.myreader.R;
@@ -24,6 +26,8 @@ import com.zhao.myreader.webapi.CommonApi;
 import java.util.ArrayList;
 
 import me.gujun.android.taggroup.TagGroup;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
  * Created by zhao on 2017/7/26.
@@ -109,6 +113,20 @@ public class SearchBookPrensenter implements BasePresenter {
             }
 
         });
+
+        mSearchBookActivity.getEtSearchKey().setOnKeyListener((v, keyCode, event) -> {
+            //是否是回车键
+            if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                //隐藏键盘
+                ((InputMethodManager) mSearchBookActivity.getSystemService(INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(mSearchBookActivity.getCurrentFocus()
+                                .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                //搜索
+                search();
+            }
+            return false;
+        });
+
 
         mSearchBookActivity.getLvSearchBooksList().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
