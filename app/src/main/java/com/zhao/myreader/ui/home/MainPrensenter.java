@@ -15,6 +15,8 @@ import com.zhao.myreader.ui.search.SearchBookActivity;
 
 import java.util.ArrayList;
 
+import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
+
 /**
  * Created by zhao on 2017/7/25.
  */
@@ -49,7 +51,8 @@ public class MainPrensenter implements BasePresenter {
         mFragments.add(new BBSFragment());
         mFragments.add(new BookcaseFragment());
         mFragments.add(new BookStoreFragment());
-        mMainActivity.getVpContent().setAdapter(new FragmentPagerAdapter(mMainActivity.getSupportFragmentManager()) {
+
+        mMainActivity.getVpContent().setAdapter(new FragmentPagerAdapter(mMainActivity.getSupportFragmentManager(),BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
             @Override
             public Fragment getItem(int position) {
