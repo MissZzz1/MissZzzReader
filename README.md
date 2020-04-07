@@ -30,7 +30,9 @@ v1.8.2 修复断网后离线阅读小说内容加载不出来的的问题
 
 v2.0.0 更新搜索源，解决由于抓取的网站更新导致的相关问题，修复一系列容易导致崩溃bug
 
-demo v2.0.0 下载体验： https://pan.baidu.com/s/1vwReYlnvPSXECg0jkx0Kag 提取码: 897f
+v2.0.2 书架UI错位修复以及搜索优化，修复部分bug，以及针对Android X 进行兼容性修改
+
+demo v2.0.2 下载体验： https://share.weiyun.com/5AmEo27
 (本项目仅限于学习使用，未经本人允许，不得挪作其他用途，否则后果自负)
 
 
