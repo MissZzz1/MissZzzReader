@@ -2,24 +2,29 @@ package com.zhao.myreader.ui.home;
 
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.zhao.myreader.R;
-import com.zhao.myreader.application.MyApplication;
+
 import com.zhao.myreader.base.BaseActivity;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.custom.CircleImageView;
 import com.zhao.myreader.util.TextHelper;
 
+import org.jsoup.Connection;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends FragmentActivity {
 
 
     @BindView(R.id.civ_avatar)
@@ -42,9 +47,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setStatusBar(R.color.sys_line);
+
+        //setStatusBar(R.color.sys_line);
         mMainPrensenter = new MainPrensenter(this);
         mMainPrensenter.start();
 

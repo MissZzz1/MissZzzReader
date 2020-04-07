@@ -13,11 +13,13 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatEditText;
+
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ContainsEmojiEditText extends android.support.v7.widget.AppCompatEditText {
+public class ContainsEmojiEditText extends AppCompatEditText {
     //输入表情前的光标位置
     private int cursorPos;
     //输入表情前EditText中的文本

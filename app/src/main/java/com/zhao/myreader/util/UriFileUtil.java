@@ -10,7 +10,9 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.v4.content.FileProvider;
+
+
+import androidx.core.content.FileProvider;
 
 import com.zhao.myreader.R;
 

@@ -1,6 +1,8 @@
 package com.zhao.myreader.greendao.entity;
 
-import android.support.annotation.Nullable;
+
+
+import androidx.annotation.Nullable;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

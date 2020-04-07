@@ -1,10 +1,11 @@
 package com.zhao.myreader.base;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -12,7 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
-import com.zhao.myreader.ActivityManage;
+import com.zhao.myreader.application.ActivityManage;
 import com.zhao.myreader.util.Anti_hijackingUtils;
 import com.zhao.myreader.util.SystemBarTintManager;
 
@@ -20,7 +21,7 @@ import com.zhao.myreader.util.SystemBarTintManager;
 /**
  * Created by zhao on 2016/4/16.
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends Activity {
 
     public static int width = 0;
     public static int height = 0;

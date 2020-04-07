@@ -9,13 +9,14 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Xfermode;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatImageView;
+
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.lang.ref.WeakReference;
 
-public abstract class BaseImageView extends AppCompatImageView {
+public abstract class BaseImageView extends ImageView {
     private static final String TAG = BaseImageView.class.getSimpleName();
 
     protected Context mContext;

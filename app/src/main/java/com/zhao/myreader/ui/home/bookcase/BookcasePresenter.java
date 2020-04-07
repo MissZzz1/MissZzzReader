@@ -1,30 +1,32 @@
 package com.zhao.myreader.ui.home.bookcase;
 
-import android.content.DialogInterface;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
+
 import android.view.View;
 import android.widget.AdapterView;
+
+import androidx.core.content.ContextCompat;
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhao.myreader.R;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
-import com.zhao.myreader.common.APPCONST;
-import com.zhao.myreader.creator.DialogCreator;
+
 import com.zhao.myreader.custom.DragSortGridView;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.greendao.service.BookService;
-import com.zhao.myreader.greendao.service.ChapterService;
+
 import com.zhao.myreader.ui.home.MainActivity;
-import com.zhao.myreader.ui.read.ReadActivity;
+
 import com.zhao.myreader.ui.search.SearchBookActivity;
-import com.zhao.myreader.util.StringHelper;
+
 import com.zhao.myreader.util.VibratorUtil;
 import com.zhao.myreader.webapi.CommonApi;
 
@@ -43,6 +45,7 @@ public class BookcasePresenter implements BasePresenter {
     private MainActivity mMainActivity;
 //    private ChapterService mChapterService;
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -59,10 +62,10 @@ public class BookcasePresenter implements BasePresenter {
         }
     };
 
-    public BookcasePresenter(BookcaseFragment bookcaseFragment) {
+    BookcasePresenter(BookcaseFragment bookcaseFragment) {
         mBookcaseFragment = bookcaseFragment;
         mBookService = new BookService();
-        mMainActivity = ((MainActivity) (mBookcaseFragment.getActivity()));
+        mMainActivity = ((MainActivity) (mBookcaseFragment.getContext()));
 //        mChapterService = new ChapterService();
     }
 
@@ -125,7 +128,7 @@ public class BookcasePresenter implements BasePresenter {
             if(mBookcaseAdapter == null) {
                 mBookcaseAdapter = new BookcaseDragAdapter(mBookcaseFragment.getContext(), R.layout.gridview_book_item, mBooks, false);
                 mBookcaseFragment.getGvBook().setDragModel(-1);
-                mBookcaseFragment.getGvBook().setTouchClashparent(((MainActivity) (mBookcaseFragment.getActivity())).getVpContent());
+                mBookcaseFragment.getGvBook().setTouchClashparent(((MainActivity) (mBookcaseFragment.getContext())).getVpContent());
        /*     mBookcaseFragment.getGvBook().setDragModel(DragSortGridView.DRAG_BY_LONG_CLICK);
             ((MainActivity) (mBookcaseFragment.getActivity())).setViewPagerScroll(false);*/
                 mBookcaseFragment.getGvBook().setAdapter(mBookcaseAdapter);
