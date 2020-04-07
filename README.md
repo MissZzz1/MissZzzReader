@@ -49,7 +49,7 @@ demo v2.0.2 下载体验： https://share.weiyun.com/5AmEo27
 
 ## License
 ```
-   Copyright 2018 caoqazwsx, All right reserved.
+   Copyright 2018 MissZzz1, All right reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
