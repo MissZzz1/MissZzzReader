@@ -118,12 +118,12 @@ public class BaseActivity extends Activity {
      * @param colorId
      */
     public void setStatusBar(int colorId){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(colorId);//通知栏所需颜色ID
-        }
+
+        setTranslucentStatus(true);
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(colorId);//通知栏所需颜色ID
+
     }
 
     public InputMethodManager getmInputMethodManager() {
