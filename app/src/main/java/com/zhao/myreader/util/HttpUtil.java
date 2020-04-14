@@ -266,37 +266,7 @@ public class HttpUtil {
        MyApplication.getApplication().newThread(new Runnable() {
             @Override
             public void run() {
-             /*   HttpURLConnection connection = null;
-                try {
-                    URL url = new URL(address);
-                    connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestMethod("GET");
-                    connection.setRequestProperty("Content-type", "text/html");
-                    connection.setRequestProperty("Accept-Charset", "gbk");
-                    connection.setRequestProperty("contentType", "gbk");
-                    connection.setConnectTimeout(5 * 1000);
-                    connection.setReadTimeout(5 * 1000);
-                    connection.setDoInput(true);
-                    connection.setDoOutput(true);
-                    if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                        Log.e("Http", "网络错误异常！!!!");
-                    }
-                    InputStream in = connection.getInputStream();
-                    Log.d("Http", "connection success");
-                    if (callback != null) {
-                        callback.onFinish(in);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Log.e("Http", e.toString());
-                    if (callback != null) {
-                        callback.onError(e);
-                    }
-                } finally {
-                    if (connection != null) {
-                        connection.disconnect();
-                    }
-                }*/
+
                 try{
 
                      OkHttpClient client = getOkHttpClient();

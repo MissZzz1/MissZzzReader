@@ -1,5 +1,6 @@
 package com.zhao.myreader.ui.search;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
@@ -8,10 +9,10 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
+
 
 import com.zhao.myreader.R;
-import com.zhao.myreader.application.MyApplication;
+
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
@@ -19,13 +20,14 @@ import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.SearchHistory;
 import com.zhao.myreader.greendao.service.SearchHistoryService;
 import com.zhao.myreader.ui.bookinfo.BookInfoActivity;
-import com.zhao.myreader.util.ListViewHeight;
+
 import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.webapi.CommonApi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
-import me.gujun.android.taggroup.TagGroup;
+
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -54,6 +56,7 @@ public class SearchBookPrensenter implements BasePresenter {
     private static String[] suggestion = {"不朽凡人", "圣墟", "我是至尊" ,"龙王传说", "太古神王", "一念永恒", "雪鹰领主", "大主宰"};
 
 
+    @SuppressLint("HandlerLeak")
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -72,24 +75,17 @@ public class SearchBookPrensenter implements BasePresenter {
         }
     };
 
-    public SearchBookPrensenter(SearchBookActivity searchBookActivity) {
+    SearchBookPrensenter(SearchBookActivity searchBookActivity) {
         mSearchBookActivity = searchBookActivity;
         mSearchHistoryService = new SearchHistoryService();
-        for (int i = 0; i < suggestion.length; i++) {
-            mSuggestions.add(suggestion[i]);
-        }
+        Collections.addAll(mSuggestions, suggestion);
     }
 
     @Override
     public void start() {
 
         mSearchBookActivity.getTvTitleText().setText("搜索");
-        mSearchBookActivity.getLlTitleBack().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mSearchBookActivity.finish();
-            }
-        });
+        mSearchBookActivity.getLlTitleBack().setOnClickListener(view -> mSearchBookActivity.finish());
 
         mSearchBookActivity.getEtSearchKey().addTextChangedListener(new TextWatcher() {
 
@@ -128,40 +124,23 @@ public class SearchBookPrensenter implements BasePresenter {
         });
 
 
-        mSearchBookActivity.getLvSearchBooksList().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(mSearchBookActivity, BookInfoActivity.class);
-                intent.putExtra(APPCONST.BOOK, mBooks.get(i));
-                mSearchBookActivity.startActivity(intent);
-            }
+        mSearchBookActivity.getLvSearchBooksList().setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(mSearchBookActivity, BookInfoActivity.class);
+            intent.putExtra(APPCONST.BOOK, mBooks.get(i));
+            mSearchBookActivity.startActivity(intent);
         });
-        mSearchBookActivity.getTvSearchConform().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                search();
-            }
+        mSearchBookActivity.getTvSearchConform().setOnClickListener(view -> search());
+        mSearchBookActivity.getTgSuggestBook().setOnTagClickListener(tag -> {
+            mSearchBookActivity.getEtSearchKey().setText(tag);
+            search();
         });
-        mSearchBookActivity.getTgSuggestBook().setOnTagClickListener(new TagGroup.OnTagClickListener() {
-            @Override
-            public void onTagClick(String tag) {
-                mSearchBookActivity.getEtSearchKey().setText(tag);
-                search();
-            }
+        mSearchBookActivity.getLvHistoryList().setOnItemClickListener((parent, view, position, id) -> {
+            mSearchBookActivity.getEtSearchKey().setText(mSearchHistories.get(position).getContent());
+            search();
         });
-        mSearchBookActivity.getLvHistoryList().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mSearchBookActivity.getEtSearchKey().setText(mSearchHistories.get(position).getContent());
-                search();
-            }
-        });
-        mSearchBookActivity.getLlClearHistory().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSearchHistoryService.clearHistory();
-                initHistoryList();
-            }
+        mSearchBookActivity.getLlClearHistory().setOnClickListener(v -> {
+            mSearchHistoryService.clearHistory();
+            initHistoryList();
         });
         initSuggestionBook();
         initHistoryList();
@@ -244,7 +223,7 @@ public class SearchBookPrensenter implements BasePresenter {
         }
     }
 
-    public boolean onBackPressed() {
+    boolean onBackPressed() {
         if (StringHelper.isEmpty(searchKey)) {
             return false;
         } else {

@@ -3,6 +3,7 @@ package com.zhao.myreader.webapi;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.common.URLCONST;
+import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.crawler.TianLaiReadUtil;
 
 import java.util.HashMap;
@@ -15,19 +16,17 @@ import java.util.Map;
 public class CommonApi extends BaseApi{
 
 
-
-
     /**
      * 获取章节列表
-     * @param url
+     * @param book
      * @param callback
      */
-    public static void getBookChapters(String url, final ResultCallback callback){
+    public static void getBookChapters(Book book, final ResultCallback callback){
 
-        getCommonReturnHtmlStringApi(url, null, "GBK", new ResultCallback() {
+        getCommonReturnHtmlStringApi(book.getChapterUrl(), null, "GBK", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
-                callback.onFinish(TianLaiReadUtil.getChaptersFromHtml((String) o),0);
+                callback.onFinish(TianLaiReadUtil.getChaptersFromHtml((String) o,book),0);
             }
 
             @Override
@@ -48,7 +47,11 @@ public class CommonApi extends BaseApi{
         if (tem != -1){
             url = url.substring(0,tem);
         }
-        getCommonReturnHtmlStringApi(URLCONST.nameSpace_tianlai + url, null, "GBK", new ResultCallback() {
+        if (!url.contains("http")){
+            url = URLCONST.nameSpace_tianlai + url;
+        }
+
+        getCommonReturnHtmlStringApi(url, null, "GBK", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(TianLaiReadUtil.getContentFormHtml((String)o),0);

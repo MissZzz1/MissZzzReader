@@ -73,7 +73,7 @@ public class BookcasePresenter implements BasePresenter {
     public void start() {
         mBookcaseFragment.getSrlContent().setEnableRefresh(false);
         mBookcaseFragment.getSrlContent().setEnableHeaderTranslationContent(false);
-        mBookcaseFragment.getSrlContent().setEnableLoadmore(false);
+        mBookcaseFragment.getSrlContent().setEnableLoadMore(false);
         mBookcaseFragment.getSrlContent().setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -90,32 +90,26 @@ public class BookcasePresenter implements BasePresenter {
             }
         });
 
-        mBookcaseFragment.getGvBook().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!mBookcaseAdapter.ismEditState()) {
-                    mBookcaseFragment.getSrlContent().setEnableRefresh(false);
-                    mBookcaseAdapter.setmEditState(true);
-                    mBookcaseFragment.getGvBook().setDragModel(DragSortGridView.DRAG_BY_LONG_CLICK);
-                    mBookcaseAdapter.notifyDataSetChanged();
-                    mMainActivity.getRlCommonTitle().setVisibility(View.GONE);
-                    mMainActivity.getRlEditTitile().setVisibility(View.VISIBLE);
-                    VibratorUtil.Vibrate(mBookcaseFragment.getActivity(),200);
-//                    mBookcaseFragment.getGvBook().setOnItemClickListener(null);
-                }
-                return true;
-            }
-        });
-        mMainActivity.getTvEditFinish().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMainActivity.getRlCommonTitle().setVisibility(View.VISIBLE);
-                mMainActivity.getRlEditTitile().setVisibility(View.GONE);
-//                mBookcaseFragment.getSrlContent().setEnableRefresh(true);
-                mBookcaseFragment.getGvBook().setDragModel(-1);
-                mBookcaseAdapter.setmEditState(false);
+        mBookcaseFragment.getGvBook().setOnItemLongClickListener((parent, view, position, id) -> {
+            if (!mBookcaseAdapter.ismEditState()) {
+                mBookcaseFragment.getSrlContent().setEnableRefresh(false);
+                mBookcaseAdapter.setmEditState(true);
+                mBookcaseFragment.getGvBook().setDragModel(DragSortGridView.DRAG_BY_LONG_CLICK);
                 mBookcaseAdapter.notifyDataSetChanged();
+                mMainActivity.getRlCommonTitle().setVisibility(View.GONE);
+                mMainActivity.getRlEditTitile().setVisibility(View.VISIBLE);
+                VibratorUtil.Vibrate(mBookcaseFragment.getActivity(),200);
+//                    mBookcaseFragment.getGvBook().setOnItemClickListener(null);
             }
+            return true;
+        });
+        mMainActivity.getTvEditFinish().setOnClickListener(v -> {
+            mMainActivity.getRlCommonTitle().setVisibility(View.VISIBLE);
+            mMainActivity.getRlEditTitile().setVisibility(View.GONE);
+//                mBookcaseFragment.getSrlContent().setEnableRefresh(true);
+            mBookcaseFragment.getGvBook().setDragModel(-1);
+            mBookcaseAdapter.setmEditState(false);
+            mBookcaseAdapter.notifyDataSetChanged();
         });
     }
 
@@ -159,7 +153,7 @@ public class BookcasePresenter implements BasePresenter {
 
     private void initNoReadNum() {
         for (final Book book : mBooks) {
-            CommonApi.getBookChapters(book.getChapterUrl(), new ResultCallback() {
+            CommonApi.getBookChapters(book, new ResultCallback() {
                 @Override
                 public void onFinish(Object o, int code) {
                     final ArrayList<Chapter> chapters = (ArrayList<Chapter>) o;

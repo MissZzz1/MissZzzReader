@@ -125,6 +125,10 @@ public class StringHelper {
         return str == null || str.equals("");
     }
 
+    public static boolean isNotEmpty(String str){
+       return !isEmpty(str);
+    }
+
     /**
      * 缩减字符串
      * @param strlocation
@@ -156,6 +160,14 @@ public class StringHelper {
             return true;
         }else return !isEmpty(str1) && !isEmpty(str2) && str1.equals(str2);
     }
+
+
+    public static String formatText(String text){
+        if (isEmpty(text)) return "";
+        else return text;
+    }
+
+
 
 
 }

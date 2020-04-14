@@ -1,5 +1,7 @@
 package com.zhao.myreader.util;
 
+import android.annotation.SuppressLint;
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,6 +12,9 @@ import java.util.Date;
  * Created by zhao on 2016/9/9.
  */
 public class DateHelper {
+
+    @SuppressLint("SimpleDateFormat")
+    public static final  SimpleDateFormat yyyymmddhhmm= new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     /**
      * @param

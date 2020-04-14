@@ -2,6 +2,8 @@ package com.zhao.myreader.util.crawler;
 
 import android.text.Html;
 
+import com.zhao.myreader.common.URLCONST;
+import com.zhao.myreader.enums.BookSource;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.Chapter;
 import com.zhao.myreader.util.StringHelper;
@@ -31,10 +33,11 @@ public class TianLaiReadUtil {
      */
     public static String getContentFormHtml(String html) {
 
-        Pattern pattern = Pattern.compile("<div id=\"content\">[\\s\\S]*?</div>");
-        Matcher matcher = pattern.matcher(html);
-        if (matcher.find()) {
-            String content = Html.fromHtml(matcher.group(0)).toString();
+        Document doc = Jsoup.parse(html);
+        Element divContent = doc.getElementById("content");
+
+        if (divContent != null) {
+            String content = Html.fromHtml(divContent.html()).toString();
             char c = 160;
             String spaec = "" + c;
             content = content.replace(spaec, "  ");
@@ -50,26 +53,38 @@ public class TianLaiReadUtil {
      * @param html
      * @return
      */
-    public static ArrayList<Chapter> getChaptersFromHtml(String html) {
+    public static ArrayList<Chapter> getChaptersFromHtml(String html,Book book) {
         ArrayList<Chapter> chapters = new ArrayList<>();
-        Pattern pattern = Pattern.compile("<dd><a href=\"([\\s\\S]*?)</a>");
-//        Pattern pattern = Pattern.compile("<dd><a href=\"([\\s\\S]*?)\"");
-        Matcher matcher = pattern.matcher(html);
+        Document doc = Jsoup.parse(html);
+        Element divList = doc.getElementById("list");
+        Element dl = divList.getElementsByTag("dl").get(0);
+
         String lastTile = null;
         int i = 0;
-        while (matcher.find()) {
-            String content = matcher.group();
-            String title = content.substring(content.indexOf("\">") + 2, content.lastIndexOf("<"));
-            if (!StringHelper.isEmpty(lastTile) && title.equals(lastTile)) {
-                continue;
+        for(Element dd : dl.getElementsByTag("dd")){
+            Elements as = dd.getElementsByTag("a");
+            if (as.size() > 0) {
+                Element a = as.get(0);
+                String title = a.html();
+                if (!StringHelper.isEmpty(lastTile) && title.equals(lastTile)) {
+                    continue;
+                }
+                Chapter chapter = new Chapter();
+                chapter.setNumber(i++);
+                chapter.setTitle(title);
+                String url = a.attr("href");
+                if (StringHelper.isEmpty(book.getSource()) || BookSource.tianlai.toString().equals(book.getSource())) {
+                    url = URLCONST.nameSpace_tianlai + url;
+                } else if (BookSource.biquge.toString().equals(book.getSource())) {
+                    url = book.getChapterUrl() + url;
+                }
+                chapter.setUrl(url);
+                chapters.add(chapter);
+                lastTile = title;
             }
-            Chapter chapter = new Chapter();
-            chapter.setNumber(i++);
-            chapter.setTitle(title);
-            chapter.setUrl(content.substring(content.indexOf("\"") + 1, content.lastIndexOf("l\"") + 1));
-            chapters.add(chapter);
-            lastTile = title;
+
         }
+
         return chapters;
     }
 
@@ -111,6 +126,7 @@ public class TianLaiReadUtil {
                     book.setNewestChapterTitle(newChapter.text());
                 }
             }
+            book.setSource(BookSource.tianlai.toString());
             books.add(book);
 
         }

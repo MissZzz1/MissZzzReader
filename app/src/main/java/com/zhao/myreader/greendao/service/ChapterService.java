@@ -9,6 +9,7 @@ import com.zhao.myreader.util.StringHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by zhao on 2017/7/24.
@@ -71,7 +72,7 @@ public class ChapterService extends BaseService {
      * @param chapter
      */
     public void addChapter(Chapter chapter) {
-        chapter.setId(StringHelper.getStringRandom(25));
+        chapter.setId(UUID.randomUUID().toString());
         addEntity(chapter);
     }
 

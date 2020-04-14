@@ -11,6 +11,7 @@ import com.zhao.myreader.util.StringHelper;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 
 /**
@@ -53,7 +54,7 @@ public class SearchHistoryService extends BaseService {
      * @param searchHistory
      */
     public void addSearchHistory(SearchHistory searchHistory) {
-        searchHistory.setId(StringHelper.getStringRandom(25));
+        searchHistory.setId(UUID.randomUUID().toString());
         searchHistory.setCreateDate(DateHelper.longToTime(new Date().getTime()));
         addEntity(searchHistory);
     }

@@ -18,6 +18,7 @@ import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.StringHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by zhao on 2017/7/26.
@@ -27,7 +28,7 @@ public class SearchBookAdapter extends ArrayAdapter<Book> {
 
     private int mResourceId;
 
-    public SearchBookAdapter(Context context, int resourceId, ArrayList<Book> datas){
+    public SearchBookAdapter(Context context, int resourceId, List<Book> datas){
         super(context,resourceId,datas);
         mResourceId = resourceId;
     }

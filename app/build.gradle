@@ -8,8 +8,8 @@ android {
         applicationId "com.zhao.myreader"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 202
-        versionName "2.0.2"
+        versionCode 300
+        versionName "3.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -63,8 +63,8 @@ dependencies {
 
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'org.jsoup:jsoup:1.10.3'
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'  
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     implementation 'me.gujun.android.taggroup:library:1.4@aar'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
@@ -76,7 +76,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 8
+    schemaVersion 9
     daoPackage 'com.zhao.myreader.greendao.gen'
     targetGenDir 'src/main/java'
 }
