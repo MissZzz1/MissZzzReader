@@ -67,7 +67,7 @@ public class MainActivity extends FragmentActivity {
             TextHelper.showText("再按一次退出");
             APPCONST.exitTime = System.currentTimeMillis();
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
 

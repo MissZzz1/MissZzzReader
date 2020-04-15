@@ -15,13 +15,23 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_book_list"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl_book_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_book_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
 
 </LinearLayout>

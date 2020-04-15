@@ -107,6 +107,7 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
        Book book = mDatas.get(position);
        holder.tvBookName.setText(book.getName());
        holder.tvAuthor.setText(book.getAuthor());
+       holder.tvDesc.setText("");
        if (StringHelper.isEmpty(book.getImgUrl())){
            //获取小说详情
            BookStoreApi.getBookInfo(book, new ResultCallback() {

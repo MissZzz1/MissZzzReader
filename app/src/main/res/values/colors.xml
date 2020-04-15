@@ -136,5 +136,8 @@
 
     <color name="sys_book_type_bg">#F7F7F7</color>
 
+    <color name="sys_refresh_bg">#E9E9E9</color>
+
+    <color name="sys_refresh_main">#353535</color>
 
 </resources>

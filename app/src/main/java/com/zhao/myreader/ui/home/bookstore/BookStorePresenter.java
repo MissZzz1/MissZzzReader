@@ -5,8 +5,15 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.scwang.smartrefresh.layout.api.RefreshFooter;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.RefreshState;
+import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhao.myreader.R;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
@@ -69,6 +76,15 @@ public class BookStorePresenter implements BasePresenter {
 
     @Override
     public void start() {
+
+         //无需加载更多
+         mBookStoreFragment.getSrlBookList().setEnableLoadMore(false);
+
+         //小说列表上拉刷新事件
+         mBookStoreFragment.getSrlBookList().setOnRefreshListener(refreshLayout -> {
+             getBooksData();
+         });
+
          getData();
 
 
@@ -166,6 +182,9 @@ public class BookStorePresenter implements BasePresenter {
 
 
         });
+
+        //刷新动作完成
+        mBookStoreFragment.getSrlBookList().finishRefresh();
 
     }
 

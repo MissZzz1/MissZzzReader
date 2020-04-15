@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhao.myreader.R;
 
 import butterknife.BindView;
@@ -24,6 +25,8 @@ public class BookStoreFragment extends Fragment {
     RecyclerView rvTypeList;
     @BindView(R.id.rv_book_list)
     RecyclerView rvBookList;
+    @BindView(R.id.srl_book_list)
+    SmartRefreshLayout srlBookList;
 
 
     private Unbinder unbinder;
@@ -55,5 +58,9 @@ public class BookStoreFragment extends Fragment {
 
     public RecyclerView getRvBookList() {
         return rvBookList;
+    }
+
+    public SmartRefreshLayout getSrlBookList() {
+        return srlBookList;
     }
 }
