@@ -8,6 +8,7 @@
 
 #### 本项目仅限于学习使用，应用内小说内容抓取自天籁小说网、笔趣阁，未经本人允许，不得挪作其他用途，否则后果自负
 
+demo v3.0.0 下载体验： https://share.weiyun.com/5YKQLQB
 
 v1.6.0 新增自动滚屏
 
@@ -33,7 +34,7 @@ v2.0.2 书架UI错位修复以及搜索优化，修复部分bug，以及针对An
 
 v3.0.0 新增书城模块，主要内容为分类排行； 新增书城小说源，更多小说内容； 更新html抓取方式，优化小说内容抓取速度；更新搜索关键词，优化搜索方式；（ps:由于组件升级，可能老版本覆盖升级会导致阅读背景颜色异常，重新切换一下背景即可）
        
-demo v3.0.0 下载体验： https://share.weiyun.com/5YKQLQB
+
 
 
 ![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)
