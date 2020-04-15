@@ -52,7 +52,7 @@ demo v3.0.0 下载体验： https://share.weiyun.com/5YKQLQB
 ![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/7.png)
 ![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/8.png)
 ![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/9.png)
-
+![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/10.png)
 
 ## License
 ```
