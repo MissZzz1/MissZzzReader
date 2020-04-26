@@ -13,6 +13,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.zhao.myreader.application.ActivityManage;
 import com.zhao.myreader.util.Anti_hijackingUtils;
 import com.zhao.myreader.util.SystemBarTintManager;
@@ -21,7 +23,7 @@ import com.zhao.myreader.util.SystemBarTintManager;
 /**
  * Created by zhao on 2016/4/16.
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends AppCompatActivity {
 
     public static int width = 0;
     public static int height = 0;

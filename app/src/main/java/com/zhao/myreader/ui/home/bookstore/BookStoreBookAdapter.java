@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.zhao.myreader.R;
 
 import com.zhao.myreader.callback.ResultCallback;
+import com.zhao.myreader.databinding.ListviewBookStoreBookItemBinding;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.StringHelper;
 import com.zhao.myreader.webapi.BookStoreApi;
@@ -29,12 +30,13 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
 
     private LayoutInflater mInflater;
     private List<Book> mDatas;
-    private int mResourceId;
+
     private Context mContext;
     private RecyclerView rvContent;
 
 
     private OnItemClickListener onItemClickListener;
+
 
     private Handler mHandle = new Handler(message -> {
 
@@ -51,37 +53,33 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
     });
 
 
-   BookStoreBookAdapter(Context context, int resourceId, List<Book> datas) {
+   BookStoreBookAdapter(Context context,  List<Book> datas) {
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
-        mResourceId = resourceId;
+
         mContext = context;
 
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ViewHolder(View arg0) {
-            super(arg0);
+        ListviewBookStoreBookItemBinding binding;
+
+        ViewHolder(ListviewBookStoreBookItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
-        ImageView ivBookImg;
-        TextView tvBookName;
-        TextView tvDesc;
-        TextView tvAuthor;
+
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (rvContent == null) rvContent = (RecyclerView) parent;
-        View view = mInflater.inflate(mResourceId, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        viewHolder.ivBookImg =  view.findViewById(R.id.iv_book_img);
-        viewHolder.tvBookName = view.findViewById(R.id.tv_book_name);
-        viewHolder.tvAuthor = view.findViewById(R.id.tv_book_author);
-        viewHolder.tvDesc = view.findViewById(R.id.tv_book_desc);
-        return viewHolder;
+        ListviewBookStoreBookItemBinding binding = ListviewBookStoreBookItemBinding.inflate(mInflater,parent,false);
+
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -105,9 +103,9 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
 
     private void initView(final int position, final ViewHolder holder) {
        Book book = mDatas.get(position);
-       holder.tvBookName.setText(book.getName());
-       holder.tvAuthor.setText(book.getAuthor());
-       holder.tvDesc.setText("");
+       holder.binding.tvBookName.setText(book.getName());
+       holder.binding.tvBookAuthor.setText(book.getAuthor());
+       holder.binding.tvBookDesc.setText("");
        if (StringHelper.isEmpty(book.getImgUrl())){
            //获取小说详情
            BookStoreApi.getBookInfo(book, new ResultCallback() {
@@ -140,9 +138,9 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
 //                .override(DipPxUtil.dip2px(getContext(), 80), DipPxUtil.dip2px(getContext(), 150))
                 .error(R.mipmap.no_image)
                 .placeholder(R.mipmap.no_image)
-                .into(holder.ivBookImg);
+                .into(holder.binding.ivBookImg);
         //简介
-        holder.tvDesc.setText(book.getDesc());
+        holder.binding.tvBookDesc.setText(book.getDesc());
 
     }
 

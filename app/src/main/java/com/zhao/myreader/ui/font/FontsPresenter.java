@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Created by zhao on 2017/8/7.
  */
 
-public class FontsPresenter implements BasePresenter {
+public class FontsPresenter extends BasePresenter {
 
     private FontsActivity mFontsActivity;
     private ArrayList<Font> mFonts;
@@ -33,7 +33,7 @@ public class FontsPresenter implements BasePresenter {
     };
 
     public FontsPresenter(FontsActivity fontsActivity) {
-
+        super(fontsActivity,fontsActivity.getLifecycle());
         mFontsActivity = fontsActivity;
     }
 

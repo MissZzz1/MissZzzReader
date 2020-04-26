@@ -32,11 +32,11 @@ public class SuggestBookAdapter extends ArrayAdapter<String> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(mResourceId, null);
-            viewHolder.tvBookName = (TextView) convertView.findViewById(R.id.tv_suggestion_book);
+            viewHolder.tvBookName = convertView.findViewById(R.id.tv_suggestion_book);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

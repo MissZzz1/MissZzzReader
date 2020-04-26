@@ -36,7 +36,7 @@ import java.util.ArrayList;
  * Created by zhao on 2017/7/25.
  */
 
-public class BookcasePresenter implements BasePresenter {
+public class BookcasePresenter extends BasePresenter {
 
     private BookcaseFragment mBookcaseFragment;
     private ArrayList<Book> mBooks = new ArrayList<>();//书目数组
@@ -63,6 +63,7 @@ public class BookcasePresenter implements BasePresenter {
     };
 
     BookcasePresenter(BookcaseFragment bookcaseFragment) {
+        super(bookcaseFragment.getContext(),bookcaseFragment.getLifecycle());
         mBookcaseFragment = bookcaseFragment;
         mBookService = new BookService();
         mMainActivity = ((MainActivity) (mBookcaseFragment.getContext()));
@@ -182,6 +183,12 @@ public class BookcasePresenter implements BasePresenter {
         if (Build.VERSION.SDK_INT >= 21) {
             mBookcaseFragment.getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(mBookcaseFragment.getContext(), colorPrimaryDark));
         }
+    }
+
+
+    @Override
+    public void resume(){
+        getData();
     }
 
 }

@@ -8,52 +8,44 @@ import android.widget.TextView;
 
 import com.zhao.myreader.R;
 import com.zhao.myreader.base.BaseActivity;
+import com.zhao.myreader.databinding.ActivityFontsBinding;
 
-import butterknife.ButterKnife;
-import butterknife.BindView;
 
 public class FontsActivity extends BaseActivity {
 
-    @BindView(R.id.ll_title_back)
-    LinearLayout llTitleBack;
-    @BindView(R.id.tv_title_text)
-    TextView tvTitleText;
-    @BindView(R.id.system_title)
-    LinearLayout systemTitle;
-    @BindView(R.id.lv_fonts)
-    ListView lvFonts;
-    @BindView(R.id.pb_loading)
-    ProgressBar pbLoading;
+
 
     private FontsPresenter mFontsPresenter;
+    private ActivityFontsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fonts);
-        ButterKnife.bind(this);
+
+        binding = ActivityFontsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         setStatusBar(R.color.sys_line);
         mFontsPresenter = new FontsPresenter(this);
-        mFontsPresenter.start();
+
     }
 
     public ProgressBar getPbLoading() {
-        return pbLoading;
+        return binding.pbLoading;
     }
 
     public LinearLayout getLlTitleBack() {
-        return llTitleBack;
+        return binding.title.llTitleBack;
     }
 
     public TextView getTvTitleText() {
-        return tvTitleText;
-    }
-
-    public LinearLayout getSystemTitle() {
-        return systemTitle;
+        return binding.title.tvTitleText;
     }
 
     public ListView getLvFonts() {
-        return lvFonts;
+        return binding.lvFonts;
+    }
+
+    public ActivityFontsBinding getBinding() {
+        return binding;
     }
 }

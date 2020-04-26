@@ -55,7 +55,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by zhao on 2017/7/27.
  */
 
-public class ReadPresenter implements BasePresenter {
+public class ReadPresenter extends BasePresenter {
 
 
 
@@ -152,6 +152,7 @@ public class ReadPresenter implements BasePresenter {
 
 
     public ReadPresenter(ReadActivity readActivity) {
+        super(readActivity,readActivity.getLifecycle());
         mReadActivity = readActivity;
         mBookService = new BookService();
         mChapterService = new ChapterService();
@@ -918,20 +919,23 @@ public class ReadPresenter implements BasePresenter {
      */
     private void autoScroll() {
         autoScrollOpening = true;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (autoScrollOpening) {
-                    try {
-                        Thread.sleep(mSetting.getAutoScrollSpeed() + 1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    mHandler.sendMessage(mHandler.obtainMessage(7));
-
+        new Thread(() -> {
+            while (autoScrollOpening) {
+                try {
+                    Thread.sleep(mSetting.getAutoScrollSpeed() + 1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+                mHandler.sendMessage(mHandler.obtainMessage(7));
+
             }
         }).start();
+    }
+
+    @Override
+    public void destroy(){
+
+        MyApplication.getApplication().shutdownThreadPool();
     }
 
 

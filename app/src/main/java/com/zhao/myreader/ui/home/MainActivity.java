@@ -1,6 +1,5 @@
 package com.zhao.myreader.ui.home;
 
-
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,47 +16,35 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.zhao.myreader.R;
 
-import com.zhao.myreader.base.BaseActivity;
+
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.custom.CircleImageView;
+import com.zhao.myreader.databinding.ActivityMainBinding;
 import com.zhao.myreader.util.SystemBarTintManager;
 import com.zhao.myreader.util.TextHelper;
 
-import org.jsoup.Connection;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 public class MainActivity extends FragmentActivity {
 
 
-    @BindView(R.id.civ_avatar)
-    CircleImageView civAvatar;
-    @BindView(R.id.tl_tab_menu)
-    TabLayout tlTabMenu;
-    @BindView(R.id.iv_search)
-    ImageView ivSearch;
-    @BindView(R.id.rl_common_title)
-    RelativeLayout rlCommonTitle;
-    @BindView(R.id.tv_edit_finish)
-    TextView tvEditFinish;
-    @BindView(R.id.rl_edit_titile)
-    RelativeLayout rlEditTitile;
-    @BindView(R.id.vp_content)
-    ViewPager vpContent;
+
     private MainPrensenter mMainPrensenter;
+
+    private ActivityMainBinding binding;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         setStatusBar(R.color.sys_line);
         mMainPrensenter = new MainPrensenter(this);
-        mMainPrensenter.start();
+
+
 
     }
 
@@ -79,31 +66,31 @@ public class MainActivity extends FragmentActivity {
 
 
     public CircleImageView getCivAvatar() {
-        return civAvatar;
+        return binding.civAvatar;
     }
 
     public TabLayout getTlTabMenu() {
-        return tlTabMenu;
+        return binding.tlTabMenu;
     }
 
     public ImageView getIvSearch() {
-        return ivSearch;
+        return binding.ivSearch;
     }
 
     public ViewPager getVpContent() {
-        return vpContent;
+        return binding.vpContent;
     }
 
     public RelativeLayout getRlCommonTitle() {
-        return rlCommonTitle;
+        return binding.rlCommonTitle;
     }
 
     public TextView getTvEditFinish() {
-        return tvEditFinish;
+        return binding.tvEditFinish;
     }
 
     public RelativeLayout getRlEditTitile() {
-        return rlEditTitile;
+        return binding.rlEditTitile;
     }
 
 

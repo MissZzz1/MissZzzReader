@@ -6,6 +6,9 @@ import android.os.Message;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.bumptech.glide.Glide;
 import com.zhao.myreader.base.BasePresenter;
@@ -20,15 +23,20 @@ import com.zhao.myreader.util.TextHelper;
 import com.zhao.myreader.util.crawler.BiQuGeReadUtil;
 import com.zhao.myreader.webapi.BookStoreApi;
 
+import static androidx.lifecycle.Lifecycle.State.STARTED;
+
 /**
  * Created by zhao on 2017/7/27.
  */
 
-public class BookInfoPresenter implements BasePresenter {
+public class BookInfoPresenter extends  BasePresenter {
 
     private BookInfoActivity mBookInfoActivity;
     private Book mBook;
     private BookService mBookService;
+
+
+
 
     private Handler mHandle = new Handler(message -> {
         switch (message.what){
@@ -40,25 +48,26 @@ public class BookInfoPresenter implements BasePresenter {
     });
 
     public BookInfoPresenter(BookInfoActivity bookInfoActivity){
+        super(bookInfoActivity,bookInfoActivity.getLifecycle());
         mBookInfoActivity  = bookInfoActivity;
         mBookService = new BookService();
-    }
-
-
-
-    @Override
-    public void start() {
-        mBook = (Book) mBookInfoActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
-        if (StringHelper.isEmpty(mBook.getSource()) || BookSource.tianlai.toString().equals(mBook.getSource())){
-            init();
-
-        }else if(BookSource.biquge.toString().equals(mBook.getSource())){
-            getData();
-        }
-
 
 
     }
+
+     @Override
+     public void start() {
+
+            mBook = (Book) mBookInfoActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
+            if (StringHelper.isEmpty(mBook.getSource()) || BookSource.tianlai.toString().equals(mBook.getSource())){
+                init();
+
+            }else if(BookSource.biquge.toString().equals(mBook.getSource())){
+                getData();
+            }
+
+    }
+
 
     private void getData(){
         BookStoreApi.getBookInfo(mBook, new ResultCallback() {

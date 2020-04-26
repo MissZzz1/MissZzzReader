@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhao.myreader.R;
 import com.zhao.myreader.application.MyApplication;
 import com.zhao.myreader.base.BaseActivity;
+import com.zhao.myreader.databinding.ActivityReadBinding;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -25,86 +26,67 @@ import butterknife.BindView;
 public class ReadActivity extends BaseActivity {
 
 
-    @BindView(R.id.pb_loading)
-    ProgressBar pbLoading;
-    @BindView(R.id.srl_content)
-    SmartRefreshLayout srlContent;
-    @BindView(R.id.lv_chapter_list)
-    ListView lvChapterList;
 
-    @BindView(R.id.dl_read_activity)
-    DrawerLayout dlReadActivity;
-    @BindView(R.id.ll_chapter_list_view)
-    LinearLayout llChapterListView;
-    @BindView(R.id.tv_book_list)
-    TextView tvBookList;
-    @BindView(R.id.tv_chapter_sort)
-    TextView tvChapterSort;
-    @BindView(R.id.rv_content)
-    RecyclerView rvContent;
 
     private ReadPresenter mReadPresenter;
+    private ActivityReadBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE); // 隐藏应用程序的标题栏，即当前activity的label
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); // 隐藏android系统的状态栏
-        setContentView(R.layout.activity_read);
-        ButterKnife.bind(this);
+        binding = ActivityReadBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         mReadPresenter = new ReadPresenter(this);
-        mReadPresenter.start();
+
 
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         mReadPresenter.onActivityResult(requestCode, resultCode, data);
     }
 
     public RecyclerView getRvContent() {
-        return rvContent;
+        return binding.rvContent;
     }
 
     public TextView getTvChapterSort() {
-        return tvChapterSort;
+        return binding.tvChapterSort;
     }
 
     public TextView getTvBookList() {
-        return tvBookList;
+        return binding.tvBookList;
     }
 
-    public ReadPresenter getmReadPresenter() {
-        return mReadPresenter;
 
-    }
 
     public SmartRefreshLayout getSrlContent() {
-        return srlContent;
+        return binding.srlContent;
     }
 
 
     public ProgressBar getPbLoading() {
-        return pbLoading;
+        return binding.pbLoading;
     }
 
 
     public ListView getLvChapterList() {
-        return lvChapterList;
+        return binding.lvChapterList;
     }
 
     public DrawerLayout getDlReadActivity() {
-        return dlReadActivity;
+        return binding.dlReadActivity;
     }
 
     public LinearLayout getLlChapterListView() {
-        return llChapterListView;
+        return binding.llChapterListView;
     }
 
-    @Override
-    protected void onDestroy() {
-        MyApplication.getApplication().shutdownThreadPool();
-        super.onDestroy();
+    public ActivityReadBinding getBinding() {
+        return binding;
     }
-
 }

@@ -57,10 +57,11 @@ public class FontsAdapter extends ArrayAdapter<Font> {
         ViewHolder viewHolder = null;
         if (convertView == null) {
             viewHolder = new ViewHolder();
+
             convertView = LayoutInflater.from(getContext()).inflate(mResourceId, null);
-            viewHolder.tvFontName = (TextView) convertView.findViewById(R.id.tv_font_name);
-            viewHolder.btnFontUse = (Button) convertView.findViewById(R.id.btn_font_use);
-            viewHolder.tvExample = (TextView)convertView.findViewById(R.id.tv_font_example);
+            viewHolder.tvFontName =  convertView.findViewById(R.id.tv_font_name);
+            viewHolder.btnFontUse =  convertView.findViewById(R.id.btn_font_use);
+            viewHolder.tvExample = convertView.findViewById(R.id.tv_font_example);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

@@ -36,15 +36,15 @@ public class SearchBookAdapter extends ArrayAdapter<Book> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if (convertView == null){
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(mResourceId,null);
-            viewHolder.ivBookImg = (ImageView) convertView.findViewById(R.id.iv_book_img);
-            viewHolder.tvBookName = (TextView) convertView.findViewById(R.id.tv_book_name);
-            viewHolder.tvAuthor = (TextView) convertView.findViewById(R.id.tv_book_author);
-            viewHolder.tvDesc = (TextView) convertView.findViewById(R.id.tv_book_desc);
-            viewHolder.tvType = (TextView) convertView.findViewById(R.id.tv_book_type);
+            viewHolder.ivBookImg =  convertView.findViewById(R.id.iv_book_img);
+            viewHolder.tvBookName = convertView.findViewById(R.id.tv_book_name);
+            viewHolder.tvAuthor =  convertView.findViewById(R.id.tv_book_author);
+            viewHolder.tvDesc =  convertView.findViewById(R.id.tv_book_desc);
+            viewHolder.tvType =  convertView.findViewById(R.id.tv_book_type);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();

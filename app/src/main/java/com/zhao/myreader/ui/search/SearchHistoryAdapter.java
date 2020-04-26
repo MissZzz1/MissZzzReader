@@ -36,11 +36,11 @@ public class SearchHistoryAdapter extends ArrayAdapter<SearchHistory> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if (convertView == null){
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(mResourceId,null);
-            viewHolder.tvContent = (TextView)convertView.findViewById(R.id.tv_history_content);
+            viewHolder.tvContent = convertView.findViewById(R.id.tv_history_content);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();

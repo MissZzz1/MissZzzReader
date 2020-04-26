@@ -21,25 +21,23 @@ import static androidx.fragment.app.FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CU
  * Created by zhao on 2017/7/25.
  */
 
-public class MainPrensenter implements BasePresenter {
+public class MainPrensenter extends BasePresenter {
 
     private MainActivity mMainActivity;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] tabTitle = {"社区","书架","书城"};
 
     public MainPrensenter(MainActivity mainActivity){
+        super(mainActivity,mainActivity.getLifecycle());
         mMainActivity = mainActivity;
     }
 
     @Override
     public void start() {
         init();
-        mMainActivity.getIvSearch().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mMainActivity, SearchBookActivity.class);
-                mMainActivity.startActivity(intent);
-            }
+        mMainActivity.getIvSearch().setOnClickListener(view -> {
+            Intent intent = new Intent(mMainActivity, SearchBookActivity.class);
+            mMainActivity.startActivity(intent);
         });
 
     }

@@ -35,7 +35,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
  * Created by zhao on 2017/7/26.
  */
 
-public class SearchBookPrensenter implements BasePresenter {
+public class SearchBookPrensenter extends BasePresenter {
 
     private SearchBookActivity mSearchBookActivity;
     private SearchBookAdapter mSearchBookAdapter;
@@ -76,6 +76,7 @@ public class SearchBookPrensenter implements BasePresenter {
     };
 
     SearchBookPrensenter(SearchBookActivity searchBookActivity) {
+        super(searchBookActivity,searchBookActivity.getLifecycle());
         mSearchBookActivity = searchBookActivity;
         mSearchHistoryService = new SearchHistoryService();
         Collections.addAll(mSuggestions, suggestion);

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.zhao.myreader.R;
+import com.zhao.myreader.databinding.ListviewBookTypeItemBinding;
 import com.zhao.myreader.entity.bookstore.BookType;
 
 
@@ -20,7 +21,7 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
 
     private LayoutInflater mInflater;
     private List<BookType> mDatas;
-    private int mResourceId;
+
     private Context mContext;
     private RecyclerView rvContent;
 
@@ -29,31 +30,33 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
     private int selectPos = 0;
 
 
-   BookStoreBookTypeAdapter(Context context, int resourceId, List<BookType> datas) {
+   BookStoreBookTypeAdapter(Context context,  List<BookType> datas) {
         mInflater = LayoutInflater.from(context);
         mDatas = datas;
-        mResourceId = resourceId;
+
         mContext = context;
 
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        ViewHolder(View arg0) {
-            super(arg0);
+       ListviewBookTypeItemBinding binding;
+
+        ViewHolder(ListviewBookTypeItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
-        TextView tvTypeName;
+
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (rvContent == null) rvContent = (RecyclerView) parent;
-        View view = mInflater.inflate(mResourceId, parent, false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        viewHolder.tvTypeName = view.findViewById(R.id.tv_type_name);
-        return viewHolder;
+        ListviewBookTypeItemBinding binding = ListviewBookTypeItemBinding.inflate(mInflater,parent,false);
+
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -87,7 +90,7 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
 
     private void initView(final int position, final ViewHolder holder) {
        BookType bookType = mDatas.get(position);
-       holder.tvTypeName.setText(bookType.getTypeName());
+       holder.binding.tvTypeName.setText(bookType.getTypeName());
 
 
     }

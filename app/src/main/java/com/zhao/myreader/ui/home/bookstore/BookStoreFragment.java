@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhao.myreader.R;
+import com.zhao.myreader.databinding.FragmentBookStoreBinding;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,18 +22,13 @@ import butterknife.Unbinder;
  */
 public class BookStoreFragment extends Fragment {
 
-    @BindView(R.id.rv_type_list)
-    RecyclerView rvTypeList;
-    @BindView(R.id.rv_book_list)
-    RecyclerView rvBookList;
-    @BindView(R.id.srl_book_list)
-    SmartRefreshLayout srlBookList;
 
 
-    private Unbinder unbinder;
+
 
 
     private BookStorePresenter mBookStorePresenter;
+    private FragmentBookStoreBinding binding;
 
 
     public BookStoreFragment() {
@@ -44,23 +40,26 @@ public class BookStoreFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_book_store, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        binding = FragmentBookStoreBinding.inflate(inflater,container,false);
         mBookStorePresenter = new BookStorePresenter(this);
-        mBookStorePresenter.start();
-        return view;
+
+        return binding.getRoot();
 
     }
 
     public RecyclerView getRvTypeList() {
-        return rvTypeList;
+        return binding.rvTypeList;
     }
 
     public RecyclerView getRvBookList() {
-        return rvBookList;
+        return binding.rvBookList;
     }
 
     public SmartRefreshLayout getSrlBookList() {
-        return srlBookList;
+        return binding.srlBookList;
+    }
+
+    public FragmentBookStoreBinding getBinding() {
+        return binding;
     }
 }

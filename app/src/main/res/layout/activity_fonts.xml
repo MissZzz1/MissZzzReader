@@ -13,7 +13,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/title_base"></include>
+        <include
+            android:id="@+id/title"
+            layout="@layout/title_base">
+
+        </include>
 
 
 

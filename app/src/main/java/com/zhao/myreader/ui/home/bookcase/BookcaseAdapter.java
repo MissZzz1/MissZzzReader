@@ -45,9 +45,9 @@ public class BookcaseAdapter extends ArrayAdapter<Book> {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(mResourceId, null);
-            viewHolder.ivBookImg = (ImageView) convertView.findViewById(R.id.iv_book_img);
-            viewHolder.tvBookName = (TextView) convertView.findViewById(R.id.tv_book_name);
-            viewHolder.tvNoReadNum = (TextView) convertView.findViewById(R.id.tv_no_read_num);
+            viewHolder.ivBookImg =  convertView.findViewById(R.id.iv_book_img);
+            viewHolder.tvBookName =  convertView.findViewById(R.id.tv_book_name);
+            viewHolder.tvNoReadNum =  convertView.findViewById(R.id.tv_no_read_num);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

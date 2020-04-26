@@ -84,14 +84,14 @@ public class BookcaseDragAdapter extends DragAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(mResourceId, null);
-            viewHolder.ivBookImg = (ImageView) convertView.findViewById(R.id.iv_book_img);
-            viewHolder.tvBookName = (TextView) convertView.findViewById(R.id.tv_book_name);
-            viewHolder.tvNoReadNum = (TextView) convertView.findViewById(R.id.tv_no_read_num);
-            viewHolder.ivDelete = (ImageView) convertView.findViewById(R.id.iv_delete);
+            viewHolder.ivBookImg =  convertView.findViewById(R.id.iv_book_img);
+            viewHolder.tvBookName = convertView.findViewById(R.id.tv_book_name);
+            viewHolder.tvNoReadNum =  convertView.findViewById(R.id.tv_no_read_num);
+            viewHolder.ivDelete = convertView.findViewById(R.id.iv_delete);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

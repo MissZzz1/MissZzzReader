@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.scwang.smartrefresh.layout.api.RefreshFooter;
@@ -32,7 +33,7 @@ import java.util.List;
  * Created by zhao on 2017/7/25.
  */
 
-public class BookStorePresenter implements BasePresenter {
+public class BookStorePresenter extends BasePresenter {
 
     private BookStoreFragment mBookStoreFragment;
 
@@ -70,7 +71,8 @@ public class BookStorePresenter implements BasePresenter {
     };
 
      BookStorePresenter(BookStoreFragment bookStoreFragment){
-        mBookStoreFragment = bookStoreFragment;
+         super(bookStoreFragment.getActivity(),bookStoreFragment.getLifecycle());
+         mBookStoreFragment = bookStoreFragment;
 
     }
 
@@ -147,7 +149,7 @@ public class BookStorePresenter implements BasePresenter {
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBookStoreFragment.getRvTypeList().setLayoutManager(mLinearLayoutManager);
-        mBookStoreBookTypeAdapter = new BookStoreBookTypeAdapter(mBookStoreFragment.getActivity(), R.layout.listview_book_type_item, mBookTypes);
+        mBookStoreBookTypeAdapter = new BookStoreBookTypeAdapter(mBookStoreFragment.getActivity(), mBookTypes);
         mBookStoreFragment.getRvTypeList().setAdapter(mBookStoreBookTypeAdapter);
 
         //点击事件
@@ -170,7 +172,7 @@ public class BookStorePresenter implements BasePresenter {
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mBookStoreFragment.getRvBookList().setLayoutManager(mLinearLayoutManager);
-        mBookStoreBookAdapter = new BookStoreBookAdapter(mBookStoreFragment.getActivity(),R.layout.listview_book_store_book_item,bookList);
+        mBookStoreBookAdapter = new BookStoreBookAdapter(mBookStoreFragment.getActivity(),bookList);
         mBookStoreFragment.getRvBookList().setAdapter(mBookStoreBookAdapter);
 
         //点击事件
