@@ -56,7 +56,7 @@ public class BookInfoPresenter extends  BasePresenter {
     }
 
      @Override
-     public void start() {
+     public void create() {
 
             mBook = (Book) mBookInfoActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
             if (StringHelper.isEmpty(mBook.getSource()) || BookSource.tianlai.toString().equals(mBook.getSource())){

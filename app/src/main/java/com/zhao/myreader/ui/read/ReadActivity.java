@@ -40,6 +40,7 @@ public class ReadActivity extends BaseActivity {
         setContentView(binding.getRoot());
 
         mReadPresenter = new ReadPresenter(this);
+        mReadPresenter.enable();
 
 
     }

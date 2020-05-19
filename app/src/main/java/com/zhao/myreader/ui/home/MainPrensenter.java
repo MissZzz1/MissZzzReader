@@ -33,7 +33,7 @@ public class MainPrensenter extends BasePresenter {
     }
 
     @Override
-    public void start() {
+    public void create() {
         init();
         mMainActivity.getIvSearch().setOnClickListener(view -> {
             Intent intent = new Intent(mMainActivity, SearchBookActivity.class);
@@ -46,6 +46,7 @@ public class MainPrensenter extends BasePresenter {
      * 初始化
      */
     private void init(){
+        mFragments.clear();
         mFragments.add(new BBSFragment());
         mFragments.add(new BookcaseFragment());
         mFragments.add(new BookStoreFragment());
@@ -65,6 +66,7 @@ public class MainPrensenter extends BasePresenter {
 
             @Override
             public CharSequence getPageTitle(int position) {
+                if (position >= tabTitle.length) return null;
                 return tabTitle[position];
             }
 

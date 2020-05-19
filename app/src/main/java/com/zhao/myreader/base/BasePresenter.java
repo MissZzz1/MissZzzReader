@@ -22,30 +22,41 @@ public abstract class BasePresenter implements LifecycleObserver {
           this.context = context;
           this.lifecycle = lifecycle;
           lifecycle.addObserver(this);
-          enable();
+
 
      }
 
-     protected void enable() {
+     public void enable() {
           enabled = true;
           if (lifecycle.getCurrentState().isAtLeast(STARTED)) {
+
                // connect if not connected
           }
      }
 
-     protected void unEnable() {
+     public void unEnable() {
           enabled = false;
           if (lifecycle.getCurrentState().isAtLeast(STARTED)) {
                // connect if not connected
           }
      }
 
+
+     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+     void onCreate() {
+          if (enabled) {
+               create();
+          }
+     }
+
      @OnLifecycleEvent(Lifecycle.Event.ON_START)
-     void onsStart() {
+     void onStart() {
           if (enabled) {
               start();
           }
      }
+
+
 
      @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
      void onDestroy() {
@@ -81,8 +92,13 @@ public abstract class BasePresenter implements LifecycleObserver {
      }
 
 
+     protected  void create(){
 
-     protected abstract void start();
+     };
+
+     protected  void start(){
+
+     };
 
      protected  void destroy(){
 

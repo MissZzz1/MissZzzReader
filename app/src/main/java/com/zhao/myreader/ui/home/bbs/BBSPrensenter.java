@@ -17,7 +17,7 @@ public class BBSPrensenter extends BasePresenter {
     }
 
     @Override
-    public void start() {
+    public void create() {
 
     }
 }

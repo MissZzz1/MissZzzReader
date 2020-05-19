@@ -34,7 +34,8 @@ public class BookcaseFragment extends Fragment {
     private FragmentBookcaseBinding binding;
 
     public BookcaseFragment() {
-        // Required empty public constructor
+        mBookcasePresenter = new BookcasePresenter(this);
+
     }
 
 
@@ -42,10 +43,9 @@ public class BookcaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
-
         binding = FragmentBookcaseBinding.inflate(inflater,container,false);
-        mBookcasePresenter = new BookcasePresenter(this);
+        mBookcasePresenter.enable();
+
 
         return binding.getRoot();
     }

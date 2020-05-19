@@ -26,6 +26,7 @@ public class FontsActivity extends BaseActivity {
         setContentView(binding.getRoot());
         setStatusBar(R.color.sys_line);
         mFontsPresenter = new FontsPresenter(this);
+        mFontsPresenter.enable();
 
     }
 

@@ -26,7 +26,8 @@ public class BookInfoActivity extends BaseActivity {
         setContentView(binding.getRoot());
         setStatusBar(R.color.sys_line);
         mBookInfoPresenter = new BookInfoPresenter(this);
-        mBookInfoPresenter.start();
+        mBookInfoPresenter.enable();
+       // mBookInfoPresenter.start();
 
 
 

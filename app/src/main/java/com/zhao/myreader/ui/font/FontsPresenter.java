@@ -39,7 +39,7 @@ public class FontsPresenter extends BasePresenter {
 
 
     @Override
-    public void start() {
+    public void create() {
         mFontsActivity.getLlTitleBack().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -83,7 +83,7 @@ public class SearchBookPrensenter extends BasePresenter {
     }
 
     @Override
-    public void start() {
+    public void create() {
 
         mSearchBookActivity.getTvTitleText().setText("搜索");
         mSearchBookActivity.getLlTitleBack().setOnClickListener(view -> mSearchBookActivity.finish());

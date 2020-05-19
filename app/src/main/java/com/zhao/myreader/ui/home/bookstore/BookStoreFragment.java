@@ -32,16 +32,19 @@ public class BookStoreFragment extends Fragment {
 
 
     public BookStoreFragment() {
-        // Required empty public constructor
+        mBookStorePresenter = new BookStorePresenter(this);
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         binding = FragmentBookStoreBinding.inflate(inflater,container,false);
-        mBookStorePresenter = new BookStorePresenter(this);
+        mBookStorePresenter.enable();
+        mBookStorePresenter.init();
 
         return binding.getRoot();
 

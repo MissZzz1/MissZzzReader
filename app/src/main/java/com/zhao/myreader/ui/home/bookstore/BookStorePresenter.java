@@ -5,17 +5,10 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.Lifecycle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.scwang.smartrefresh.layout.api.RefreshFooter;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.constant.RefreshState;
-import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.zhao.myreader.R;
+
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
@@ -71,13 +64,13 @@ public class BookStorePresenter extends BasePresenter {
     };
 
      BookStorePresenter(BookStoreFragment bookStoreFragment){
-         super(bookStoreFragment.getActivity(),bookStoreFragment.getLifecycle());
+         super(bookStoreFragment.getContext(),bookStoreFragment.getLifecycle());
          mBookStoreFragment = bookStoreFragment;
 
     }
 
-    @Override
-    public void start() {
+
+    public void init() {
 
          //无需加载更多
          mBookStoreFragment.getSrlBookList().setEnableLoadMore(false);

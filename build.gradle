@@ -3,13 +3,16 @@
 buildscript {
 
     repositories {
-        jcenter()
+        mavenLocal()
         mavenCentral()
+        maven { url "https://jitpack.io" }
+        jcenter()
         google()
+
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.2'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.1'
         // NOTE: Do not place your application dependencies here; they belong
@@ -20,9 +23,12 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        mavenLocal()
+        mavenCentral()
         maven { url "https://jitpack.io" }
+        jcenter()
         google()
+
     }
 }
 

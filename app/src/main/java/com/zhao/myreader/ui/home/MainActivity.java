@@ -43,10 +43,11 @@ public class MainActivity extends FragmentActivity {
         setContentView(binding.getRoot());
         setStatusBar(R.color.sys_line);
         mMainPrensenter = new MainPrensenter(this);
-
-
+        mMainPrensenter.enable();
 
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -58,11 +59,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        MyApplication.checkVersionByServer(this);
-    }
+
 
 
     public CircleImageView getCivAvatar() {

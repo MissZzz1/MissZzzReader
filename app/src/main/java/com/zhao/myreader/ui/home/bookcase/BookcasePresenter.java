@@ -66,12 +66,12 @@ public class BookcasePresenter extends BasePresenter {
         super(bookcaseFragment.getContext(),bookcaseFragment.getLifecycle());
         mBookcaseFragment = bookcaseFragment;
         mBookService = new BookService();
-        mMainActivity = ((MainActivity) (mBookcaseFragment.getContext()));
-//        mChapterService = new ChapterService();
+
     }
 
     @Override
     public void start() {
+        mMainActivity = ((MainActivity) (mBookcaseFragment.getContext()));
         mBookcaseFragment.getSrlContent().setEnableRefresh(false);
         mBookcaseFragment.getSrlContent().setEnableHeaderTranslationContent(false);
         mBookcaseFragment.getSrlContent().setEnableLoadMore(false);

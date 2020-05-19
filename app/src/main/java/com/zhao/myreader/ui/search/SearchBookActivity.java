@@ -29,6 +29,7 @@ public class SearchBookActivity extends BaseActivity {
         setContentView(binding.getRoot());
         setStatusBar(R.color.sys_line);
         mSearchBookPrensenter = new SearchBookPrensenter(this);
+        mSearchBookPrensenter.enable();
 
     }
 
