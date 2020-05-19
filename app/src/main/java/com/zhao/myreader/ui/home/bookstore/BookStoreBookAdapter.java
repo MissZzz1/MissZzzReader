@@ -1,6 +1,7 @@
 package com.zhao.myreader.ui.home.bookstore;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 
 import android.view.LayoutInflater;
@@ -10,9 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.zhao.myreader.R;
 
 import com.zhao.myreader.callback.ResultCallback;
@@ -37,6 +43,8 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
 
     private OnItemClickListener onItemClickListener;
 
+    private boolean isScrolling;
+
 
     private Handler mHandle = new Handler(message -> {
 
@@ -58,6 +66,8 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
         mDatas = datas;
 
         mContext = context;
+
+
 
     }
 
@@ -106,13 +116,19 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
        holder.binding.tvBookName.setText(book.getName());
        holder.binding.tvBookAuthor.setText(book.getAuthor());
        holder.binding.tvBookDesc.setText("");
+       holder.binding.tvBookName.setTag(position);//设置列表书的当前加载位置
        if (StringHelper.isEmpty(book.getImgUrl())){
+           Glide.with(mContext).clear(holder.binding.ivBookImg);
            //获取小说详情
            BookStoreApi.getBookInfo(book, new ResultCallback() {
                @Override
                public void onFinish(Object o, int code) {
                    mDatas.set(position,(Book) o);
-                   mHandle.sendMessage(mHandle.obtainMessage(1,position,0,holder));
+                   //防止列表快速滑动时出现书的信息加载混乱的问题
+                   if (holder.binding.tvBookName.getTag() == null || (int)holder.binding.tvBookName.getTag() == position) {
+                       mHandle.sendMessage(mHandle.obtainMessage(1,position,0,holder));
+                   }
+
                }
 
                @Override
@@ -132,15 +148,26 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
     private void initImgAndDec(final int position, final ViewHolder holder){
         Book book = mDatas.get(position);
 
+        if (holder.binding.ivBookImg.getTag() != null && (int)holder.binding.ivBookImg.getTag() != position){
+
+            Glide.with(mContext).clear(holder.binding.ivBookImg);
+
+        }
+
         //图片
         Glide.with(mContext)
                 .load(book.getImgUrl())
-//                .override(DipPxUtil.dip2px(getContext(), 80), DipPxUtil.dip2px(getContext(), 150))
                 .error(R.mipmap.no_image)
                 .placeholder(R.mipmap.no_image)
                 .into(holder.binding.ivBookImg);
+
+
+        holder.binding.ivBookImg.setTag(position);
+
+
         //简介
         holder.binding.tvBookDesc.setText(book.getDesc());
+
 
     }
 
@@ -154,7 +181,11 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
 
     }
 
+    public boolean isScrolling() {
+        return isScrolling;
+    }
 
-
-
+    public void setScrolling(boolean scrolling) {
+        isScrolling = scrolling;
+    }
 }

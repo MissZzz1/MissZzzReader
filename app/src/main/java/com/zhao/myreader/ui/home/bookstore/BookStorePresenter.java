@@ -6,9 +6,12 @@ import android.os.Handler;
 import android.os.Message;
 
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
@@ -153,6 +156,8 @@ public class BookStorePresenter extends BasePresenter {
         });
 
 
+
+
     }
 
 
@@ -180,6 +185,28 @@ public class BookStorePresenter extends BasePresenter {
 
         //刷新动作完成
         mBookStoreFragment.getSrlBookList().finishRefresh();
+
+        mBookStoreFragment.getRvBookList().addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState){
+                    /*正在拖拽*/
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
+                        break;
+                    /*滑动停止*/
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        break;
+                    /*惯性滑动中*/
+                    case RecyclerView.SCROLL_STATE_SETTLING:
+                        break;
+                }
+
+
+            }
+        });
+
+
 
     }
 

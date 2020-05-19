@@ -56,6 +56,8 @@ public class Book implements Serializable {
     private String source;
 
 
+
+
     @Generated(hash = 1392889320)
     public Book(String id, String name, String chapterUrl, String imgUrl,
             String desc, String author, String type, String updateDate,
@@ -193,9 +195,6 @@ public class Book implements Serializable {
     public void setSource(String source) {
         this.source = source;
     }
-
-
-
 
 
 }
