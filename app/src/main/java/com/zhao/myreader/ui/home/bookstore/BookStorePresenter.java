@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 
 
 import androidx.annotation.NonNull;
@@ -11,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.bumptech.glide.Glide;
+
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
@@ -52,11 +53,13 @@ public class BookStorePresenter extends BasePresenter {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
+
                     initTypeList();
 
                     break;
 
                 case 2:
+
                     initBookList();
 
                     break;
@@ -78,8 +81,9 @@ public class BookStorePresenter extends BasePresenter {
          //无需加载更多
          mBookStoreFragment.getSrlBookList().setEnableLoadMore(false);
 
-         //小说列表上拉刷新事件
+         //小说列表下拉刷新事件
          mBookStoreFragment.getSrlBookList().setOnRefreshListener(refreshLayout -> {
+
              getBooksData();
          });
 
@@ -93,6 +97,7 @@ public class BookStorePresenter extends BasePresenter {
      * 获取页面数据
      */
     private void getData(){
+        mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
          BookStoreApi.getBookTypeList(URLCONST.nameSpace_biquge, new ResultCallback() {
              @Override
              public void onFinish(Object o, int code) {
@@ -116,6 +121,7 @@ public class BookStorePresenter extends BasePresenter {
      * 获取小数列表数据
      */
     private void getBooksData(){
+
         BookStoreApi.getBookRankList(curType.getUrl(), new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
@@ -140,7 +146,7 @@ public class BookStorePresenter extends BasePresenter {
      * 初始化类别列表
      */
     private void initTypeList(){
-
+        mBookStoreFragment.getBinding().pbLoading.setVisibility(View.GONE);
         //设置布局管理器
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -151,6 +157,7 @@ public class BookStorePresenter extends BasePresenter {
         //点击事件
         mBookStoreBookTypeAdapter.setOnItemClickListener((pos, view) -> {
             curType = mBookTypes.get(pos);
+            mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
             getBooksData();
 
         });
@@ -166,6 +173,7 @@ public class BookStorePresenter extends BasePresenter {
      * 初始化小说列表
      */
     private void initBookList(){
+        mBookStoreFragment.getBinding().pbLoading.setVisibility(View.GONE);
         //设置布局管理器
         mLinearLayoutManager = new LinearLayoutManager(mBookStoreFragment.getActivity());
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -186,25 +194,7 @@ public class BookStorePresenter extends BasePresenter {
         //刷新动作完成
         mBookStoreFragment.getSrlBookList().finishRefresh();
 
-        mBookStoreFragment.getRvBookList().addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                switch (newState){
-                    /*正在拖拽*/
-                    case RecyclerView.SCROLL_STATE_DRAGGING:
-                        break;
-                    /*滑动停止*/
-                    case RecyclerView.SCROLL_STATE_IDLE:
-                        break;
-                    /*惯性滑动中*/
-                    case RecyclerView.SCROLL_STATE_SETTLING:
-                        break;
-                }
 
-
-            }
-        });
 
 
 
