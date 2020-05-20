@@ -17,6 +17,7 @@
 
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
@@ -26,11 +27,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+>
 
 
         <activity
-            android:name=".ui.home.MainActivity">
+            android:name=".ui.home.MainActivity"
+            android:alwaysRetainTaskState="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

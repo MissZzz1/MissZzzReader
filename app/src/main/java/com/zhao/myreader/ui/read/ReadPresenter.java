@@ -161,7 +161,7 @@ public class ReadPresenter extends BasePresenter {
 
 
     @Override
-    public void start() {
+    public void create() {
         if (mSetting.isDayStyle()) {
             mReadActivity.getDlReadActivity().setBackgroundResource(mSetting.getReadBgColor());
         } else {
