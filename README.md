@@ -38,16 +38,16 @@ v3.0.1 修复书城因为快速滚动而产生的加载混乱等问题，优化�
 
 
 
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/1.png)
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/2.png)
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/3.png)
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/4.png)
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/5.png)
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/6.png)
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/7.png)
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/8.png)
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/9.png)
-![demoImg](https://raw.githubusercontent.com/caoqazwsx/MissZzzReader/master/img/10.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/1.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/2.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/3.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/4.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/5.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/6.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/7.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/8.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/9.png)
+![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/10.png)
 
 ## License
 ```
