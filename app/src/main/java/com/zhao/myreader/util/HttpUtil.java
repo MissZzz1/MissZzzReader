@@ -113,6 +113,7 @@ public class HttpUtil {
             builder.hostnameVerifier((hostname, session) ->
                     true);
 
+
            mClient = builder.build();
 
         }
