@@ -62,15 +62,20 @@ public class HttpUtil {
     //因为每个OkHttpClient 实例都有自己的连接池和线程池，重用这个实例能降低延时，减少内存消耗，而重复创建新实例则会浪费资源。
     private static OkHttpClient mClient;
 
+
+
     static final TrustManager[] trustAllCerts = new TrustManager[]{
             new X509TrustManager() {
                 @Override
-                public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                public void checkClientTrusted(X509Certificate[] chain, String authType) {
                 }
 
                 @Override
-                public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                public void checkServerTrusted(X509Certificate[] chain, String authType) {
                 }
+
+
+
 
                 @Override
                 public X509Certificate[] getAcceptedIssuers() {
@@ -79,28 +84,18 @@ public class HttpUtil {
             }
     };
 
-   static class TrustEveryoneManager implements X509TrustManager {
-        @Override
-        public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException { }
 
-        @Override
-        public void checkServerTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException { }
-
-        @Override
-        public java.security.cert.X509Certificate[] getAcceptedIssuers() {
-            return null;
-        }
-    }
 
     private static SSLSocketFactory createSSLSocketFactory() {
         SSLSocketFactory ssfFactory = null;
 
         try {
-            SSLContext sc = SSLContext.getInstance("TLS");
-            sc.init(null, trustAllCerts, new java.security.SecureRandom());
 
+            SSLContext sslContext = SSLContext.getInstance("SSL");
 
-            ssfFactory = sc.getSocketFactory();
+            sslContext.init(null, trustAllCerts, new java.security.SecureRandom());
+
+            ssfFactory = sslContext.getSocketFactory();
         } catch (Exception e) {
         }
 
@@ -115,14 +110,11 @@ public class HttpUtil {
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.connectTimeout(30000, TimeUnit.SECONDS);
             builder.sslSocketFactory(createSSLSocketFactory(), (X509TrustManager) trustAllCerts[0]);
-            builder.hostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
-           mClient = builder
-                    .build();
+            builder.hostnameVerifier((hostname, session) ->
+                    true);
+
+           mClient = builder.build();
+
         }
         return mClient;
 
@@ -263,27 +255,23 @@ public class HttpUtil {
     }
 
     public static void sendGetRequest_okHttp(final String address, final HttpCallback callback) {
-       MyApplication.getApplication().newThread(new Runnable() {
-            @Override
-            public void run() {
+       MyApplication.getApplication().newThread(() -> {
 
-                try{
+           try{
 
-                     OkHttpClient client = getOkHttpClient();
-                    Request request = new Request.Builder()
-                            .url(address)
-                            .build();
+                OkHttpClient client = getOkHttpClient();
+               Request request = new Request.Builder()
+                       .url(address)
+                       .build();
 
-                    Response response = client.newCall(request).execute();
-                    callback.onFinish(response.body().byteStream());
+               Response response = client.newCall(request).execute();
+               callback.onFinish(response.body().byteStream());
 
-                }catch(Exception e){
-                    e.printStackTrace();
-                    callback.onError(e);
-                }
-            }
-
-        });
+           }catch(Exception e){
+               e.printStackTrace();
+               callback.onError(e);
+           }
+       });
     }
 
     /**
