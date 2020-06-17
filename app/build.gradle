@@ -54,7 +54,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     implementation "androidx.lifecycle:lifecycle-runtime:2.2.0"
     implementation 'com.android.support:appcompat-v7:29.0.0'
     implementation 'com.android.support:support-v4:29.0.0'
