@@ -8,7 +8,7 @@
 
 #### 本项目小说内容抓取自天籁小说网、笔趣阁，仅限于学习使用，未经本人允许，不得挪作其他用途，否则后果自负
 
-demo v3.0.2 下载体验： https://share.weiyun.com/nNjqLoAX
+demo v3.0.3 下载体验： https://share.weiyun.com/rlA1fgIz
 
 v1.6.0 新增自动滚屏
 
@@ -36,7 +36,9 @@ v3.0.0 新增书城模块，主要内容为分类排行； 新增书城小说源
 
 v3.0.1 修复书城因为快速滚动而产生的加载混乱等问题，优化书城加载平滑度。
 
-v3.0.2 修复由于抓取网站https证书过期或使用自签名证书所导致的一系列问题     
+v3.0.2 修复由于抓取网站https证书过期或使用自签名证书所导致的一系列问题  
+
+v3.0.3 修复由于小说搜索源参数以及该页面html数据结构改动而导致应用内书源搜索总是结果为空的问题   
 
 
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/1.png)

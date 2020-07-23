@@ -108,7 +108,7 @@ public class TianLaiReadUtil {
             book.setImgUrl(img.attr("src"));
             Element title = element.getElementsByClass("result-item-title result-game-item-title").get(0);
             book.setName(title.child(0).attr("title"));
-            book.setChapterUrl(title.child(0).attr("href"));
+            book.setChapterUrl(URLCONST.nameSpace_tianlai + title.child(0).attr("href"));
             Element desc = element.getElementsByClass("result-game-item-desc").get(0);
             book.setDesc(desc.text());
             Element info = element.getElementsByClass("result-game-item-info").get(0);

@@ -30,18 +30,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="bookname"
+                android:ellipsize="end"
                 android:textSize="18sp"
+                android:maxLines="1"
+
                 android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/tv_book_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:maxLines="2"
                 android:paddingTop="5dp"
                 android:paddingBottom="5dp"
                 android:text="book desc"
-                android:maxLines="2"
-                android:textSize="14sp"/>
+                android:ellipsize="end"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
