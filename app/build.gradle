@@ -3,7 +3,7 @@ apply plugin: 'org.greenrobot.greendao'//greendao插件dependencies
 
 android {
     compileSdkVersion 29
-    buildToolsVersion '29.0.0'
+    buildToolsVersion '29.0.3'
     defaultConfig {
         applicationId "com.zhao.myreader"
         minSdkVersion 23
@@ -12,11 +12,7 @@ android {
         versionName "3.0.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                includeCompileClasspath = true
-            }
-        }
+
     }
 
     buildTypes {
@@ -62,18 +58,18 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.8.1'
     implementation 'com.google.code.gson:gson:2.8.6'
 
     implementation 'org.greenrobot:greendao:3.2.2'
-    implementation 'org.jsoup:jsoup:1.10.3'
+    implementation 'org.jsoup:jsoup:1.11.3'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.2'  
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.3'
     implementation 'me.gujun.android.taggroup:library:1.4@aar'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation('com.journeyapps:zxing-android-embedded:4.1.0') { transitive = false }
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.zxing:core:3.3.0'
 
 
