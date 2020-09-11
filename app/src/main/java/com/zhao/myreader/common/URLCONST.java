@@ -9,7 +9,7 @@ public class URLCONST {
     // 命名空间
     public static String nameSpace_tianlai = "https://www.23txt.com/";
 
-    public static  String nameSpace_biquge = "https://www.52bqg.com/";
+    public static  String nameSpace_biquge = "https://www.52bqg.net/";
 
     public static String nameSpace_system = "https://10.10.123.31:8080/jeecg";
 
