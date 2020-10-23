@@ -8,7 +8,7 @@
 
 #### 本项目小说内容抓取自天籁小说网、笔趣阁，仅限于学习使用，未经本人允许，不得挪作其他用途，否则后果自负
 
-demo v3.0.3 下载体验： https://pan.baidu.com/s/1K5CEzxNOJ6iu6WBQtggrbQ  提取码:jyiv
+demo v3.0.5 下载体验： 链接: https://pan.baidu.com/s/1bz4sgBASx3twgAKnD_X6mA 提取码: gc7m
 
 v1.6.0 新增自动滚屏
 
