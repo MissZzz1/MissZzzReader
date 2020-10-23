@@ -108,7 +108,7 @@ public class HttpUtil {
         if (mClient == null){
 
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.connectTimeout(30000, TimeUnit.SECONDS);
+            builder.connectTimeout(30, TimeUnit.SECONDS);
             builder.sslSocketFactory(createSSLSocketFactory(), (X509TrustManager) trustAllCerts[0]);
             builder.hostnameVerifier((hostname, session) ->
                     true);

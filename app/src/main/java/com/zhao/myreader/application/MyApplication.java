@@ -124,12 +124,7 @@ public class MyApplication extends Application {
             SSLContext sc = SSLContext.getInstance("SSL");
             sc.init(null, trustAllCerts, new SecureRandom());
             HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    return true;
-                }
-            });
+            HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
         } catch (Exception ignored) {
         }
     }
@@ -159,13 +154,7 @@ public class MyApplication extends Application {
     }
 
 
-    /*@TargetApi(26)
-    private void createNotificationChannel() {
 
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.createNotificationChannel(new NotificationChannel("gxdw_push_and_im", "gxdw", NotificationManager.IMPORTANCE_DEFAULT));
-    }*/
 
 
     /**

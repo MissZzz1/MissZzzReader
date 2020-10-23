@@ -38,10 +38,12 @@ v3.0.1 修复书城因为快速滚动而产生的加载混乱等问题，优化�
 
 v3.0.2 修复由于抓取网站https证书过期或使用自签名证书所导致的一系列问题  
 
-v3.0.3 修复由于小说搜索源参数以及该页面html数据结构改动而导致应用内书源搜索总是结果为空的问题   
+v3.0.3 修复由于小说搜索源参数以及该页面html数据结构改动而导致应用内书源搜索总是结果为空的问题
+
+v3.0.5 更新书城抓取页面连接，解决书城可能无法加载的问题
 
 
-![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/1.png)
+[demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/1.png)
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/2.png)
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/3.png)
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/4.png)
