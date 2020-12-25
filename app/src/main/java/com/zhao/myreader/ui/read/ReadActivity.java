@@ -15,13 +15,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhao.myreader.R;
-import com.zhao.myreader.application.MyApplication;
+
 import com.zhao.myreader.base.BaseActivity;
 import com.zhao.myreader.databinding.ActivityReadBinding;
 
-import butterknife.ButterKnife;
-import butterknife.BindView;
+
 
 public class ReadActivity extends BaseActivity {
 

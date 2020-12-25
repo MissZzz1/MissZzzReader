@@ -61,6 +61,7 @@ public class TianLaiReadUtil {
 
         String lastTile = null;
         int i = 0;
+
         for(Element dd : dl.getElementsByTag("dd")){
             Elements as = dd.getElementsByTag("a");
             if (as.size() > 0) {

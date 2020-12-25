@@ -122,7 +122,7 @@ public class BookStorePresenter extends BasePresenter {
      */
     private void getBooksData(){
 
-        BookStoreApi.getBookRankList(curType.getUrl(), new ResultCallback() {
+        BookStoreApi.getBookRankList(URLCONST.nameSpace_biquge + curType.getUrl(), new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 bookList= (ArrayList<Book>)o;

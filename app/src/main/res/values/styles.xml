@@ -12,6 +12,7 @@
 
     <style name="TabLayoutTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
         <item name="android:textSize">16sp</item>
+
     </style>
 
     <style name="jmui_default_dialog_style">

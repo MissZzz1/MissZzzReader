@@ -10,12 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhao.myreader.R;
+
 import com.zhao.myreader.databinding.FragmentBookStoreBinding;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.

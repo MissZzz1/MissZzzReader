@@ -42,6 +42,8 @@ v3.0.3 修复由于小说搜索源参数以及该页面html数据结构改动而
 
 v3.0.5 更新书城抓取页面连接，解决书城可能无法加载的问题
 
+v3.0.6 修复由于抓取网站的结构性变化，而导致的书城栏目小说列表无法加载的问题
+
 
 [demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/1.png)
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/2.png)
