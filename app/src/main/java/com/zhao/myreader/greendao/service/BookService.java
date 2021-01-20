@@ -92,10 +92,10 @@ public class BookService extends BaseService {
      * @param bookName
      * @return
      */
-    public Book findBookByAuthorAndName(String bookName, String author){
+    public Book findBookByAuthorAndName(String bookName, String author,String source){
         Book book = null;
         try {
-            Cursor cursor = selectBySql("select id from book where author = ? and name = ?",new String[]{author,bookName});
+            Cursor cursor = selectBySql("select id from book where author = ? and name = ? and source = ?",new String[]{author,bookName,source});
             if (cursor.moveToNext()){
                 String id = cursor.getString(0);
                 book = getBookById(id);

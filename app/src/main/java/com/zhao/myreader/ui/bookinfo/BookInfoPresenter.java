@@ -111,14 +111,11 @@ public class BookInfoPresenter extends  BasePresenter {
             }
 
         });
-        mBookInfoActivity.getBtnReadBook().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mBookInfoActivity, ReadActivity.class);
-                intent.putExtra(APPCONST.BOOK,mBook);
-                mBookInfoActivity.startActivity(intent);
+        mBookInfoActivity.getBtnReadBook().setOnClickListener(view -> {
+            Intent intent = new Intent(mBookInfoActivity, ReadActivity.class);
+            intent.putExtra(APPCONST.BOOK,mBook);
+            mBookInfoActivity.startActivity(intent);
 
-            }
         });
         Glide.with(mBookInfoActivity)
                 .load(mBook.getImgUrl())
@@ -126,7 +123,7 @@ public class BookInfoPresenter extends  BasePresenter {
     }
 
     private boolean isBookCollected(){
-        Book book = mBookService.findBookByAuthorAndName(mBook.getName(),mBook.getAuthor());
+        Book book = mBookService.findBookByAuthorAndName(mBook.getName(),mBook.getAuthor(),mBook.getSource());
         if (book == null){
             return false;
         }else {

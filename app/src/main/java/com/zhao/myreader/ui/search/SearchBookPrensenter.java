@@ -16,6 +16,7 @@ import com.zhao.myreader.R;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
+import com.zhao.myreader.common.Common;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.SearchHistory;
 import com.zhao.myreader.greendao.service.SearchHistoryService;
@@ -53,7 +54,8 @@ public class SearchBookPrensenter extends BasePresenter {
     private int inputConfirm = 0;//搜索输入确认
     private int confirmTime = 1000;//搜索输入确认时间（毫秒）
 
-    private static String[] suggestion = {"凡人修仙之仙界篇", "诡秘之主", "元尊" ,"天下第九","斗罗大陆4终极斗罗", "剑来",  "三寸人间"};
+
+    private static String[] suggestion = {"斗罗大陆4终极斗罗","左道倾天", "诡秘之主", "元尊" ,"天下第九", "三寸人间","万族之劫","大奉打更人"};
 
 
     @SuppressLint("HandlerLeak")
@@ -188,11 +190,24 @@ public class SearchBookPrensenter extends BasePresenter {
      */
     private void getData() {
         mBooks.clear();
-        CommonApi.search(searchKey, new ResultCallback() {
+        CommonApi.searchTl(searchKey, new ResultCallback() {
 
             @Override
             public void onFinish(Object o, int code) {
-                mBooks = (ArrayList<Book>) o;
+                mBooks.addAll((ArrayList<Book>) o);
+                mHandler.sendMessage(mHandler.obtainMessage(2));
+            }
+
+            @Override
+            public void onError(Exception e) {
+                mHandler.sendMessage(mHandler.obtainMessage(3));
+            }
+        });
+
+        CommonApi.searchBqg(searchKey, new ResultCallback() {
+            @Override
+            public void onFinish(Object o, int code) {
+                mBooks.addAll((ArrayList<Book>) o);
                 mHandler.sendMessage(mHandler.obtainMessage(2));
             }
 

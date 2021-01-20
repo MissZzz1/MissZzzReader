@@ -18,6 +18,9 @@ public class URLCONST {
     // 搜索小说
     public static String method_buxiu_search = "https://www.23txt.com/search.php";
 
+    public static String method_bqg_search = nameSpace_biquge + "/modules/article/search.php";
+//    searchkey=%C1%E9%D3%F2
+
     // 获取最新版本号
     public static String method_getCurAppVersion = nameSpace_system + "/mReaderController.do?getCurAppVersion";
 

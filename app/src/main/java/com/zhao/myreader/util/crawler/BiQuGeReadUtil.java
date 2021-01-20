@@ -2,6 +2,7 @@ package com.zhao.myreader.util.crawler;
 
 import android.text.Html;
 
+import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.entity.bookstore.BookType;
 import com.zhao.myreader.enums.BookSource;
 import com.zhao.myreader.greendao.entity.Book;
@@ -104,6 +105,13 @@ public class BiQuGeReadUtil {
         book.setSource(BookSource.biquge.toString());
         Document doc = Jsoup.parse(html);
 
+        /* <meta property="og:novel:read_url" content="https://www.52bqg.net/book_113099/">*/
+
+        Element meta = doc.getElementsByAttributeValue("property","og:novel:read_url").get(0);
+
+        book.setChapterUrl(meta.attr("content"));
+
+
         //图片url
         Element divImg = doc.getElementById("fmimg");
         Element img = divImg.getElementsByTag("img").get(0);
@@ -141,8 +149,69 @@ public class BiQuGeReadUtil {
         book.setDesc(Html.fromHtml(divIntro.html()).toString());
 
 
+
+
         return book;
 
+    }
+
+
+
+    /**
+     * 从搜索html中得到书列表
+     *
+     * @param html
+     * @return
+     */
+    public static ArrayList<Book> getBooksFromSearchHtml(String html) {
+        ArrayList<Book> books = new ArrayList<>();
+        Document doc = Jsoup.parse(html);
+
+        Elements divs = doc.getElementsByClass("novelslistss");
+
+
+        if (divs.size() != 0){
+            Element div = divs.get(0);
+            Elements lis = div.getElementsByTag("li");
+            for (Element li : lis) {
+                Book book = new Book();
+
+
+
+                Element s2a  = li.getElementsByClass("s2").get(0).getElementsByTag("a").get(0);
+
+                book.setChapterUrl(s2a.attr("href"));
+                book.setName(s2a.text());
+
+                Element s4 = li.getElementsByClass("s4").get(0);
+                book.setAuthor(s4.text());
+                Element s1 = li.getElementsByClass("s1").get(0);
+                book.setType(s1.text());
+                Element s5 = li.getElementsByClass("s5").get(0);
+                book.setUpdateDate(s5.text());
+
+                Element s3a = li.getElementsByClass("s3").get(0).getElementsByTag("a").get(0);
+
+                book.setNewestChapterUrl(s3a.attr("href"));
+                book.setNewestChapterTitle(s3a.text());
+
+                book.setSource(BookSource.biquge.toString());
+                books.add(book);
+
+            }
+
+        }else{
+            Book book = new Book();
+            getBookInfo(html,book);
+            books.add(book);
+
+        }
+
+
+
+
+
+        return books;
     }
 
 

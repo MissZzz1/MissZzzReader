@@ -4,8 +4,11 @@ import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.greendao.entity.Book;
+import com.zhao.myreader.util.crawler.BiQuGeReadUtil;
 import com.zhao.myreader.util.crawler.TianLaiReadUtil;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,17 +69,45 @@ public class CommonApi extends BaseApi{
     }
 
     /**
-     * 搜索小说
+     * 搜索小说（天籁）
      * @param key
      * @param callback
      */
-    public static void search(String key, final ResultCallback callback){
+    public static void searchTl(String key, final ResultCallback callback){
         Map<String,Object> params = new HashMap<>();
         params.put("q", key);
         getCommonReturnHtmlStringApi(URLCONST.method_buxiu_search, params, "utf-8", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(TianLaiReadUtil.getBooksFromSearchHtml((String)o),code);
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+                callback.onError(e);
+
+            }
+        });
+    }
+
+
+    /**
+     * 搜索小说（笔趣阁）
+     * @param key
+     * @param callback
+     */
+    public static void searchBqg(String key, final ResultCallback callback){
+        Map<String,Object> params = new HashMap<>();
+        try {
+            params.put("searchkey", URLEncoder.encode(key,"GB2312"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        getCommonReturnHtmlStringApi(URLCONST.method_bqg_search, params, "GBK", new ResultCallback() {
+            @Override
+            public void onFinish(Object o, int code) {
+                callback.onFinish(BiQuGeReadUtil.getBooksFromSearchHtml((String)o),code);
 
             }
 

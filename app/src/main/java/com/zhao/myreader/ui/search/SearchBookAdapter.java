@@ -1,5 +1,6 @@
 package com.zhao.myreader.ui.search;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.zhao.myreader.R;
+import com.zhao.myreader.enums.BookSource;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.StringHelper;
 
@@ -45,6 +47,7 @@ public class SearchBookAdapter extends ArrayAdapter<Book> {
             viewHolder.tvAuthor =  convertView.findViewById(R.id.tv_book_author);
             viewHolder.tvDesc =  convertView.findViewById(R.id.tv_book_desc);
             viewHolder.tvType =  convertView.findViewById(R.id.tv_book_type);
+            viewHolder.tvBookSource = convertView.findViewById(R.id.tv_book_source);
             convertView.setTag(viewHolder);
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -53,7 +56,8 @@ public class SearchBookAdapter extends ArrayAdapter<Book> {
         return convertView;
     }
 
-    private void initView(int postion,ViewHolder viewHolder){
+
+    private void initView(int postion, ViewHolder viewHolder){
         Book book = getItem(postion);
         if (StringHelper.isEmpty(book.getImgUrl())){
             book.setImgUrl("");
@@ -65,9 +69,11 @@ public class SearchBookAdapter extends ArrayAdapter<Book> {
                 .placeholder(R.mipmap.no_image)
                 .into(viewHolder.ivBookImg);
         viewHolder.tvBookName.setText(book.getName());
+        viewHolder.tvBookSource.setText(BookSource.fromString(book.getSource()).text);
         viewHolder.tvDesc.setText(book.getDesc());
         viewHolder.tvAuthor.setText(book.getAuthor());
         viewHolder.tvType.setText(book.getType());
+
     }
 
     class ViewHolder{
@@ -76,6 +82,7 @@ public class SearchBookAdapter extends ArrayAdapter<Book> {
         TextView tvDesc;
         TextView tvAuthor;
         TextView tvType;
+        TextView tvBookSource;
 
     }
 
