@@ -70,7 +70,7 @@ public class SearchBookPrensenter extends BasePresenter {
                     initSearchList();
                     break;
                 case 3:
-                    mSearchBookActivity.getLvSearchBooksList().setAdapter(null);
+//                    mSearchBookActivity.getLvSearchBooksList().setAdapter(null);
                     mSearchBookActivity.getPbLoading().setVisibility(View.GONE);
                     break;
             }

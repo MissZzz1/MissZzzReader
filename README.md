@@ -8,7 +8,7 @@
 
 #### 本项目小说内容抓取自天籁小说网、笔趣阁，仅限于学习使用，未经本人允许，不得挪作其他用途，否则后果自负
 
-demo v3.0.7 下载体验： 链接: https://pan.baidu.com/s/1cdKrJqOxrnk06PuiY4NbRQ 提取码: uup1
+demo v3.0.8 下载体验： 链接: https://pan.baidu.com/s/1NDcUXCDmNBup87A1eh09vA 提取码: aw5u 
 
 v1.6.0 新增自动滚屏
 
@@ -45,6 +45,8 @@ v3.0.5 更新书城抓取页面连接，解决书城可能无法加载的问题
 v3.0.6 修复由于抓取网站的结构性变化，而导致的书城栏目小说列表无法加载的问题
 
 v3.0.7 更新小说搜索模块，新增笔趣阁搜索源，实现多源搜索
+
+v3.0.8 更新书源域名，修复小说加载失败的问题，修复小说搜索概率性搜索结果缺失的问题
 
 
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/1.png)

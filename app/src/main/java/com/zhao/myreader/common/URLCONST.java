@@ -7,7 +7,7 @@ package com.zhao.myreader.common;
 public class URLCONST {
 
     // 命名空间
-    public static String nameSpace_tianlai = "https://www.23txt.com/";
+    public static String nameSpace_tianlai = "https://www.233txt.com/";
 
     public static  String nameSpace_biquge = "https://www.52bqg.net/";
 
@@ -16,7 +16,7 @@ public class URLCONST {
     public static boolean isRSA = false;
 
     // 搜索小说
-    public static String method_buxiu_search = "https://www.23txt.com/search.php";
+    public static String method_buxiu_search = "https://www.233txt.com/search.php";
 
     public static String method_bqg_search = nameSpace_biquge + "/modules/article/search.php";
 //    searchkey=%C1%E9%D3%F2
