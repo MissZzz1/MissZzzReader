@@ -88,7 +88,7 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
-        HttpUtil.trustAllHosts();//信任所有证书
+//        HttpUtil.trustAllHosts();//信任所有证书
 
 
 //        handleSSLHandshake();

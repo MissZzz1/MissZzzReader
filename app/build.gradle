@@ -8,8 +8,8 @@ android {
         applicationId "com.zhao.myreader"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 308
-        versionName "3.0.8"
+        versionCode 309
+        versionName "3.0.9"
 
 
 
