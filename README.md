@@ -8,7 +8,7 @@
 
 #### 本项目小说内容抓取自天籁小说网、笔趣阁，仅限于学习使用，未经本人允许，不得挪作其他用途，否则后果自负
 
-demo v3.0.8 下载体验： 链接: https://pan.baidu.com/s/1x22wuLF8P6dEY7C3F_l_YA 提取码: fbfq
+demo v3.0.9 下载体验： 链接: https://pan.baidu.com/s/1x22wuLF8P6dEY7C3F_l_YA 提取码: fbfq
 
 v1.6.0 新增自动滚屏
 
