@@ -360,50 +360,37 @@ public class ReadPresenter extends BasePresenter {
         if (mSettingDialog != null) {
             mSettingDialog.show();
         } else {
-            int progress = mLinearLayoutManager.findLastVisibleItemPosition() * 100 / (mChapters.size() - 1);
-            mSettingDialog = DialogCreator.createReadSetting(mReadActivity, mSetting.isDayStyle(), progress, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//返回
-                            mReadActivity.finish();
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//上一章
-//                            int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
-                            int curPosition = mLinearLayoutManager.findLastVisibleItemPosition();
-                            if (curPosition > 0) {
-                                mReadActivity.getRvContent().scrollToPosition(curPosition - 1);
-                            }
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//下一章
-//                            int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
-                            int curPosition = mLinearLayoutManager.findLastVisibleItemPosition();
-                            if (curPosition < mChapters.size() - 1) {
-                                mReadActivity.getRvContent().scrollToPosition(curPosition + 1);
-                                delayTurnToChapter(curPosition + 1);
-                            }
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//目录
-                            initChapterTitleList();
-                            mReadActivity.getDlReadActivity().openDrawer(GravityCompat.START);
-                            mSettingDialog.dismiss();
+            int progress = 100;
+            if(mChapters.size() != 1){
+                progress = mLinearLayoutManager.findLastVisibleItemPosition() * 100 / (mChapters.size() - 1);
+            }
 
+            //缓存整本
+            mSettingDialog = DialogCreator.createReadSetting(mReadActivity, mSetting.isDayStyle(), progress, view -> {//返回
+                mReadActivity.finish();
+            }, view -> {//上一章
+//                            int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
+                        int curPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+                        if (curPosition > 0) {
+                            mReadActivity.getRvContent().scrollToPosition(curPosition - 1);
                         }
-                    }, new DialogCreator.OnClickNightAndDayListener() {
-                        @Override
-                        public void onClick(Dialog dialog, View view, boolean isDayStyle) {//日夜切换
+                    }, view -> {//下一章
+//                            int curPosition = mReadActivity.getLvContent().getLastVisiblePosition();
+                        int curPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+                        if (curPosition < mChapters.size() - 1) {
+                            mReadActivity.getRvContent().scrollToPosition(curPosition + 1);
+                            delayTurnToChapter(curPosition + 1);
+                        }
+                    }, view -> {//目录
+                        initChapterTitleList();
+                        mReadActivity.getDlReadActivity().openDrawer(GravityCompat.START);
+                        mSettingDialog.dismiss();
 
-                            changeNightAndDaySetting(isDayStyle);
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {//设置
-                            showSettingDetailView();
-                        }
+                    }, (dialog, view, isDayStyle) -> {//日夜切换
+
+                        changeNightAndDaySetting(isDayStyle);
+                    }, view -> {//设置
+                        showSettingDetailView();
                     }, new SeekBar.OnSeekBarChangeListener() {//阅读进度
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -435,16 +422,13 @@ public class ReadPresenter extends BasePresenter {
 
                         }
                     }
-                    , null, new DialogCreator.OnClickDownloadAllChapterListener() {//缓存整本
-                        @Override
-                        public void onClick(Dialog dialog, View view, TextView tvDownloadProgress) {
-                            if (StringHelper.isEmpty(mBook.getId())){
-                                addBookToCaseAndDownload(tvDownloadProgress);
-                            }else {
-                                getAllChapterData(tvDownloadProgress);
-                            }
-
+                    , null, (dialog, view, tvDownloadProgress) -> {
+                        if (StringHelper.isEmpty(mBook.getId())){
+                            addBookToCaseAndDownload(tvDownloadProgress);
+                        }else {
+                            getAllChapterData(tvDownloadProgress);
                         }
+
                     });
         }
 
@@ -478,45 +462,21 @@ public class ReadPresenter extends BasePresenter {
             mSettingDetailDialog.show();
         } else {
             mSettingDetailDialog = DialogCreator.createReadDetailSetting(mReadActivity, mSetting,
-                    new DialogCreator.OnReadStyleChangeListener() {
-                        @Override
-                        public void onChange(ReadStyle readStyle) {
-                            changeStyle(readStyle);
+                    readStyle -> changeStyle(readStyle), v -> reduceTextSize(), v -> increaseTextSize(), v -> {
+                        if (mSetting.getLanguage() == Language.simplified) {
+                            mSetting.setLanguage(Language.traditional);
+                        } else {
+                            mSetting.setLanguage(Language.simplified);
                         }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            reduceTextSize();
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            increaseTextSize();
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (mSetting.getLanguage() == Language.simplified) {
-                                mSetting.setLanguage(Language.traditional);
-                            } else {
-                                mSetting.setLanguage(Language.simplified);
-                            }
-                            SysManager.saveSetting(mSetting);
-                            settingChange = true;
-                            init();
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(mReadActivity, FontsActivity.class);
-                            mReadActivity.startActivityForResult(intent, APPCONST.REQUEST_FONT);
-                        }
-                    }, new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            autoScroll();
-                            mSettingDetailDialog.dismiss();
-                        }
+                        SysManager.saveSetting(mSetting);
+                        settingChange = true;
+                        init();
+                    }, v -> {
+                        Intent intent = new Intent(mReadActivity, FontsActivity.class);
+                        mReadActivity.startActivityForResult(intent, APPCONST.REQUEST_FONT);
+                    }, v -> {
+                        autoScroll();
+                        mSettingDetailDialog.dismiss();
                     });
         }
     }
@@ -525,15 +485,12 @@ public class ReadPresenter extends BasePresenter {
      * 延迟跳转章节(防止跳到章节尾部)
      */
     private void delayTurnToChapter(final int position) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(50);
-                    mHandler.sendMessage(mHandler.obtainMessage(4, position, 0));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                Thread.sleep(50);
+                mHandler.sendMessage(mHandler.obtainMessage(4, position, 0));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }).start();
 
@@ -543,15 +500,12 @@ public class ReadPresenter extends BasePresenter {
      * 延迟跳转章节位置
      */
     private void delayTurnToLastChapterReadPosion() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(100);
-                    mHandler.sendMessage(mHandler.obtainMessage(6));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                Thread.sleep(100);
+                mHandler.sendMessage(mHandler.obtainMessage(6));
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }).start();
 
