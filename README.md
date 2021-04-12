@@ -8,7 +8,7 @@
 
 #### 本项目小说内容抓取自天籁小说网、笔趣阁，仅限于学习使用，未经本人允许，不得挪作其他用途，否则后果自负
 
-demo v3.0.9 下载体验： 链接: https://pan.baidu.com/s/1x22wuLF8P6dEY7C3F_l_YA 提取码: fbfq
+demo v3.1.0 下载体验： 链接: 链接: https://pan.baidu.com/s/1mv6b9lnUwEs13JBF7eK2PA 提取码: irwy
 
 v1.6.0 新增自动滚屏
 
@@ -51,6 +51,7 @@ v3.0.8 更新书源域名，修复小说加载失败的问题，修复小说搜�
 v3.0.9 更新书源域名，修复小说加载失败、书城加载不出来等问题
 （旧版本覆盖更新后，书架中存在加载不出来的书或者不更新章节的书，请删掉，重新加入书架即可恢复正常）
 
+v3.1.0 修复小说总章节数为1时，会出现闪退的问题
 
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/1.png)
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/2.png)
