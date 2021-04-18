@@ -106,6 +106,7 @@ public class BookInfoPresenter extends  BasePresenter {
                 mBookInfoActivity.getBtnAddBookcase().setText("不追了");
             }else {
                 mBookService.deleteBookById(mBook.getId());
+                mBook.setId(null);
                 TextHelper.showText("成功移除书籍");
                 mBookInfoActivity.getBtnAddBookcase().setText("加入书架");
             }
