@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 
+import androidx.lifecycle.LiveData;
+
 import com.zhao.myreader.R;
 import com.zhao.myreader.base.BasePresenter;
 import com.zhao.myreader.enums.Font;
@@ -21,16 +23,6 @@ public class FontsPresenter extends BasePresenter {
     private FontsAdapter mFontsAdapter;
 
 
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what){
-                case 1:
-                    init();
-                    break;
-            }
-        }
-    };
 
     public FontsPresenter(FontsActivity fontsActivity) {
         super(fontsActivity,fontsActivity.getLifecycle());
@@ -40,12 +32,8 @@ public class FontsPresenter extends BasePresenter {
 
     @Override
     public void create() {
-        mFontsActivity.getLlTitleBack().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFontsActivity.finish();
-            }
-        });
+        mFontsActivity.getLlTitleBack().setOnClickListener(v -> mFontsActivity.finish());
+
         mFontsActivity.getTvTitleText().setText(mFontsActivity.getString(R.string.font));
         init();
     }

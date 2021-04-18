@@ -5,9 +5,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.OnLifecycleEvent;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +23,15 @@ import com.zhao.myreader.util.TextHelper;
 import com.zhao.myreader.util.crawler.BiQuGeReadUtil;
 import com.zhao.myreader.webapi.BookStoreApi;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.ObservableEmitter;
+import io.reactivex.rxjava3.core.ObservableOnSubscribe;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 import static androidx.lifecycle.Lifecycle.State.STARTED;
 
 /**
@@ -34,23 +43,22 @@ public class BookInfoPresenter extends  BasePresenter {
     private BookInfoActivity mBookInfoActivity;
     private Book mBook;
     private BookService mBookService;
+    private MutableLiveData<Book> bookMutableLiveData = new MutableLiveData<>();
 
 
 
 
-    private Handler mHandle = new Handler(message -> {
-        switch (message.what){
-            case 1:
-                init();
-                break;
-        }
-        return false;
-    });
+
 
     public BookInfoPresenter(BookInfoActivity bookInfoActivity){
         super(bookInfoActivity,bookInfoActivity.getLifecycle());
         mBookInfoActivity  = bookInfoActivity;
         mBookService = new BookService();
+        bookMutableLiveData.observe(mBookInfoActivity, book -> {
+
+            mBook = book;
+            init();
+        });
 
 
     }
@@ -63,6 +71,9 @@ public class BookInfoPresenter extends  BasePresenter {
                 init();
 
             }else if(BookSource.biquge.toString().equals(mBook.getSource())){
+
+
+
                 getData();
             }
 
@@ -73,8 +84,9 @@ public class BookInfoPresenter extends  BasePresenter {
         BookStoreApi.getBookInfo(mBook, new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
-                mBook = (Book)o;
-                mHandle.sendMessage(mHandle.obtainMessage(1));
+
+                bookMutableLiveData.postValue((Book)o);
+
             }
 
             @Override
