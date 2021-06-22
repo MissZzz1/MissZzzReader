@@ -55,7 +55,7 @@ public class SearchBookPrensenter extends BasePresenter {
     private int confirmTime = 1000;//搜索输入确认时间（毫秒）
 
 
-    private static String[] suggestion = {"斗罗大陆4终极斗罗","左道倾天", "诡秘之主", "元尊" ,"天下第九", "三寸人间","万族之劫","大奉打更人"};
+    private static String[] suggestion = {"终极斗罗","左道倾天", "诡秘之主", "元尊" ,"天下第九", "从红月开始","万族之劫","大奉打更人"};
 
 
     @SuppressLint("HandlerLeak")

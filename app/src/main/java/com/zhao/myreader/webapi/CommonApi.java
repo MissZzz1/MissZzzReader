@@ -1,7 +1,6 @@
 package com.zhao.myreader.webapi;
 
 import com.zhao.myreader.callback.ResultCallback;
-import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.crawler.BiQuGeReadUtil;
@@ -75,8 +74,12 @@ public class CommonApi extends BaseApi{
      */
     public static void searchTl(String key, final ResultCallback callback){
         Map<String,Object> params = new HashMap<>();
-        params.put("q", key);
-        getCommonReturnHtmlStringApi(URLCONST.method_buxiu_search, params, "utf-8", new ResultCallback() {
+        try {
+            params.put("searchkey", URLEncoder.encode(key,"GB2312"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        getCommonReturnHtmlStringApi(URLCONST.method_tl_search, params, "gbk", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(TianLaiReadUtil.getBooksFromSearchHtml((String)o),code);

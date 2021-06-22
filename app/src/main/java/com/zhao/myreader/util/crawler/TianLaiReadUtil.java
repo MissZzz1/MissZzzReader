@@ -1,5 +1,6 @@
 package com.zhao.myreader.util.crawler;
 
+import android.net.UrlQuerySanitizer;
 import android.text.Html;
 
 import com.zhao.myreader.common.URLCONST;
@@ -98,35 +99,44 @@ public class TianLaiReadUtil {
     public static ArrayList<Book> getBooksFromSearchHtml(String html) {
         ArrayList<Book> books = new ArrayList<>();
         Document doc = Jsoup.parse(html);
-//        Element node = doc.getElementById("results");
-//        for (Element div : node.children()) {
-        Elements divs = doc.getElementsByClass("result-list");
-        Element div = divs.get(0);
-//        if (!StringHelper.isEmpty(div.className()) && div.className().equals("result-list")) {
-        for (Element element : div.children()) {
+
+        Element div = doc.getElementsByClass("details").first();
+
+
+        for (Element element : div.getElementsByClass("item-pic")) {
             Book book = new Book();
-            Element img = element.child(0).child(0).child(0);
-            book.setImgUrl(img.attr("src"));
-            Element title = element.getElementsByClass("result-item-title result-game-item-title").get(0);
-            book.setName(title.child(0).attr("title"));
-            book.setChapterUrl(URLCONST.nameSpace_tianlai + title.child(0).attr("href"));
-            Element desc = element.getElementsByClass("result-game-item-desc").get(0);
-            book.setDesc(desc.text());
-            Element info = element.getElementsByClass("result-game-item-info").get(0);
-            for (Element element1 : info.children()) {
-                String infoStr = element1.text();
-                if (infoStr.contains("作者：")) {
+            Element img = element.getElementsByTag("img").first();
+            book.setImgUrl(URLCONST.nameSpace_tianlai + img.attr("src"));
+            Element info = element.getElementsByClass("result-game-item-detail").first();
+
+            for (Element el : info.children()) {
+
+                String infoStr = el.text();
+
+                if (el.tagName().equals("h3")){
+
+                    Element a = el.getElementsByTag("a").first();
+                    book.setChapterUrl(URLCONST.nameSpace_tianlai + a.attr("href"));
+                    book.setName(a.text());
+
+                }else if(el.className().equals("intro")){
+                    book.setDesc(el.text());
+
+                }else if (infoStr.contains("作者：")) {
+                    infoStr = infoStr.substring(0,infoStr.indexOf("状态"));
                     book.setAuthor(infoStr.replace("作者：", "").replace(" ", ""));
                 } else if (infoStr.contains("类型：")) {
                     book.setType(infoStr.replace("类型：", "").replace(" ", ""));
                 } else if (infoStr.contains("更新时间：")) {
                     book.setUpdateDate(infoStr.replace("更新时间：", "").replace(" ", ""));
-                } else {
-                    Element newChapter = element1.child(1);
-                    book.setNewestChapterUrl(newChapter.attr("href"));
+                }else if(infoStr.contains("最新章节")) {
+                    Element newChapter = el.getElementsByTag("a").first();
+                    book.setNewestChapterUrl(URLCONST.nameSpace_tianlai + newChapter.attr("href"));
                     book.setNewestChapterTitle(newChapter.text());
                 }
+
             }
+
             book.setSource(BookSource.tianlai.toString());
             books.add(book);
 

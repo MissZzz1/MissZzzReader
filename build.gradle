@@ -8,13 +8,13 @@ buildscript {
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url "https://jitpack.io" }
         maven { url "https://oss.jfrog.org/libs-snapshot" }
-        jcenter()
+
         google()
 
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.3'
+        classpath 'com.android.tools.build:gradle:4.2.1'
         classpath 'org.greenrobot:greendao-gradle-plugin:3.3.0'
 //        classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.1'
         // NOTE: Do not place your application dependencies here; they belong
@@ -30,7 +30,7 @@ allprojects {
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url "https://jitpack.io" }
         maven { url "https://oss.jfrog.org/libs-snapshot" }
-        jcenter()
+        
         google()
 
     }

@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'//greendao插件dependencies
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.2'
     defaultConfig {
         applicationId "com.zhao.myreader"
         minSdkVersion 23
-        targetSdkVersion 29
-        versionCode 310
-        versionName "3.1.0"
+        targetSdkVersion 30
+        versionCode 311
+        versionName "3.1.1"
 
     }
 
@@ -49,9 +49,9 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "androidx.lifecycle:lifecycle-runtime:2.2.0"
-    implementation 'com.android.support:appcompat-v7:29.0.0'
-    implementation 'com.android.support:support-v4:29.0.0'
-    implementation 'com.android.support:design:29.0.0'
+    implementation 'com.android.support:appcompat-v7:30.0.0'
+    implementation 'com.android.support:support-v4:30.0.0'
+    implementation 'com.android.support:design:30.0.0'
 //    implementation 'com.jakewharton:butterknife:10.2.1'
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'com.github.bumptech.glide:glide:4.11.0'
