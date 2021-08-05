@@ -1,5 +1,9 @@
 package com.zhao.myreader.entity.bookstore;
 
+import com.zhao.myreader.greendao.entity.Book;
+
+import java.util.List;
+
 /**
  * @author zhao
  * @description: 书城小说分类
@@ -10,6 +14,8 @@ public class BookType {
 
     private String typeName;//分类名称
     private String url;//分类链接
+
+    private List<Book> books; //书列表
 
     public String getTypeName() {
         return typeName;
@@ -25,5 +31,13 @@ public class BookType {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

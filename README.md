@@ -8,7 +8,7 @@
 
 #### 本项目小说内容抓取自天籁小说网、笔趣阁，仅限于学习使用，未经本人允许，不得挪作其他用途，否则后果自负
 
-demo v3.1.1 下载体验：https://pan.baidu.com/s/1ivwTFpswPHP69uU5jK0vrA 提取码: gpfk 
+demo v3.2.0 下载体验：https://pan.baidu.com/s/12Tp7fyITh3OVCWy8qvYFng 提取码: yvwx 
 
 v1.6.0 新增自动滚屏
 
@@ -54,6 +54,8 @@ v3.0.9 更新书源域名，修复小说加载失败、书城加载不出来等�
 v3.1.0 修复小说总章节数为1时，会出现闪退的问题
 
 v3.1.1 修改天籁源链接，重构天籁源爬取脚本，解决天籁小说书源不可用的问题
+
+v3.2.0 新增顶点小说书源，书城源全面升级顶点小说书城（排行更新更及时，书目更新快，类别更多）
 
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/1.png)
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/2.png)

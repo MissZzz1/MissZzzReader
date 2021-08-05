@@ -4,6 +4,7 @@ import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.crawler.BiQuGeReadUtil;
+import com.zhao.myreader.util.crawler.DingDianReadUtil;
 import com.zhao.myreader.util.crawler.TianLaiReadUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -111,6 +112,34 @@ public class CommonApi extends BaseApi{
             @Override
             public void onFinish(Object o, int code) {
                 callback.onFinish(BiQuGeReadUtil.getBooksFromSearchHtml((String)o),code);
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+                callback.onError(e);
+
+            }
+        });
+    }
+
+    /**
+     * 搜索小说（顶点小说）
+     * @param key
+     * @param callback
+     */
+    public static void searchDdxs(String key, final ResultCallback callback){
+        Map<String,Object> params = new HashMap<>();
+        try {
+            params.put("searchkey", URLEncoder.encode(key,"GB2312"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        params.put("searchtype", "articlename");
+        getCommonReturnHtmlStringApi(URLCONST.method_dd_search, params, "GBK", new ResultCallback() {
+            @Override
+            public void onFinish(Object o, int code) {
+                callback.onFinish(DingDianReadUtil.getBooksFromSearchHtml((String)o),code);
 
             }
 

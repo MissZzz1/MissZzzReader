@@ -75,10 +75,13 @@ public class TianLaiReadUtil {
                 chapter.setNumber(i++);
                 chapter.setTitle(title);
                 String url = a.attr("href");
-                if (StringHelper.isEmpty(book.getSource()) || BookSource.tianlai.toString().equals(book.getSource())) {
+                if (StringHelper.isEmpty(book.getSource())
+                        || BookSource.tianlai.toString().equals(book.getSource())) {
                     url = URLCONST.nameSpace_tianlai + url;
                 } else if (BookSource.biquge.toString().equals(book.getSource())) {
                     url = book.getChapterUrl() + url;
+                }else if (BookSource.dingdian.toString().equals(book.getSource())) {
+                    url = URLCONST.nameSpace_dingdian + url;
                 }
                 chapter.setUrl(url);
                 chapters.add(chapter);

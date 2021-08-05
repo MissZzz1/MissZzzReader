@@ -22,6 +22,8 @@ import com.bumptech.glide.request.target.Target;
 import com.zhao.myreader.R;
 
 import com.zhao.myreader.callback.ResultCallback;
+
+
 import com.zhao.myreader.databinding.ListviewBookStoreBookItemBinding;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.StringHelper;
@@ -167,6 +169,9 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
 
         //简介
         holder.binding.tvBookDesc.setText(book.getDesc());
+
+        //作者
+        holder.binding.tvBookAuthor.setText(book.getAuthor());
 
 
     }

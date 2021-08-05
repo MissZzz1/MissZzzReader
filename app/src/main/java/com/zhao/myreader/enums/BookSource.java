@@ -9,7 +9,8 @@ public enum BookSource {
 
 
     tianlai("天籁小说"),
-    biquge("笔趣阁");
+    biquge("笔趣阁"),
+    dingdian("顶点小说");
 
 
     public String text;

@@ -8,8 +8,8 @@ android {
         applicationId "com.zhao.myreader"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 311
-        versionName "3.1.1"
+        versionCode 320
+        versionName "3.2.0"
 
     }
 
@@ -33,13 +33,7 @@ android {
         jniLibs.srcDir "libs/"
     }
 
-    compileOptions {
 
-        sourceCompatibility JavaVersion.VERSION_1_8
-
-        targetCompatibility JavaVersion.VERSION_1_8
-
-    }
 
     buildFeatures {
         viewBinding = true

@@ -67,10 +67,13 @@ public class BookInfoPresenter extends  BasePresenter {
      public void create() {
 
             mBook = (Book) mBookInfoActivity.getIntent().getSerializableExtra(APPCONST.BOOK);
-            if (StringHelper.isEmpty(mBook.getSource()) || BookSource.tianlai.toString().equals(mBook.getSource())){
+         assert mBook != null;
+         if (StringHelper.isEmpty(mBook.getSource())
+                 || BookSource.tianlai.toString().equals(mBook.getSource())){
                 init();
 
-            }else if(BookSource.biquge.toString().equals(mBook.getSource())){
+            }else if(BookSource.biquge.toString().equals(mBook.getSource())
+         || BookSource.dingdian.toString().equals(mBook.getSource())){
 
 
 

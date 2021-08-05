@@ -7,9 +7,15 @@ package com.zhao.myreader.common;
 public class URLCONST {
 
     // 命名空间
-    public static String nameSpace_tianlai = "https://www.tlai.cc/";
+    public static String nameSpace_tianlai = "https://www.tlai.cc";
 
-    public static  String nameSpace_biquge = "https://www.xxbqg.com/";
+    public static  String nameSpace_biquge = "https://www.xxbqg.com";
+
+    public static  String nameSpace_dingdian = "https://www.ddxs.cc";
+
+
+
+
 
     public static String nameSpace_system = "https://10.10.123.31:8080/jeecg";
 
@@ -20,6 +26,10 @@ public class URLCONST {
 
     public static String method_bqg_search = nameSpace_biquge + "/modules/article/search.php";
 //    searchkey=%C1%E9%D3%F2
+
+    public static String method_dd_search = nameSpace_dingdian + "/modules/article/search.php";
+
+    public static String method_dd_rank = nameSpace_dingdian + "/paihangbang/";
 
     // 获取最新版本号
     public static String method_getCurAppVersion = nameSpace_system + "/mReaderController.do?getCurAppVersion";

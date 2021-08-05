@@ -55,6 +55,7 @@ public class BookStorePresenter extends BasePresenter {
                 case 1:
 
                     initTypeList();
+                    initBookList();
 
                     break;
 
@@ -81,11 +82,13 @@ public class BookStorePresenter extends BasePresenter {
          //无需加载更多
          mBookStoreFragment.getSrlBookList().setEnableLoadMore(false);
 
-         //小说列表下拉刷新事件
-         mBookStoreFragment.getSrlBookList().setOnRefreshListener(refreshLayout -> {
+         mBookStoreFragment.getSrlBookList().setEnableRefresh(false);
 
-             getBooksData();
-         });
+         //小说列表下拉刷新事件
+//         mBookStoreFragment.getSrlBookList().setOnRefreshListener(refreshLayout -> {
+//
+//             getBooksData();
+//         });
 
          getData();
 
@@ -98,13 +101,14 @@ public class BookStorePresenter extends BasePresenter {
      */
     private void getData(){
         mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
-         BookStoreApi.getBookTypeList(URLCONST.nameSpace_biquge, new ResultCallback() {
+         BookStoreApi.getDdBookRank(URLCONST.method_dd_rank, new ResultCallback() {
              @Override
              public void onFinish(Object o, int code) {
                  mBookTypes = (ArrayList<BookType>)o;
                  curType = mBookTypes.get(0);
+                 bookList = mBookTypes.get(0).getBooks();
                  mHandler.sendMessage(mHandler.obtainMessage(1));
-                 getBooksData();
+
              }
 
              @Override
@@ -120,7 +124,7 @@ public class BookStorePresenter extends BasePresenter {
     /**
      * 获取小数列表数据
      */
-    private void getBooksData(){
+   /* private void getBooksData(){
 
         BookStoreApi.getBookRankList(URLCONST.nameSpace_biquge + curType.getUrl(), new ResultCallback() {
             @Override
@@ -136,7 +140,7 @@ public class BookStorePresenter extends BasePresenter {
 
             }
         });
-    }
+    }*/
 
 
 
@@ -158,7 +162,8 @@ public class BookStorePresenter extends BasePresenter {
         mBookStoreBookTypeAdapter.setOnItemClickListener((pos, view) -> {
             curType = mBookTypes.get(pos);
             mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
-            getBooksData();
+            bookList = curType.getBooks();
+            initBookList();
 
         });
 

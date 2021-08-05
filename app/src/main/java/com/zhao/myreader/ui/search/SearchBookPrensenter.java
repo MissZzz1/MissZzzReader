@@ -55,7 +55,7 @@ public class SearchBookPrensenter extends BasePresenter {
     private int confirmTime = 1000;//搜索输入确认时间（毫秒）
 
 
-    private static String[] suggestion = {"终极斗罗","左道倾天", "诡秘之主", "元尊" ,"天下第九", "从红月开始","万族之劫","大奉打更人"};
+    private static String[] suggestion = {"重生唐三","左道倾天", "长夜余火", "沧元图" ,"深空彼岸", "从红月开始","夜的命名术","大奉打更人"};
 
 
     @SuppressLint("HandlerLeak")
@@ -205,6 +205,19 @@ public class SearchBookPrensenter extends BasePresenter {
         });
 
         CommonApi.searchBqg(searchKey, new ResultCallback() {
+            @Override
+            public void onFinish(Object o, int code) {
+                mBooks.addAll((ArrayList<Book>) o);
+                mHandler.sendMessage(mHandler.obtainMessage(2));
+            }
+
+            @Override
+            public void onError(Exception e) {
+                mHandler.sendMessage(mHandler.obtainMessage(3));
+            }
+        });
+
+        CommonApi.searchDdxs(searchKey, new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 mBooks.addAll((ArrayList<Book>) o);
