@@ -9,7 +9,7 @@
 #### 本项目小说内容抓取自天籁小说网、笔趣阁、顶点小说，仅限于学习使用，未经本人允许，不得挪作其他用途，否则后果自负
 
 
-demo v3.2.0 下载体验：https://pan.baidu.com/s/12Tp7fyITh3OVCWy8qvYFng 提取码: yvwx 
+demo v3.2.2 下载体验： https://pan.baidu.com/s/1vhDqgouvcfD9QVhp7lTGSQ 提取码: gxv9 
 
 v1.6.0 新增自动滚屏
 
