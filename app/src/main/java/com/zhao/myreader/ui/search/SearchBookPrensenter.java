@@ -23,11 +23,12 @@ import com.zhao.myreader.greendao.service.SearchHistoryService;
 import com.zhao.myreader.ui.bookinfo.BookInfoActivity;
 
 import com.zhao.myreader.util.StringHelper;
+import com.zhao.myreader.util.TextHelper;
 import com.zhao.myreader.webapi.CommonApi;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
+import java.util.List;
 
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -43,7 +44,7 @@ public class SearchBookPrensenter extends BasePresenter {
     private String searchKey;//搜索关键字
     private ArrayList<Book> mBooks = new ArrayList<>();
     private ArrayList<SearchHistory> mSearchHistories = new ArrayList<>();
-    private ArrayList<String> mSuggestions = new ArrayList<>();
+    private List<String> mSuggestions ;
 
     private SearchHistoryService mSearchHistoryService;
 
@@ -55,7 +56,7 @@ public class SearchBookPrensenter extends BasePresenter {
     private int confirmTime = 1000;//搜索输入确认时间（毫秒）
 
 
-    private static String[] suggestion = {"重生唐三","左道倾天", "长夜余火", "沧元图" ,"深空彼岸", "从红月开始","夜的命名术","大奉打更人"};
+//    private static String[] suggestion = {"重生唐三","左道倾天", "长夜余火", "沧元图" ,"深空彼岸", "从红月开始","夜的命名术","大奉打更人"};
 
 
     @SuppressLint("HandlerLeak")
@@ -73,6 +74,9 @@ public class SearchBookPrensenter extends BasePresenter {
 //                    mSearchBookActivity.getLvSearchBooksList().setAdapter(null);
                     mSearchBookActivity.getPbLoading().setVisibility(View.GONE);
                     break;
+                case 4:
+                    initSuggestionBook();
+                    break;
             }
         }
     };
@@ -81,7 +85,7 @@ public class SearchBookPrensenter extends BasePresenter {
         super(searchBookActivity,searchBookActivity.getLifecycle());
         mSearchBookActivity = searchBookActivity;
         mSearchHistoryService = new SearchHistoryService();
-        Collections.addAll(mSuggestions, suggestion);
+//        Collections.addAll(mSuggestions, suggestion);
     }
 
     @Override
@@ -145,8 +149,29 @@ public class SearchBookPrensenter extends BasePresenter {
             mSearchHistoryService.clearHistory();
             initHistoryList();
         });
-        initSuggestionBook();
+//        initSuggestionBook();
+        getHotBooksData();
+
         initHistoryList();
+    }
+
+    private void getHotBooksData(){
+        CommonApi.getTlHotBookList(new ResultCallback() {
+            @Override
+            public void onFinish(Object o, int code) {
+                if (code == 0){
+                    mSuggestions = (List<String>) o;
+                    mHandler.sendMessage(mHandler.obtainMessage(4));
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                TextHelper.showText(e.toString());
+
+            }
+        });
+
     }
 
 
@@ -155,7 +180,7 @@ public class SearchBookPrensenter extends BasePresenter {
      */
     private void initSuggestionBook() {
 
-        mSearchBookActivity.getTgSuggestBook().setTags(suggestion);
+        mSearchBookActivity.getTgSuggestBook().setTags(mSuggestions);
     }
 
     /**
@@ -204,7 +229,7 @@ public class SearchBookPrensenter extends BasePresenter {
             }
         });
 
-        CommonApi.searchBqg(searchKey, new ResultCallback() {
+       /* CommonApi.searchBqg(searchKey, new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
                 mBooks.addAll((ArrayList<Book>) o);
@@ -228,7 +253,7 @@ public class SearchBookPrensenter extends BasePresenter {
             public void onError(Exception e) {
                 mHandler.sendMessage(mHandler.obtainMessage(3));
             }
-        });
+        });*/
 
     }
 

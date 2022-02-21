@@ -57,6 +57,7 @@ public class HttpDataSource {
                        callback.onFinish(response.toString(),0);
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
                     callback.onError(e);
                 }
             }
@@ -68,6 +69,7 @@ public class HttpDataSource {
 
             @Override
             public void onError(Exception e) {
+
                 if (callback != null) {
                     callback.onError(e);
                 }

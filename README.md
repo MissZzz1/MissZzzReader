@@ -8,6 +8,7 @@
 
 #### 本项目小说内容抓取自天籁小说网、笔趣阁、顶点小说，仅限于学习使用，未经本人允许，不得挪作其他用途，否则后果自负
 
+
 demo v3.2.0 下载体验：https://pan.baidu.com/s/12Tp7fyITh3OVCWy8qvYFng 提取码: yvwx 
 
 v1.6.0 新增自动滚屏
@@ -56,6 +57,13 @@ v3.1.0 修复小说总章节数为1时，会出现闪退的问题
 v3.1.1 修改天籁源链接，重构天籁源爬取脚本，解决天籁小说书源不可用的问题
 
 v3.2.0 新增顶点小说书源，书城源全面升级顶点小说书城（排行更新更及时，书目更新快，类别更多）
+
+v3.2.2 移除无效书源，目前只取天籁小说源
+       修复小说搜索功能无结果的问题
+       修复书城加载失败，显示错乱等问题
+       修复小说内容加载失败的问题
+       新增小说搜索热门关键词进行实时读取，不再固定。
+（由于各个网站针对小说爬取进行识别限制，所以适当降低了应用内各个功能的网络读取速度，望知悉！）
 
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/1.png)
 ![demoImg](https://raw.githubusercontent.com/MissZzz1/MissZzzReader/master/img/2.png)

@@ -1,5 +1,6 @@
 package com.zhao.myreader.ui.home.bookstore;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,7 +61,7 @@ public class BookStoreBookTypeAdapter extends RecyclerView.Adapter<BookStoreBook
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder,final int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         initView(position, holder);
         if (position == selectPos){
             holder.itemView.setBackgroundResource(R.color.white);

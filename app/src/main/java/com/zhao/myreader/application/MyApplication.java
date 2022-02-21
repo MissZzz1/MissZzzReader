@@ -46,6 +46,7 @@ import java.security.cert.X509Certificate;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
@@ -67,7 +68,7 @@ public class MyApplication extends Application {
 
     private static Handler handler = new Handler();
     private static MyApplication application;
-    private ExecutorService mFixedThreadPool;
+    private ScheduledExecutorService mFixedThreadPool;
 
     static {
         //设置全局的Header构建器
@@ -92,7 +93,8 @@ public class MyApplication extends Application {
 
 
 //        handleSSLHandshake();
-        mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());//初始化线程池
+
+        mFixedThreadPool = Executors.newScheduledThreadPool(Math.min(Runtime.getRuntime().availableProcessors(), 2));//初始化线程池   最大线程2是为了限制瞬时访问量，以防止网站反爬虫识别
 
         BaseActivity.setCloseAntiHijacking(true);
 
@@ -141,10 +143,11 @@ public class MyApplication extends Application {
     public void newThread(Runnable runnable) {
 
         try {
-            mFixedThreadPool.execute(runnable);
+
+            mFixedThreadPool.schedule(runnable,1,TimeUnit.SECONDS);
         } catch (Exception e) {
             e.printStackTrace();
-            mFixedThreadPool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());//初始化线程池
+            mFixedThreadPool = Executors.newScheduledThreadPool(Math.min(Runtime.getRuntime().availableProcessors(), 3));//初始化线程池
             mFixedThreadPool.execute(runnable);
         }
     }

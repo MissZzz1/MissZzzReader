@@ -33,7 +33,8 @@
 
         <activity
             android:name=".ui.home.MainActivity"
-            android:alwaysRetainTaskState="true">
+            android:alwaysRetainTaskState="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

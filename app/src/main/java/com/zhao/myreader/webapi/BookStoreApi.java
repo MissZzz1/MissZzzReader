@@ -81,6 +81,9 @@ public class BookStoreApi extends BaseApi{
                 }else if(BookSource.biquge.toString().equals(book.getSource())){
 
                     callback.onFinish(BiQuGeReadUtil.getBookInfo((String) o,book),0);
+                }else if(BookSource.tianlai.toString().equals(book.getSource())){
+
+                    callback.onFinish(TianLaiReadUtil.getBookInfo((String) o,book),0);
                 }
 
             }
@@ -95,17 +98,26 @@ public class BookStoreApi extends BaseApi{
 
 
     /**
-     * 获取顶点小说排行榜
+     * 获取书城小说排行榜
      * @param url
      * @param callback
      */
-    public static void getDdBookRank(String url, final ResultCallback callback){
+    public static void getBookRank(String url, BookSource bookSource, final ResultCallback callback){
 
         getCommonReturnHtmlStringApi(url, null, "GBK", new ResultCallback() {
             @Override
             public void onFinish(Object o, int code) {
-                callback.onFinish(DingDianReadUtil.getRank((String) o),0);
 
+                if (BookSource.dingdian == bookSource){
+                    callback.onFinish(DingDianReadUtil.getRank((String) o),0);
+
+                }else if(BookSource.biquge == bookSource){
+
+
+                }else if(BookSource.tianlai == bookSource){
+
+                    callback.onFinish(TianLaiReadUtil.getRank((String) o),0);
+                }
 
 
             }
@@ -117,6 +129,7 @@ public class BookStoreApi extends BaseApi{
             }
         });
     }
+
 
 
 

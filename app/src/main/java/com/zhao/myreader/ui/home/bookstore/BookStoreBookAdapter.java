@@ -27,6 +27,7 @@ import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.databinding.ListviewBookStoreBookItemBinding;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.util.StringHelper;
+import com.zhao.myreader.util.TextHelper;
 import com.zhao.myreader.webapi.BookStoreApi;
 
 
@@ -120,31 +121,44 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
        holder.binding.tvBookDesc.setText("");
        holder.binding.tvBookName.setTag(position);//设置列表书的当前加载位置
        if (StringHelper.isEmpty(book.getImgUrl())){
-           Glide.with(mContext).clear(holder.binding.ivBookImg);
-           //获取小说详情
-           BookStoreApi.getBookInfo(book, new ResultCallback() {
-               @Override
-               public void onFinish(Object o, int code) {
-                   mDatas.set(position,(Book) o);
-                   //防止列表快速滑动时出现书的信息加载混乱的问题
-                   if (holder.binding.tvBookName.getTag() == null || (int)holder.binding.tvBookName.getTag() == position) {
-                       mHandle.sendMessage(mHandle.obtainMessage(1,position,0,holder));
-                   }
-
-               }
-
-               @Override
-               public void onError(Exception e) {
-
-
-               }
-           });
+          getBookInfo(position,holder,book);
        }else{
            initImgAndDec(position,holder);
        }
 
 
 
+    }
+
+    /**
+     * 获取小说详情
+     * @param position
+     * @param holder
+     * @param book
+     */
+    private void getBookInfo(final int position, final ViewHolder holder,final Book book){
+
+        Glide.with(mContext).clear(holder.binding.ivBookImg);
+        //获取小说详情
+        BookStoreApi.getBookInfo(book, new ResultCallback() {
+            @Override
+            public void onFinish(Object o, int code) {
+                mDatas.set(position,(Book) o);
+                //防止列表快速滑动时出现书的信息加载混乱的问题
+                if (holder.binding.tvBookName.getTag() == null || (int)holder.binding.tvBookName.getTag() == position) {
+                    mHandle.sendMessage(mHandle.obtainMessage(1,position,0,holder));
+                }
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+                //防止网站进行反爬虫处理，进行重复获取
+                getBookInfo(position,holder,book);
+
+
+            }
+        });
     }
 
     private void initImgAndDec(final int position, final ViewHolder holder){
@@ -172,6 +186,8 @@ public class BookStoreBookAdapter extends RecyclerView.Adapter<BookStoreBookAdap
 
         //作者
         holder.binding.tvBookAuthor.setText(book.getAuthor());
+
+
 
 
     }

@@ -4,6 +4,7 @@ import android.net.UrlQuerySanitizer;
 import android.text.Html;
 
 import com.zhao.myreader.common.URLCONST;
+import com.zhao.myreader.entity.bookstore.BookType;
 import com.zhao.myreader.enums.BookSource;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.greendao.entity.Chapter;
@@ -15,6 +16,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -146,6 +148,184 @@ public class TianLaiReadUtil {
         }
 
         return books;
+    }
+
+
+    /**
+     * 提取排行榜列表
+     * @param html
+     * @return
+     */
+    public static List<BookType> getRank(String html){
+
+        List<BookType> bookTypes = new ArrayList<>();
+
+        Document doc = Jsoup.parse(html);
+
+        Elements boxs = doc.getElementById("main").getElementsByTag("div");
+
+        for(Element box : boxs){
+            String className = box.className();
+            if (!className.contains("box")) continue;
+
+            BookType bookType = new BookType();
+
+
+            Element h3 = box.getElementsByTag("h3").get(0);
+            bookType.setTypeName(h3.text().replace("小说排行榜",""));
+
+
+            //书列表
+            List<Book> books = new ArrayList<>();
+            Elements lis = box.getElementsByTag("li");
+
+            for(Element li : lis){
+
+                if (StringHelper.isNotEmpty(li.className())){
+                    continue;
+                }
+
+                Book book = new Book();
+                Element a = li.getElementsByTag("a").get(0);
+
+                book.setName(a.text());
+                book.setChapterUrl(URLCONST.nameSpace_tianlai + a.attr("href"));
+                book.setSource(BookSource.tianlai.toString());
+
+                books.add(book);
+
+
+            }
+
+            bookType.setBooks(books);
+
+            bookTypes.add(bookType);
+
+
+
+
+        }
+
+
+        return bookTypes;
+
+
+    }
+
+
+    /**
+     * 获取小说详细信息
+     * @param html
+     * @return
+     */
+    public static Book getBookInfo(String html,Book book)  {
+
+
+        //小说源
+        book.setSource(BookSource.tianlai.toString());
+        Document doc = Jsoup.parse(html);
+
+
+        Element meta = doc.getElementsByAttributeValue("property","og:url").get(0);
+
+        book.setChapterUrl(meta.attr("content"));
+
+
+        //图片url
+        Element divImg = doc.getElementById("fmimg");
+        Element img = divImg.getElementsByTag("img").get(0);
+        book.setImgUrl(img.attr("src"));
+
+        //书名
+        Element divInfo = doc.getElementById("info");
+        Element h1 = divInfo.getElementsByTag("h1").get(0);
+        book.setName(h1.html());
+
+        Elements ps = divInfo.getElementsByTag("p");
+
+        //作者
+        Element p0 = ps.get(0);
+
+        Pattern pattern = Pattern.compile("作&nbsp;&nbsp;&nbsp;&nbsp;者：(.*)");
+        Matcher matcher = pattern.matcher(p0.html());
+        if (matcher.find()){
+            book.setAuthor(matcher.group(1));
+        }
+
+
+        //类别
+        Element a = doc.getElementsByClass("con_top").first().getElementsByTag("a").get(1);
+
+        book.setType(a.text());
+
+
+
+
+
+        //更新时间
+        Element p3 = ps.get(2);
+
+        pattern = Pattern.compile("最后更新：(.*)");
+        matcher = pattern.matcher(p3.html());
+        if (matcher.find()){
+            book.setUpdateDate(matcher.group(1));
+        }
+
+
+        //最新章节
+        Element p2 = ps.get(3);
+        a = p2.getElementsByTag("a").get(0);
+        book.setNewestChapterTitle(a.text());
+        book.setNewestChapterUrl(a.attr("href"));
+
+
+
+        //简介
+        Element pIntro = doc.getElementById("intro").getElementsByTag("p").first();
+        book.setDesc(Html.fromHtml(pIntro.html()).toString());
+
+
+
+
+        return book;
+
+    }
+
+
+    /**
+     * 获取热门小说列表
+     * @param html
+     * @return
+     */
+    public static List<String> getHotBookList(String html)  {
+
+        Element doc = Jsoup.parse(html);
+        List<String> hotBooks  = new ArrayList<>();
+
+        Elements items = new Elements();
+
+
+        //全部热门推荐
+        Elements allHots = doc.getElementsByClass("item");
+
+        items.addAll(allHots);
+
+        //各分类热门推荐
+
+        Elements typeHot = doc.getElementsByClass("content");
+
+
+        items.addAll(typeHot);
+
+        //提取书名
+        for(Element item : items){
+            Element a = item.getElementsByTag("dt").first().getElementsByTag("a").first();
+            hotBooks.add(a.text());
+        }
+
+
+        return hotBooks;
+
     }
 
 }

@@ -156,4 +156,26 @@ public class CommonApi extends BaseApi{
     }
 
 
+    /**
+     * 获取天籁热门小说列表
+
+     * @param callback
+     */
+    public static void getTlHotBookList( final ResultCallback callback){
+
+        getCommonReturnHtmlStringApi(URLCONST.nameSpace_tianlai, null, "GBK", new ResultCallback() {
+            @Override
+            public void onFinish(Object o, int code) {
+                callback.onFinish(TianLaiReadUtil.getHotBookList((String)o),0);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                callback.onError(e);
+
+            }
+        });
+    }
+
+
 }

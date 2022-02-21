@@ -7,10 +7,7 @@ import android.os.Message;
 import android.view.View;
 
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 
 
 import com.zhao.myreader.base.BasePresenter;
@@ -18,6 +15,7 @@ import com.zhao.myreader.callback.ResultCallback;
 import com.zhao.myreader.common.APPCONST;
 import com.zhao.myreader.common.URLCONST;
 import com.zhao.myreader.entity.bookstore.BookType;
+import com.zhao.myreader.enums.BookSource;
 import com.zhao.myreader.greendao.entity.Book;
 import com.zhao.myreader.ui.bookinfo.BookInfoActivity;
 import com.zhao.myreader.util.TextHelper;
@@ -101,7 +99,7 @@ public class BookStorePresenter extends BasePresenter {
      */
     private void getData(){
         mBookStoreFragment.getBinding().pbLoading.setVisibility(View.VISIBLE);
-         BookStoreApi.getDdBookRank(URLCONST.method_dd_rank, new ResultCallback() {
+         BookStoreApi.getBookRank(URLCONST.method_tl_rank, BookSource.tianlai,new ResultCallback() {
              @Override
              public void onFinish(Object o, int code) {
                  mBookTypes = (ArrayList<BookType>)o;
